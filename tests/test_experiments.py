@@ -1,4 +1,10 @@
-from dealos.experiments.metrics import format_cli_report, format_report, format_seed_details
+from dealos.experiments.metrics import (
+    completed_deal_distribution,
+    format_cli_report,
+    format_compact_summary,
+    format_report,
+    format_seed_details,
+)
 from dealos.experiments.runner import run_experiment
 from dealos.policies.bottleneck import BottleneckPolicy
 from dealos.policies.fifo import FIFOPolicy
@@ -51,3 +57,17 @@ def test_experiment_summary_is_descriptive_and_reproducible() -> None:
     assert [(run.policy, run.seed, run.total_task_progress) for run in first.runs] == [
         (run.policy, run.seed, run.total_task_progress) for run in second.runs
     ]
+    compact = format_compact_summary(first)
+    assert "does not rank policies" in compact
+    assert "best" not in compact.lower()
+    for policy in ("bottleneck", "fifo", "random"):
+        assert f"policy: {policy}" in compact
+        assert "mean_task_progress:" in compact
+        assert "blocked_task_steps:" in compact
+        assert "throughput:" in compact
+        assert "mean_resource_utilization:" in compact
+        assert "mean_active_deals:" in compact
+    fifo_runs = [run for run in first.runs if run.policy == "fifo"]
+    distribution = completed_deal_distribution(fifo_runs)
+    assert sum(distribution.values()) == len(fifo_runs)
+    assert f"completed_deals = 0: {distribution[0]} runs" in compact

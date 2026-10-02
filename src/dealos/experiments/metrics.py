@@ -83,6 +83,64 @@ def summarize(runs: list[RunResult]) -> dict[str, dict[str, object]]:
     return summary
 
 
+def completed_deal_distribution(runs: list[RunResult]) -> dict[int, int]:
+    """How many runs finished exactly k deals, for k from 0 through the portfolio size."""
+
+    if not runs:
+        return {}
+    n_deals = len(runs[0].completion_times)
+    highest = max(run.completed_deals for run in runs)
+    limit = max(n_deals, highest)
+    return {count: sum(run.completed_deals == count for run in runs) for count in range(limit + 1)}
+
+
+def format_metric(stats: dict[str, float | int]) -> str:
+    """Sample standard deviation, matching summarize_metric."""
+
+    return (
+        f"n={stats['count']} mean={float(stats['mean']):.4f} "
+        f"std={float(stats['stdev']):.4f} min={float(stats['min']):.4f} max={float(stats['max']):.4f}"
+    )
+
+
+def format_compact_summary(report: ExperimentReport) -> str:
+    """One preset, one block per policy. Descriptive only."""
+
+    grouped: dict[str, list[RunResult]] = {}
+    for run in report.runs:
+        grouped.setdefault(run.policy, []).append(run)
+    lines = [
+        f"preset: {report.preset}",
+        f"seeds: {', '.join(str(seed) for seed in report.seeds)}",
+        "std is the sample standard deviation.",
+        "This summary does not rank policies.",
+    ]
+    scalar_fields = (
+        ("completed_deals", "completed_deals"),
+        ("mean_task_progress", "mean_task_progress"),
+        ("blocked_task_steps", "blocked_task_steps"),
+        ("throughput", "throughput"),
+        ("mean_active_deals", "mean_active_deals"),
+        ("mean_utilization_overall", "mean_resource_utilization"),
+    )
+    for policy in sorted(grouped):
+        group = grouped[policy]
+        lines.append("")
+        lines.append(f"policy: {policy}")
+        for attr, label in scalar_fields:
+            stats = summarize_metric([float(getattr(run, attr)) for run in group])
+            lines.append(f"  {label}: {format_metric(stats)}")
+        resource_ids = sorted(group[0].mean_utilization)
+        parts = []
+        for resource_id in resource_ids:
+            stats = summarize_metric([run.mean_utilization[resource_id] for run in group])
+            parts.append(f"{resource_id}={float(stats['mean']):.4f}")
+        lines.append(f"  mean_utilization_by_resource: {', '.join(parts)}")
+        for count, n_runs in completed_deal_distribution(group).items():
+            lines.append(f"  completed_deals = {count}: {n_runs} runs")
+    return "\n".join(lines)
+
+
 def format_seed_details(report: ExperimentReport) -> str:
     """Per-seed, per-policy values taken from RunResult. No ranking."""
 
