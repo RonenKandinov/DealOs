@@ -107,7 +107,9 @@ class RunDiagnosis:
     preset: str
     seed: int
     policy: str
+    horizon: int
     completed_deals: int
+    completion_times: dict[str, int | None]
     steps: int
     mean_target_progress: float | None
     mean_nontarget_progress: float | None
@@ -215,7 +217,14 @@ def diagnose_actions(scenario: Scenario, actions: Sequence[AllocationAction]) ->
             break
         applied.append((dict(state.task_progress), action, dict(state.capacities)))
         state, _info = env.step(action)
-    return _assemble(scenario, "fixed_actions", state.task_progress, state.deal_complete, applied)
+    return _assemble(
+        scenario,
+        "fixed_actions",
+        state.task_progress,
+        state.deal_complete,
+        state.deal_completed_at,
+        applied,
+    )
 
 
 def diagnose_rollout(scenario: Scenario, policy: Policy) -> RunDiagnosis:
@@ -228,7 +237,14 @@ def diagnose_rollout(scenario: Scenario, policy: Policy) -> RunDiagnosis:
         action = policy.select_action(state, scenario)
         applied.append((dict(state.task_progress), action, dict(state.capacities)))
         state, _info = env.step(action)
-    return _assemble(scenario, policy.name, state.task_progress, state.deal_complete, applied)
+    return _assemble(
+        scenario,
+        policy.name,
+        state.task_progress,
+        state.deal_complete,
+        state.deal_completed_at,
+        applied,
+    )
 
 
 def _assemble(
@@ -236,6 +252,7 @@ def _assemble(
     policy_name: str,
     progress: Mapping[tuple[str, str], float],
     deal_complete: Mapping[str, int],
+    completion_times: Mapping[str, int | None],
     applied: Sequence[tuple[Mapping[tuple[str, str], float], AllocationAction, Mapping[str, float]]],
 ) -> RunDiagnosis:
     tolerance = scenario.simulation.completion_tolerance
@@ -255,7 +272,9 @@ def _assemble(
         preset=scenario.generator.name,
         seed=scenario.seed,
         policy=policy_name,
+        horizon=scenario.horizon,
         completed_deals=sum(deal_complete.values()),
+        completion_times=dict(completion_times),
         steps=len(applied),
         mean_target_progress=mean_progress(target_values),
         mean_nontarget_progress=mean_progress(nontarget_values),
