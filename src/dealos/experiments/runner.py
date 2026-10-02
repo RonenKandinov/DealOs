@@ -43,6 +43,8 @@ def rollout(scenario: Scenario, policy: Policy) -> RunResult:
         for resource_id, utilization in info.utilization.items():
             util_sums[resource_id] += utilization
     total_progress = sum(state.task_progress.values())
+    task_count = len(state.task_progress)
+    mean_task_progress = total_progress / task_count if task_count else 0.0
     mean_utilization = {
         resource_id: (util_sums[resource_id] / steps if steps else 0.0)
         for resource_id in util_sums
@@ -58,6 +60,7 @@ def rollout(scenario: Scenario, policy: Policy) -> RunResult:
         completed_deals=final_completed,
         completion_times=dict(state.deal_completed_at),
         total_task_progress=total_progress,
+        mean_task_progress=mean_task_progress,
         blocked_task_steps=blocked_task_steps,
         mean_utilization=mean_utilization,
         mean_utilization_overall=overall,

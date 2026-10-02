@@ -14,6 +14,7 @@ class RunResult:
     completed_deals: int
     completion_times: dict[str, int | None]
     total_task_progress: float
+    mean_task_progress: float
     blocked_task_steps: int
     mean_utilization: dict[str, float]
     mean_utilization_overall: float
@@ -80,6 +81,55 @@ def summarize(runs: list[RunResult]) -> dict[str, dict[str, object]]:
         )
         summary[policy] = metrics
     return summary
+
+
+def format_seed_details(report: ExperimentReport) -> str:
+    """Per-seed, per-policy values taken from RunResult. No ranking."""
+
+    lines = ["per-seed results:"]
+    runs_by_seed: dict[int, list[RunResult]] = {seed: [] for seed in report.seeds}
+    for run in report.runs:
+        runs_by_seed.setdefault(run.seed, []).append(run)
+    for seed in report.seeds:
+        lines.append("")
+        lines.append(f"seed: {seed}")
+        for run in runs_by_seed.get(seed, []):
+            completed_ids = [
+                deal_id
+                for deal_id, completed_at in sorted(run.completion_times.items())
+                if completed_at is not None
+            ]
+            utilization = ", ".join(
+                f"{resource_id}={value:.6f}"
+                for resource_id, value in sorted(run.mean_utilization.items())
+            )
+            lines.extend(
+                [
+                    "",
+                    f"Policy: {run.policy}",
+                    f"seed: {run.seed}",
+                    f"policy: {run.policy}",
+                    f"completed_deals: {run.completed_deals}",
+                    f"mean_task_progress: {run.mean_task_progress:.6f}",
+                    f"blocked_task_steps: {run.blocked_task_steps}",
+                    f"mean_utilization: {utilization}",
+                    f"active_deals: {run.mean_active_deals:.6f}",
+                    f"throughput: {run.throughput:.6f}",
+                    f"steps: {run.steps}",
+                    f"completed_deal_ids: {completed_ids}",
+                    "completion_times:",
+                ]
+            )
+            for deal_id, completed_at in sorted(run.completion_times.items()):
+                shown = "None" if completed_at is None else str(completed_at)
+                lines.append(f"{deal_id}: {shown}")
+    return "\n".join(lines)
+
+
+def format_cli_report(report: ExperimentReport) -> str:
+    """Per-seed diagnostics followed by the unchanged aggregate summary."""
+
+    return f"{format_seed_details(report)}\n\n{format_report(report)}"
 
 
 def format_report(report: ExperimentReport) -> str:
