@@ -103,6 +103,23 @@ def format_metric(stats: dict[str, float | int]) -> str:
     )
 
 
+def completion_day_distribution(runs: list[RunResult]) -> tuple[list[int], int]:
+    """Finished-deal completion days, and the count of deals still open at the horizon.
+
+    A day of 0 means the deal was already complete at the start of the run.
+    """
+
+    finished: list[int] = []
+    unfinished = 0
+    for run in runs:
+        for completed_at in run.completion_times.values():
+            if completed_at is None:
+                unfinished += 1
+            else:
+                finished.append(completed_at)
+    return finished, unfinished
+
+
 def format_compact_summary(report: ExperimentReport) -> str:
     """One preset, one block per policy. Descriptive only."""
 
@@ -138,6 +155,17 @@ def format_compact_summary(report: ExperimentReport) -> str:
         lines.append(f"  mean_utilization_by_resource: {', '.join(parts)}")
         for count, n_runs in completed_deal_distribution(group).items():
             lines.append(f"  completed_deals = {count}: {n_runs} runs")
+        finished_days, unfinished = completion_day_distribution(group)
+        if finished_days:
+            day_stats = summarize_metric([float(day) for day in finished_days])
+            lines.append(f"  completion_days: {format_metric(day_stats)} unfinished_deals={unfinished}")
+            counts: dict[int, int] = {}
+            for day in finished_days:
+                counts[day] = counts.get(day, 0) + 1
+            day_list = ", ".join(f"{day}:{counts[day]}" for day in sorted(counts))
+            lines.append(f"  completion_day_counts: {day_list}")
+        else:
+            lines.append(f"  completion_days: n_finished=0 unfinished_deals={unfinished}")
     return "\n".join(lines)
 
 
