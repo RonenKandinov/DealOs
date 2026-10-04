@@ -1,0 +1,7 @@
+Phase D: observation layer. The simulator steps only on x_true, and this screen does not step.
+Seeds 0-49. One select_action per policy on the observed copy.
+This summary does not rank policies.
+
+exact epsilon=+0.00: n=150 path=0 eligible=0 action=0
+noise epsilon=+0.10: n=150 path=111 eligible=150 action=149
+interval epsilon=+0.10: n=150 path=0 eligible=150 action=150

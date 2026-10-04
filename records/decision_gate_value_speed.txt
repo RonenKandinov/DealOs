@@ -1,0 +1,19 @@
+Experiment: value against speed
+Hypothesis: one declared reallocation can raise synthetic value and lower completion count.
+Mathematical change: none in the transition.
+Per seed, FIFO's earliest completed deal has V=1 and its latest completed deal has V=10.
+Other deals have V=1. Seeds with fewer than two distinct completion days are skipped.
+The swap takes FIFO's action and pours the capacity it assigned to the fast deal
+onto eligible tasks of the slow deal, using the existing greedy fill and only that freed capacity.
+Held constant: graphs, capacities, alpha, q, phi, initial progress, T=80.
+Changed: the score labels, and, only in the swap arm, which deal receives that freed capacity.
+This is not a new policy family and it is not an optimizer.
+This summary does not rank policies.
+Skipped seeds: 0. Scored seeds: 50.
+
+fifo: completed 4.000, day 42.820, value 13.000, residual 0.000
+bottleneck: completed 4.000, day 53.425, value 13.000, residual 0.000
+random: completed 0.180, day nan, value 0.180, residual 1.519
+swap: completed 2.320, day 42.013, value 11.320, residual 2.240
+Swap minus FIFO: completed -1.680, day -0.807, value -1.680.
+Verdict: unresolved. The swap moves at least one score, but not as an opposite-signed conflict between completion count and value. One swap is not every feasible allocation.

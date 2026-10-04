@@ -1,0 +1,105 @@
+Experiment: fresh symmetric noise versus persistent CRM bias
+Hypothesis: a constant observation error creates a different horizon outcome
+from an independent symmetric error of the same magnitude.
+Mathematical change: none in the transition.
+True arm: the policy sees x_true.
+Fresh arm: x_obs = clip(x_true + U(-m, m), 0, 1), redrawn every morning.
+Bias arm: x_obs = clip(x_true + b, 0, 1), with b fixed at +0.05, -0.05, +0.10, or -0.10.
+The simulator steps x_true. ready_since stays the true clock.
+Held constant: graphs, capacities, alpha, q, phi, initial progress, T=80, seeds 0-49, policies.
+Changed: only the progress copy passed to select_action.
+Screening band: completed 0.25, residual 0.25, completion day 2, idle_despite 0.02.
+Wasted allocation is reported and is not part of that band.
+This summary does not rank policies.
+
+true
+  random: completed n=50 mean=0.1800 std=0.5226 min=0.0000 max=2.0000; completion_day n=9 mean=76.3333 std=3.5000 min=70.0000 max=80.0000 median=78.00; target n=50 mean=0.2556 std=0.2139 min=0.0213 max=0.8770; residual_all n=50 mean=1.5187 std=0.6742 min=0.1230 max=3.1330; blocked_steps n=50 mean=83.9600 std=10.7703 min=57.0000 max=102.0000; utilization n=50 mean=0.7709 std=0.0786 min=0.5537 max=0.9351; idle_despite n=50 mean=0.0531 std=0.0197 min=0.0189 max=0.1128; herfindahl n=50 mean=0.1375 std=0.0188 min=0.1101 max=0.1965; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fifo: completed n=50 mean=4.0000 std=0.0000 min=4.0000 max=4.0000; completion_day n=200 mean=42.8200 std=12.0513 min=20.0000 max=73.0000 median=43.00; target n=50 mean=1.0000 std=0.0000 min=1.0000 max=1.0000; residual_all n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; blocked_steps n=50 mean=562.8000 std=153.3642 min=261.0000 max=870.0000; utilization n=50 mean=0.5785 std=0.0608 min=0.4584 max=0.6964; idle_despite n=50 mean=0.0306 std=0.0079 min=0.0191 max=0.0514; herfindahl n=50 mean=0.3440 std=0.0344 min=0.2830 max=0.4410; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  bottleneck: completed n=50 mean=4.0000 std=0.0000 min=4.0000 max=4.0000; completion_day n=200 mean=53.4250 std=8.5328 min=26.0000 max=72.0000 median=54.00; target n=50 mean=1.0000 std=0.0000 min=1.0000 max=1.0000; residual_all n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; blocked_steps n=50 mean=557.6600 std=143.3902 min=288.0000 max=873.0000; utilization n=50 mean=0.5534 std=0.0510 min=0.4558 max=0.6989; idle_despite n=50 mean=0.0272 std=0.0060 min=0.0175 max=0.0434; herfindahl n=50 mean=0.3465 std=0.0245 min=0.2886 max=0.4007; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  wasted random=0.00, fifo=0.00, bottleneck=0.00
+fresh m=0.05
+  random: completed n=50 mean=0.1600 std=0.3703 min=0.0000 max=1.0000; completion_day n=8 mean=74.0000 std=8.4007 min=54.0000 max=80.0000 median=75.50; target n=50 mean=0.1956 std=0.1191 min=0.0195 max=0.5205; residual_all n=50 mean=1.7485 std=0.4101 min=1.0373 max=2.4734; blocked_steps n=50 mean=171.8400 std=37.4691 min=111.0000 max=259.0000; utilization n=50 mean=0.9329 std=0.0221 min=0.8446 max=0.9647; idle_despite n=50 mean=0.0399 std=0.0134 min=0.0200 max=0.0777; herfindahl n=50 mean=0.1046 std=0.0034 min=0.0989 max=0.1175; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=127.8585 std=35.3834 min=66.8401 max=227.8636
+  fifo: completed n=50 mean=3.5800 std=0.7309 min=2.0000 max=4.0000; completion_day n=179 mean=51.4469 std=15.7926 min=23.0000 max=80.0000 median=52.00; target n=50 mean=0.9412 std=0.1108 min=0.6353 max=1.0000; residual_all n=50 mean=0.0856 std=0.1808 min=0.0000 max=0.7708; blocked_steps n=50 mean=651.4800 std=173.9262 min=314.0000 max=1012.0000; utilization n=50 mean=0.7000 std=0.0324 min=0.6365 max=0.7670; idle_despite n=50 mean=0.0180 std=0.0094 min=0.0049 max=0.0613; herfindahl n=50 mean=0.1359 std=0.0057 min=0.1222 max=0.1454; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=104.6376 std=15.7424 min=71.7730 max=139.1446
+  bottleneck: completed n=50 mean=2.4400 std=1.3426 min=0.0000 max=4.0000; completion_day n=122 mean=70.4836 std=6.8009 min=48.0000 max=80.0000 median=72.00; target n=50 mean=0.7404 std=0.2872 min=0.0331 max=1.0000; residual_all n=50 mean=0.2604 std=0.2890 min=0.0000 max=1.0002; blocked_steps n=50 mean=655.5200 std=143.8689 min=351.0000 max=982.0000; utilization n=50 mean=0.6813 std=0.0356 min=0.5861 max=0.7477; idle_despite n=50 mean=0.0134 std=0.0074 min=0.0017 max=0.0304; herfindahl n=50 mean=0.1375 std=0.0060 min=0.1224 max=0.1525; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=114.9455 std=10.1306 min=100.1965 max=145.9214
+  wasted random=127.86, fifo=104.64, bottleneck=114.95
+Change from true to fresh 0.05:
+  fifo: completed -0.420, day +8.627, residual +0.086, idle_despite -0.013, blocked_steps +88.7; outside band: completed, completion_day
+  bottleneck: completed -1.560, day +17.059, residual +0.260, idle_despite -0.014, blocked_steps +97.9; outside band: completed, residual, completion_day
+exceeds_screening_band: True
+  support differs in 109/150 runs; mean Jaccard 0.956
+fresh m=0.10
+  random: completed n=50 mean=0.0600 std=0.2399 min=0.0000 max=1.0000; completion_day n=3 mean=74.0000 std=3.0000 min=71.0000 max=77.0000 median=74.00; target n=50 mean=0.1734 std=0.1039 min=0.0322 max=0.4350; residual_all n=50 mean=1.7449 std=0.3997 min=0.8585 max=2.4475; blocked_steps n=50 mean=182.0200 std=36.5644 min=89.0000 max=258.0000; utilization n=50 mean=0.9257 std=0.0246 min=0.8305 max=0.9552; idle_despite n=50 mean=0.0438 std=0.0138 min=0.0240 max=0.0788; herfindahl n=50 mean=0.1052 std=0.0035 min=0.0990 max=0.1183; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=134.6285 std=34.8146 min=62.7384 max=227.0983
+  fifo: completed n=50 mean=1.8600 std=0.6704 min=1.0000 max=3.0000; completion_day n=93 mean=51.4301 std=14.6565 min=24.0000 max=80.0000 median=50.00; target n=50 mean=0.5305 std=0.1695 min=0.2500 max=0.9351; residual_all n=50 mean=0.9577 std=0.4120 min=0.0649 max=1.7653; blocked_steps n=50 mean=769.0400 std=191.9142 min=362.0000 max=1118.0000; utilization n=50 mean=0.8044 std=0.0357 min=0.7146 max=0.8707; idle_despite n=50 mean=0.0091 std=0.0051 min=0.0025 max=0.0309; herfindahl n=50 mean=0.1136 std=0.0067 min=0.0986 max=0.1325; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=213.3921 std=15.8438 min=163.7097 max=240.3836
+  bottleneck: completed n=50 mean=0.0200 std=0.1414 min=0.0000 max=1.0000; completion_day n=1 mean=78.0000 std=0.0000 min=78.0000 max=78.0000 median=78.00; target n=50 mean=0.0262 std=0.0695 min=0.0000 max=0.3898; residual_all n=50 mean=1.3816 std=0.3591 min=0.6102 max=2.2003; blocked_steps n=50 mean=769.9800 std=164.6424 min=408.0000 max=1088.0000; utilization n=50 mean=0.8041 std=0.0348 min=0.7137 max=0.8615; idle_despite n=50 mean=0.0099 std=0.0049 min=0.0002 max=0.0236; herfindahl n=50 mean=0.1166 std=0.0065 min=0.1021 max=0.1328; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=207.5922 std=17.7289 min=162.6736 max=241.3942
+  wasted random=134.63, fifo=213.39, bottleneck=207.59
+Change from true to fresh 0.10:
+  fifo: completed -2.140, day +8.610, residual +0.958, idle_despite -0.021, blocked_steps +206.2; outside band: completed, residual, completion_day, idle_despite
+  bottleneck: completed -3.980, day +24.575, residual +1.382, idle_despite -0.017, blocked_steps +212.3; outside band: completed, residual, completion_day
+exceeds_screening_band: True
+  support differs in 134/150 runs; mean Jaccard 0.914
+bias b=+0.05
+  random: completed n=50 mean=0.0800 std=0.3405 min=0.0000 max=2.0000; completion_day n=4 mean=71.2500 std=6.8981 min=64.0000 max=80.0000 median=70.50; target n=50 mean=0.1477 std=0.1690 min=0.0057 max=0.9075; residual_all n=50 mean=2.0769 std=0.6517 min=0.1269 max=3.3379; blocked_steps n=50 mean=85.3000 std=12.9161 min=57.0000 max=131.0000; utilization n=50 mean=0.8557 std=0.0764 min=0.6428 max=0.9713; idle_despite n=50 mean=0.1385 std=0.0716 min=0.0280 max=0.2826; herfindahl n=50 mean=0.1193 std=0.0160 min=0.0983 max=0.1834; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fifo: completed n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; completion_day no finished deals median=na; target n=50 mean=0.9500 std=0.0000 min=0.9500 max=0.9500; residual_all n=50 mean=0.3713 std=0.0196 min=0.3250 max=0.4000; blocked_steps n=50 mean=577.9200 std=149.9313 min=280.0000 max=869.0000; utilization n=50 mean=0.4494 std=0.0616 min=0.3268 max=0.5644; idle_despite n=50 mean=0.5506 std=0.0616 min=0.4356 max=0.6732; herfindahl n=50 mean=0.3715 std=0.0284 min=0.2767 max=0.4397; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  bottleneck: completed n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; completion_day no finished deals median=na; target n=50 mean=0.9500 std=0.0000 min=0.9500 max=0.9500; residual_all n=50 mean=0.3713 std=0.0196 min=0.3250 max=0.4000; blocked_steps n=50 mean=616.7400 std=124.8893 min=342.0000 max=907.0000; utilization n=50 mean=0.4773 std=0.0503 min=0.3670 max=0.5833; idle_despite n=50 mean=0.5227 std=0.0503 min=0.4167 max=0.6330; herfindahl n=50 mean=0.3688 std=0.0340 min=0.2902 max=0.4397; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  wasted random=0.00, fifo=0.00, bottleneck=0.00
+Change from true to bias +0.05:
+  fifo: completed -4.000, day na, residual +0.371, idle_despite +0.520, blocked_steps +15.1; outside band: completed, residual, idle_despite
+  bottleneck: completed -4.000, day na, residual +0.371, idle_despite +0.495, blocked_steps +59.1; outside band: completed, residual, idle_despite
+exceeds_screening_band: True
+  support differs in 0/150 runs; mean Jaccard 1.000
+Change from fresh m=0.05 to bias +0.05:
+  fifo: completed -3.580, day na, residual +0.286, idle_despite +0.533, blocked_steps -73.6; outside band: completed, residual, idle_despite
+  bottleneck: completed -2.440, day na, residual +0.111, idle_despite +0.509, blocked_steps -38.8; outside band: completed, idle_despite
+exceeds_screening_band: True
+  support differs in 109/150 runs; mean Jaccard 0.956
+  wasted bias-minus-fresh -115.81
+bias b=-0.05
+  random: completed n=50 mean=0.1000 std=0.3030 min=0.0000 max=1.0000; completion_day n=5 mean=74.8000 std=3.7014 min=71.0000 max=80.0000 median=74.00; target n=50 mean=0.1746 std=0.0943 min=0.0309 max=0.4069; residual_all n=50 mean=1.7767 std=0.3152 min=1.1609 max=2.5370; blocked_steps n=50 mean=436.9800 std=61.9040 min=287.0000 max=541.0000; utilization n=50 mean=0.9243 std=0.0279 min=0.8614 max=0.9721; idle_despite n=50 mean=0.0517 std=0.0143 min=0.0243 max=0.0849; herfindahl n=50 mean=0.1097 std=0.0064 min=0.0990 max=0.1222; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=230.8270 std=29.7057 min=183.1854 max=294.1970
+  fifo: completed n=50 mean=0.0800 std=0.3405 min=0.0000 max=2.0000; completion_day n=4 mean=46.0000 std=20.1660 min=29.0000 max=75.0000 median=40.00; target n=50 mean=0.0240 std=0.0851 min=0.0000 max=0.5000; residual_all n=50 mean=2.6106 std=0.5195 min=1.5000 max=4.0696; blocked_steps n=50 mean=1111.6400 std=247.5921 min=589.0000 max=1630.0000; utilization n=50 mean=0.9083 std=0.0650 min=0.6966 max=0.9965; idle_despite n=50 mean=0.0111 std=0.0109 min=-0.0000 max=0.0679; herfindahl n=50 mean=0.0927 std=0.0274 min=0.0569 max=0.1652; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=348.6787 std=38.1574 min=228.0458 max=413.4017
+  bottleneck: completed n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; completion_day no finished deals median=na; target n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; residual_all n=50 mean=3.0046 std=0.4571 min=2.2492 max=4.2500; blocked_steps n=50 mean=1191.4600 std=176.1212 min=821.0000 max=1627.0000; utilization n=50 mean=0.9085 std=0.0563 min=0.7533 max=0.9949; idle_despite n=50 mean=0.0108 std=0.0103 min=0.0000 max=0.0461; herfindahl n=50 mean=0.0990 std=0.0241 min=0.0567 max=0.1594; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=341.6074 std=39.4316 min=243.6538 max=433.5422
+  wasted random=230.83, fifo=348.68, bottleneck=341.61
+Change from true to bias -0.05:
+  fifo: completed -3.920, day +3.180, residual +2.611, idle_despite -0.019, blocked_steps +548.8; outside band: completed, residual, completion_day
+  bottleneck: completed -4.000, day na, residual +3.005, idle_despite -0.016, blocked_steps +633.8; outside band: completed, residual
+exceeds_screening_band: True
+  support differs in 138/150 runs; mean Jaccard 0.739
+Change from fresh m=0.05 to bias -0.05:
+  fifo: completed -3.500, day -5.447, residual +2.525, idle_despite -0.007, blocked_steps +460.2; outside band: completed, residual, completion_day
+  bottleneck: completed -2.440, day na, residual +2.744, idle_despite -0.003, blocked_steps +535.9; outside band: completed, residual
+exceeds_screening_band: True
+  support differs in 122/150 runs; mean Jaccard 0.772
+  wasted bias-minus-fresh +191.22
+bias b=+0.10
+  random: completed n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; completion_day no finished deals median=na; target n=50 mean=0.1517 std=0.1594 min=0.0052 max=0.6955; residual_all n=50 mean=2.2080 std=0.6074 min=0.5814 max=3.2553; blocked_steps n=50 mean=85.3000 std=12.9161 min=57.0000 max=131.0000; utilization n=50 mean=0.8434 std=0.0777 min=0.6251 max=0.9832; idle_despite n=50 mean=0.1558 std=0.0775 min=0.0161 max=0.3728; herfindahl n=50 mean=0.1215 std=0.0164 min=0.0988 max=0.1763; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fifo: completed n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; completion_day no finished deals median=na; target n=50 mean=0.9000 std=0.0000 min=0.9000 max=0.9000; residual_all n=50 mean=0.7425 std=0.0392 min=0.6500 max=0.8000; blocked_steps n=50 mean=567.4200 std=147.8585 min=275.0000 max=851.0000; utilization n=50 mean=0.4460 std=0.0610 min=0.3248 max=0.5681; idle_despite n=50 mean=0.5540 std=0.0610 min=0.4319 max=0.6752; herfindahl n=50 mean=0.3861 std=0.0322 min=0.2794 max=0.4627; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  bottleneck: completed n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; completion_day no finished deals median=na; target n=50 mean=0.9000 std=0.0000 min=0.9000 max=0.9000; residual_all n=50 mean=0.7425 std=0.0392 min=0.6500 max=0.8000; blocked_steps n=50 mean=605.5600 std=122.4230 min=333.0000 max=885.0000; utilization n=50 mean=0.4726 std=0.0503 min=0.3613 max=0.5763; idle_despite n=50 mean=0.5274 std=0.0503 min=0.4237 max=0.6387; herfindahl n=50 mean=0.3792 std=0.0340 min=0.3121 max=0.4438; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  wasted random=0.00, fifo=0.00, bottleneck=0.00
+Change from true to bias +0.10:
+  fifo: completed -4.000, day na, residual +0.743, idle_despite +0.523, blocked_steps +4.6; outside band: completed, residual, idle_despite
+  bottleneck: completed -4.000, day na, residual +0.743, idle_despite +0.500, blocked_steps +47.9; outside band: completed, residual, idle_despite
+exceeds_screening_band: True
+  support differs in 0/150 runs; mean Jaccard 1.000
+Change from fresh m=0.10 to bias +0.10:
+  fifo: completed -1.860, day na, residual -0.215, idle_despite +0.545, blocked_steps -201.6; outside band: completed, idle_despite
+  bottleneck: completed -0.020, day na, residual -0.639, idle_despite +0.517, blocked_steps -164.4; outside band: residual, idle_despite
+exceeds_screening_band: True
+  support differs in 134/150 runs; mean Jaccard 0.914
+  wasted bias-minus-fresh -185.20
+bias b=-0.10
+  random: completed n=50 mean=0.1800 std=0.3881 min=0.0000 max=1.0000; completion_day n=9 mean=68.1111 std=7.7208 min=59.0000 max=80.0000 median=67.00; target n=50 mean=0.2099 std=0.1054 min=0.0129 max=0.4749; residual_all n=50 mean=1.6452 std=0.3022 min=0.9887 max=2.3464; blocked_steps n=50 mean=521.9800 std=83.7207 min=308.0000 max=676.0000; utilization n=50 mean=0.9090 std=0.0340 min=0.8409 max=0.9688; idle_despite n=50 mean=0.0643 std=0.0177 min=0.0260 max=0.0922; herfindahl n=50 mean=0.1126 std=0.0079 min=0.1009 max=0.1276; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=247.2037 std=31.1013 min=196.0086 max=316.0929
+  fifo: completed n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; completion_day no finished deals median=na; target n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; residual_all n=50 mean=5.3319 std=0.8960 min=3.7500 max=7.0263; blocked_steps n=50 mean=1965.5600 std=438.2300 min=1101.0000 max=2809.0000; utilization n=50 mean=0.7225 std=0.2791 min=0.2000 max=1.0000; idle_despite n=50 mean=0.0145 std=0.0165 min=0.0000 max=0.0779; herfindahl n=50 mean=0.1496 std=0.0748 min=0.0778 max=0.3424; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=342.4235 std=118.3626 min=133.9740 max=482.9566
+  bottleneck: completed n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; completion_day no finished deals median=na; target n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; residual_all n=50 mean=5.5489 std=0.7244 min=4.2500 max=7.2500; blocked_steps n=50 mean=2009.7600 std=344.1083 min=1159.0000 max=2809.0000; utilization n=50 mean=0.7454 std=0.2212 min=0.2000 max=1.0000; idle_despite n=50 mean=0.0216 std=0.0395 min=0.0000 max=0.2178; herfindahl n=50 mean=0.1424 std=0.0620 min=0.0766 max=0.3618; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=354.4086 std=95.4615 min=135.6521 max=483.6451
+  wasted random=247.20, fifo=342.42, bottleneck=354.41
+Change from true to bias -0.10:
+  fifo: completed -4.000, day na, residual +5.332, idle_despite -0.016, blocked_steps +1402.8; outside band: completed, residual
+  bottleneck: completed -4.000, day na, residual +5.549, idle_despite -0.006, blocked_steps +1452.1; outside band: completed, residual
+exceeds_screening_band: True
+  support differs in 145/150 runs; mean Jaccard 0.493
+Change from fresh m=0.10 to bias -0.10:
+  fifo: completed -1.860, day na, residual +4.374, idle_despite +0.005, blocked_steps +1196.5; outside band: completed, residual
+  bottleneck: completed -0.020, day na, residual +4.167, idle_despite +0.012, blocked_steps +1239.8; outside band: residual
+exceeds_screening_band: True
+  support differs in 135/150 runs; mean Jaccard 0.534
+  wasted bias-minus-fresh +129.47
+
+Verdict: persistent bias differs from fresh noise outside the screening band at levels +0.05, -0.05, +0.10, -0.10. They are not the same observation error for horizon outcomes. Neither is promoted into V1. A real CRM error log is what would say which error actually occurs.

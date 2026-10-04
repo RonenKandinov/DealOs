@@ -1,0 +1,22 @@
+Experiment: value opposed to completion speed
+Hypothesis: some feasible allocation has fewer completed deals and higher total value
+than FIFO on the same deals.
+At T=80, FIFO completes every deal on these seeds. If every value is positive,
+every subset has a lower total value. No feasible allocation can raise value
+by completing fewer deals. That comparison is not run as a forced conflict.
+Construction: same frozen graphs, horizon set to 40, which is the only change.
+Deals FIFO finishes at T=40 get V=1. Deals it leaves open get V=10.
+The declared intervention keeps the existing greedy fill and restricts it to the V=10 deals.
+Seeds where FIFO finishes every deal or no deal are skipped, because value and speed
+are not opposed there.
+Held constant within the T=40 comparison: graphs, capacities, alpha, q, phi, initial progress.
+This is not a new policy class and it is not an optimizer.
+This summary does not rank policies.
+
+T=80 FIFO completed-deal mean on seeds 0-49: 4.000. Every compared trajectory that completes all deals has the maximum positive-value score.
+Skipped seeds at T=40: 2. Compared seeds: 48.
+FIFO at T=40: completed 1.812, day 31.392, value 1.812, residual 1.065
+Focus on V=10 deals: completed 1.625, day 30.365, value 16.250, residual 3.334
+Focus minus FIFO: completed -0.188, value +14.438.
+Seeds with fewer completions and higher value: 11 / 48.
+Verdict: a conflict is constructable on the seeds counted above, under T=40 and these labels. It is not a V1 objective. It does not say which score should be chosen. Real values are still required before either score is treated as the business objective.

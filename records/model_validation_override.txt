@@ -1,0 +1,12 @@
+Phase J: human override audit.
+The model recommendation is kept after a different feasible action is applied.
+This does not change FIFO, Random, or Bottleneck.
+seed=0
+policy=fifo
+actor=screen
+timestamp=0
+override_flag=True
+override_reason=removed the largest model allocation
+model_allocations=5
+actual_allocations=4
+recommendation_preserved=True

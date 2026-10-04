@@ -1,0 +1,11 @@
+Phase I: CRM error. x_observed = clip(x_true + epsilon, 0, 1). True progress is not overwritten.
+Seeds 0-49. One select_action per policy on the observed copy.
+This summary does not rank policies.
+
+bias epsilon=+0.00: n=150 path=0 eligible=0 action=0
+bias epsilon=+0.05: n=150 path=0 eligible=150 action=150
+bias epsilon=-0.05: n=150 path=0 eligible=102 action=78
+bias epsilon=+0.10: n=150 path=0 eligible=150 action=150
+bias epsilon=-0.10: n=150 path=0 eligible=102 action=78
+bias epsilon=+0.20: n=150 path=0 eligible=150 action=150
+bias epsilon=-0.20: n=150 path=0 eligible=102 action=78

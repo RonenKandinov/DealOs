@@ -1,0 +1,7 @@
+Phase C: controllability as a q=0 label.
+delta_x is unchanged. q=0 is the existing suitability rule, applied to selected tasks.
+Comparison is at the initial state: critical path, eligible set, and one select_action.
+Seeds 0-49. This summary does not rank policies.
+
+Comparisons: 450. Path changes: 0. Eligible-set changes: 0. Action changes: 261. Stops: 0.
+The critical path and the eligible set ignore q. The allocation changes because q=0 removes every resource from that task.

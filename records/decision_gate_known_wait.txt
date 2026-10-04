@@ -1,0 +1,28 @@
+Experiment: known wait versus blind wait
+Hypothesis: telling the existing policies which tasks are externally waiting
+changes idle capacity or completion day, relative to stripping that allocation after the choice.
+Mathematical change: waiting tasks do not gain progress from allocation.
+At day 10 their true progress is set to 1. This is outside apply_progress.
+Blind: select_action sees baseline q, then allocation on waiting tasks is removed and not reassigned.
+Informed: select_action sees q=0 on those tasks, so greedy fill can use the capacity elsewhere.
+The environment scenario is the baseline in both arms.
+Waiting tasks are the initial critical-path tasks that are not targets.
+Held constant: graphs, capacities, true alpha, true q, phi, initial progress, T=80, seeds 0-49.
+Changed: whether the policy is shown q=0 on the waiting tasks.
+This summary does not rank policies.
+
+blind
+  random: completed n=50 mean=4.0000 std=0.0000 min=4.0000 max=4.0000; completion_day n=200 mean=22.8350 std=3.9491 min=17.0000 max=53.0000 median=22.00; target n=50 mean=1.0000 std=0.0000 min=1.0000 max=1.0000; residual_all n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; blocked_steps n=50 mean=344.4200 std=27.5696 min=260.0000 max=390.0000; utilization n=50 mean=0.3164 std=0.0369 min=0.2435 max=0.4129; idle_despite n=50 mean=0.2277 std=0.1030 min=0.1142 max=0.4305; herfindahl n=50 mean=0.2925 std=0.1347 min=0.1577 max=0.5396; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fifo: completed n=50 mean=4.0000 std=0.0000 min=4.0000 max=4.0000; completion_day n=200 mean=18.4200 std=3.5293 min=14.0000 max=45.0000 median=18.00; target n=50 mean=1.0000 std=0.0000 min=1.0000 max=1.0000; residual_all n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; blocked_steps n=50 mean=360.6000 std=32.0274 min=265.0000 max=406.0000; utilization n=50 mean=0.3275 std=0.0453 min=0.2445 max=0.4317; idle_despite n=50 mean=0.1868 std=0.0969 min=0.0755 max=0.3603; herfindahl n=50 mean=0.3783 std=0.1406 min=0.2438 max=0.6326; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  bottleneck: completed n=50 mean=4.0000 std=0.0000 min=4.0000 max=4.0000; completion_day n=200 mean=18.3700 std=3.2690 min=14.0000 max=39.0000 median=18.00; target n=50 mean=1.0000 std=0.0000 min=1.0000 max=1.0000; residual_all n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; blocked_steps n=50 mean=355.2800 std=31.6409 min=260.0000 max=402.0000; utilization n=50 mean=0.3280 std=0.0453 min=0.2501 max=0.4317; idle_despite n=50 mean=0.1873 std=0.0969 min=0.0878 max=0.3603; herfindahl n=50 mean=0.3782 std=0.1377 min=0.2429 max=0.6172; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+informed
+  random: completed n=50 mean=4.0000 std=0.0000 min=4.0000 max=4.0000; completion_day n=200 mean=22.8300 std=4.5513 min=17.0000 max=65.0000 median=23.00; target n=50 mean=1.0000 std=0.0000 min=1.0000 max=1.0000; residual_all n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; blocked_steps n=50 mean=344.4200 std=27.5696 min=260.0000 max=390.0000; utilization n=50 mean=0.3156 std=0.0373 min=0.2295 max=0.4037; idle_despite n=50 mean=0.2295 std=0.1050 min=0.1237 max=0.5050; herfindahl n=50 mean=0.2935 std=0.1342 min=0.1617 max=0.5581; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fifo: completed n=50 mean=4.0000 std=0.0000 min=4.0000 max=4.0000; completion_day n=200 mean=18.4200 std=3.5293 min=14.0000 max=45.0000 median=18.00; target n=50 mean=1.0000 std=0.0000 min=1.0000 max=1.0000; residual_all n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; blocked_steps n=50 mean=360.6000 std=32.0274 min=265.0000 max=406.0000; utilization n=50 mean=0.3275 std=0.0453 min=0.2445 max=0.4317; idle_despite n=50 mean=0.1868 std=0.0969 min=0.0755 max=0.3603; herfindahl n=50 mean=0.3783 std=0.1406 min=0.2438 max=0.6326; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  bottleneck: completed n=50 mean=4.0000 std=0.0000 min=4.0000 max=4.0000; completion_day n=200 mean=18.3700 std=3.2690 min=14.0000 max=39.0000 median=18.00; target n=50 mean=1.0000 std=0.0000 min=1.0000 max=1.0000; residual_all n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; blocked_steps n=50 mean=355.2800 std=31.6409 min=260.0000 max=402.0000; utilization n=50 mean=0.3280 std=0.0453 min=0.2501 max=0.4317; idle_despite n=50 mean=0.1873 std=0.0969 min=0.0878 max=0.3603; herfindahl n=50 mean=0.3782 std=0.1377 min=0.2429 max=0.6172; rework n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000; wasted n=50 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+Change from blind to informed:
+  fifo: completed +0.000, day +0.000, residual +0.000, idle_despite +0.000, blocked_steps +0.0; outside band: none
+  bottleneck: completed +0.000, day +0.000, residual +0.000, idle_despite +0.000, blocked_steps +0.0; outside band: none
+exceeds_screening_band: False
+  support differs in 0/150 runs; mean Jaccard 1.000
+
+Verdict: rejected as a decision-input extension under the existing policies. Showing the wait does not move idle-despite or completion day outside the band. The wait remains a physical fact in this test. Unresolved: a rule that is not FIFO, Bottleneck, or Random might still use the information. That was not tested.

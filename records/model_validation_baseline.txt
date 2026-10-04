@@ -1,0 +1,10 @@
+Model validation baseline.
+Frozen V1. Simulator dynamics, policies, generator, and objective were not changed.
+pytest before this phase: 69 passed.
+Seeds 0-19, T=80, untouched balanced scenario.
+Replication check passed inside collect_baseline:
+FIFO and Bottleneck complete 4 deals on every seed.
+Random mean completed deals is 0.15.
+Rollouts in this check: 60.
+Existing records exp0 through exp9 were not modified.
+This summary does not rank policies.

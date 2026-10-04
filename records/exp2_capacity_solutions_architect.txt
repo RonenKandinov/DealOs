@@ -1,0 +1,260 @@
+Experiment 2: solutions_architect capacity sensitivity
+Independent variable: solutions_architect capacity
+Baseline solutions_architect capacity: 1.00
+Levels: 0.25x, 0.50x, 0.75x, 1.00x, 1.25x of that baseline
+Level capacities: 0.2500 / 0.5000 / 0.7500 / 1.0000 / 1.2500
+Seeds: 0-19
+Horizon: T=80
+Policies: random, fifo, bottleneck
+Fixed capacities at baseline except solutions_architect: ae=2.00, legal=1.00, sales_engineer=2.00, security=1.00, solutions_architect=1.00
+Fixed: deal graphs, task sets, dependency edges, initial progress, phi, alpha, q, objective sum of completed deals
+Identity: before each rollout, assert_only_changed allowed only capacity:solutions_architect.
+This summary does not rank policies.
+Completed is the mean of sum y_i across seeds.
+Completion day pools finished deals. Residual all deals counts a finished deal as gap 0.
+Idle is allocated / no compatible eligible work / eligible work left unused.
+Utilization is the allocated fraction of each resource's capacity.
+
+| Level | Level value | Policy | Completed | Completion day | Target | Non-target | Residual unfinished | Residual all | A | B | C | Idle alloc | Idle none | Idle despite | Herfindahl | Tasks allocated |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 0.25x | 0.2500 | random | 0.150 (0.489) | 74.667 (7.572) med 78.00 | 0.218 (0.172) | 0.903 (0.055) | 1.670 | 1.607 | 1 | 0 | 76 | 0.819 | 0.122 | 0.058 | 0.125 | 28.716 (3.782) |
+| 0.25x | 0.2500 | fifo | 4.000 (0.000) | 42.862 (12.064) med 43.00 | 1.000 (0.000) | 1.000 (0.000) | none | 0.000 | 0 | 0 | 0 | 0.638 | 0.334 | 0.028 | 0.316 | 4.676 (0.442) |
+| 0.25x | 0.2500 | bottleneck | 4.000 (0.000) | 53.737 (8.903) med 54.50 | 1.000 (0.000) | 1.000 (0.000) | none | 0.000 | 0 | 0 | 0 | 0.593 | 0.381 | 0.026 | 0.330 | 4.382 (0.411) |
+| 0.50x | 0.5000 | random | 0.150 (0.366) | 78.333 (2.887) med 80.00 | 0.255 (0.181) | 0.910 (0.058) | 1.549 | 1.491 | 1 | 0 | 76 | 0.797 | 0.145 | 0.058 | 0.130 | 28.084 (3.905) |
+| 0.50x | 0.5000 | fifo | 4.000 (0.000) | 42.375 (11.928) med 43.00 | 1.000 (0.000) | 1.000 (0.000) | none | 0.000 | 0 | 0 | 0 | 0.622 | 0.348 | 0.029 | 0.322 | 4.598 (0.412) |
+| 0.50x | 0.5000 | bottleneck | 4.000 (0.000) | 52.938 (9.070) med 53.00 | 1.000 (0.000) | 1.000 (0.000) | none | 0.000 | 0 | 0 | 0 | 0.581 | 0.393 | 0.026 | 0.337 | 4.316 (0.397) |
+| 0.75x | 0.7500 | random | 0.200 (0.523) | 75.250 (4.193) med 77.00 | 0.276 (0.216) | 0.907 (0.059) | 1.585 | 1.505 | 5 | 0 | 71 | 0.769 | 0.174 | 0.057 | 0.137 | 27.456 (3.933) |
+| 0.75x | 0.7500 | fifo | 4.000 (0.000) | 42.138 (11.784) med 43.00 | 1.000 (0.000) | 1.000 (0.000) | none | 0.000 | 0 | 0 | 0 | 0.610 | 0.359 | 0.031 | 0.329 | 4.531 (0.411) |
+| 0.75x | 0.7500 | bottleneck | 4.000 (0.000) | 52.225 (9.317) med 53.00 | 1.000 (0.000) | 1.000 (0.000) | none | 0.000 | 0 | 0 | 0 | 0.574 | 0.400 | 0.026 | 0.339 | 4.280 (0.405) |
+| 1.00x | 1.0000 | random | 0.150 (0.489) | 74.000 (4.000) med 74.00 | 0.259 (0.194) | 0.912 (0.061) | 1.516 | 1.459 | 2 | 0 | 75 | 0.762 | 0.184 | 0.054 | 0.139 | 27.239 (3.887) |
+| 1.00x | 1.0000 | fifo | 4.000 (0.000) | 41.950 (11.695) med 42.50 | 1.000 (0.000) | 1.000 (0.000) | none | 0.000 | 0 | 0 | 0 | 0.598 | 0.370 | 0.033 | 0.338 | 4.454 (0.387) |
+| 1.00x | 1.0000 | bottleneck | 4.000 (0.000) | 51.837 (9.311) med 52.50 | 1.000 (0.000) | 1.000 (0.000) | none | 0.000 | 0 | 0 | 0 | 0.565 | 0.407 | 0.028 | 0.346 | 4.246 (0.393) |
+| 1.25x | 1.2500 | random | 0.250 (0.550) | 72.200 (4.324) med 72.00 | 0.282 (0.197) | 0.914 (0.061) | 1.500 | 1.406 | 3 | 0 | 72 | 0.752 | 0.191 | 0.056 | 0.140 | 27.048 (3.773) |
+| 1.25x | 1.2500 | fifo | 4.000 (0.000) | 42.062 (11.657) med 42.50 | 1.000 (0.000) | 1.000 (0.000) | none | 0.000 | 0 | 0 | 0 | 0.589 | 0.375 | 0.036 | 0.337 | 4.438 (0.399) |
+| 1.25x | 1.2500 | bottleneck | 4.000 (0.000) | 51.600 (9.406) med 52.50 | 1.000 (0.000) | 1.000 (0.000) | none | 0.000 | 0 | 0 | 0 | 0.558 | 0.411 | 0.032 | 0.348 | 4.239 (0.391) |
+
+level=0.25x level_value=0.2500 policy=random
+  completed_deals: n=20 mean=0.1500 std=0.4894 min=0.0000 max=2.0000
+  target_progress: n=20 mean=0.2185 std=0.1719 min=0.0148 max=0.7248
+  nontarget_progress: n=20 mean=0.9035 std=0.0554 min=0.8008 max=0.9920
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.2624 std=0.0872 min=0.0769 max=0.4186
+  fraction_x_eq_1: n=20 mean=0.7376 std=0.0872 min=0.5814 max=0.9231
+  completion_day: n=3 mean=74.6667 std=7.5719 min=66.0000 max=80.0000 median=78.0000 n_deals=3
+  utilization_ae: n=20 mean=0.9936 std=0.0064 min=0.9764 max=0.9994 idle_none=0.0000 idle_despite=0.0064
+  utilization_legal: n=20 mean=0.8873 std=0.1062 min=0.5321 max=0.9718 idle_none=0.0719 idle_despite=0.0408
+  utilization_sales_engineer: n=20 mean=0.7884 std=0.1064 min=0.5534 max=0.9543 idle_none=0.1531 idle_despite=0.0585
+  utilization_security: n=20 mean=0.6185 std=0.1400 min=0.3690 max=0.8492 idle_none=0.2331 idle_despite=0.1484
+  utilization_solutions_architect: n=20 mean=0.8089 std=0.1060 min=0.5708 max=0.9626 idle_none=0.1531 idle_despite=0.0380
+  herfindahl: n=20 mean=0.1249 std=0.0187 min=0.1028 max=0.1773
+  tasks_with_allocation: n=20 mean=28.7156 std=3.7815 min=19.5625 max=35.9125
+level=0.25x level_value=0.2500 policy=fifo
+  completed_deals: n=20 mean=4.0000 std=0.0000 min=4.0000 max=4.0000
+  target_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  nontarget_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_x_eq_1: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  completion_day: n=80 mean=42.8625 std=12.0639 min=23.0000 max=75.0000 median=43.0000 n_deals=80
+  utilization_ae: n=20 mean=0.9259 std=0.0664 min=0.6993 max=0.9932 idle_none=0.0158 idle_despite=0.0583
+  utilization_legal: n=20 mean=0.7069 std=0.0829 min=0.5690 max=0.8343 idle_none=0.2814 idle_despite=0.0117
+  utilization_sales_engineer: n=20 mean=0.5396 std=0.0833 min=0.3693 max=0.6934 idle_none=0.4119 idle_despite=0.0486
+  utilization_security: n=20 mean=0.4364 std=0.1058 min=0.2789 max=0.6428 idle_none=0.5478 idle_despite=0.0158
+  utilization_solutions_architect: n=20 mean=0.5805 std=0.0909 min=0.4000 max=0.7361 idle_none=0.4119 idle_despite=0.0077
+  herfindahl: n=20 mean=0.3158 std=0.0396 min=0.2377 max=0.3989
+  tasks_with_allocation: n=20 mean=4.6760 std=0.4418 min=3.5867 max=5.5652
+level=0.25x level_value=0.2500 policy=bottleneck
+  completed_deals: n=20 mean=4.0000 std=0.0000 min=4.0000 max=4.0000
+  target_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  nontarget_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_x_eq_1: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  completion_day: n=80 mean=53.7375 std=8.9028 min=26.0000 max=72.0000 median=54.5000 n_deals=80
+  utilization_ae: n=20 mean=0.8752 std=0.0758 min=0.7478 max=0.9942 idle_none=0.0652 idle_despite=0.0596
+  utilization_legal: n=20 mean=0.6634 std=0.0898 min=0.4263 max=0.7760 idle_none=0.3246 idle_despite=0.0120
+  utilization_sales_engineer: n=20 mean=0.5038 std=0.0729 min=0.3958 max=0.6405 idle_none=0.4557 idle_despite=0.0405
+  utilization_security: n=20 mean=0.3855 std=0.0834 min=0.2636 max=0.6005 idle_none=0.6034 idle_despite=0.0110
+  utilization_solutions_architect: n=20 mean=0.5350 std=0.0813 min=0.4143 max=0.6800 idle_none=0.4557 idle_despite=0.0093
+  herfindahl: n=20 mean=0.3298 std=0.0355 min=0.2579 max=0.3840
+  tasks_with_allocation: n=20 mean=4.3822 std=0.4108 min=3.8545 max=5.2800
+level=0.50x level_value=0.5000 policy=random
+  completed_deals: n=20 mean=0.1500 std=0.3663 min=0.0000 max=1.0000
+  target_progress: n=20 mean=0.2551 std=0.1811 min=0.0132 max=0.6965
+  nontarget_progress: n=20 mean=0.9103 std=0.0579 min=0.7786 max=1.0000
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.2551 std=0.0849 min=0.0769 max=0.4103
+  fraction_x_eq_1: n=20 mean=0.7449 std=0.0849 min=0.5897 max=0.9231
+  completion_day: n=3 mean=78.3333 std=2.8868 min=75.0000 max=80.0000 median=80.0000 n_deals=3
+  utilization_ae: n=20 mean=0.9933 std=0.0064 min=0.9739 max=0.9995 idle_none=0.0000 idle_despite=0.0067
+  utilization_legal: n=20 mean=0.8815 std=0.1113 min=0.5243 max=0.9693 idle_none=0.0700 idle_despite=0.0485
+  utilization_sales_engineer: n=20 mean=0.7445 std=0.1071 min=0.5076 max=0.9055 idle_none=0.1988 idle_despite=0.0568
+  utilization_security: n=20 mean=0.5954 std=0.1434 min=0.3205 max=0.8493 idle_none=0.2575 idle_despite=0.1471
+  utilization_solutions_architect: n=20 mean=0.7703 std=0.1090 min=0.5142 max=0.9381 idle_none=0.1988 idle_despite=0.0310
+  herfindahl: n=20 mean=0.1295 std=0.0209 min=0.1046 max=0.1879
+  tasks_with_allocation: n=20 mean=28.0837 std=3.9052 min=18.5250 max=36.4875
+level=0.50x level_value=0.5000 policy=fifo
+  completed_deals: n=20 mean=4.0000 std=0.0000 min=4.0000 max=4.0000
+  target_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  nontarget_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_x_eq_1: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  completion_day: n=80 mean=42.3750 std=11.9285 min=23.0000 max=74.0000 median=43.0000 n_deals=80
+  utilization_ae: n=20 mean=0.9293 std=0.0588 min=0.7300 max=0.9921 idle_none=0.0162 idle_despite=0.0546
+  utilization_legal: n=20 mean=0.7112 std=0.0753 min=0.5942 max=0.8343 idle_none=0.2765 idle_despite=0.0123
+  utilization_sales_engineer: n=20 mean=0.4999 std=0.0782 min=0.3428 max=0.6259 idle_none=0.4457 idle_despite=0.0543
+  utilization_security: n=20 mean=0.4275 std=0.1006 min=0.2746 max=0.6013 idle_none=0.5568 idle_despite=0.0157
+  utilization_solutions_architect: n=20 mean=0.5441 std=0.0871 min=0.3670 max=0.6818 idle_none=0.4457 idle_despite=0.0102
+  herfindahl: n=20 mean=0.3218 std=0.0324 min=0.2688 max=0.3870
+  tasks_with_allocation: n=20 mean=4.5978 std=0.4122 min=3.5405 max=5.2340
+level=0.50x level_value=0.5000 policy=bottleneck
+  completed_deals: n=20 mean=4.0000 std=0.0000 min=4.0000 max=4.0000
+  target_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  nontarget_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_x_eq_1: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  completion_day: n=80 mean=52.9375 std=9.0698 min=26.0000 max=73.0000 median=53.0000 n_deals=80
+  utilization_ae: n=20 mean=0.8822 std=0.0703 min=0.7636 max=0.9926 idle_none=0.0570 idle_despite=0.0608
+  utilization_legal: n=20 mean=0.6689 std=0.0873 min=0.4483 max=0.7919 idle_none=0.3187 idle_despite=0.0124
+  utilization_sales_engineer: n=20 mean=0.4695 std=0.0723 min=0.3711 max=0.6136 idle_none=0.4914 idle_despite=0.0391
+  utilization_security: n=20 mean=0.3820 std=0.0875 min=0.2535 max=0.6179 idle_none=0.6070 idle_despite=0.0111
+  utilization_solutions_architect: n=20 mean=0.5003 std=0.0791 min=0.3808 max=0.6531 idle_none=0.4914 idle_despite=0.0082
+  herfindahl: n=20 mean=0.3369 std=0.0345 min=0.2590 max=0.3835
+  tasks_with_allocation: n=20 mean=4.3163 std=0.3972 min=3.8082 max=5.2653
+level=0.75x level_value=0.7500 policy=random
+  completed_deals: n=20 mean=0.2000 std=0.5231 min=0.0000 max=2.0000
+  target_progress: n=20 mean=0.2759 std=0.2163 min=0.0107 max=0.8320
+  nontarget_progress: n=20 mean=0.9069 std=0.0590 min=0.7825 max=1.0000
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.2511 std=0.0907 min=0.0513 max=0.4048
+  fraction_x_eq_1: n=20 mean=0.7489 std=0.0907 min=0.5952 max=0.9487
+  completion_day: n=4 mean=75.2500 std=4.1932 min=69.0000 max=78.0000 median=77.0000 n_deals=4
+  utilization_ae: n=20 mean=0.9930 std=0.0082 min=0.9634 max=0.9992 idle_none=0.0000 idle_despite=0.0070
+  utilization_legal: n=20 mean=0.8717 std=0.1123 min=0.5419 max=0.9712 idle_none=0.0750 idle_despite=0.0533
+  utilization_sales_engineer: n=20 mean=0.6923 std=0.1032 min=0.4709 max=0.8744 idle_none=0.2525 idle_despite=0.0552
+  utilization_security: n=20 mean=0.5682 std=0.1400 min=0.3232 max=0.8205 idle_none=0.2894 idle_despite=0.1424
+  utilization_solutions_architect: n=20 mean=0.7192 std=0.1025 min=0.4834 max=0.8947 idle_none=0.2525 idle_despite=0.0283
+  herfindahl: n=20 mean=0.1367 std=0.0195 min=0.1094 max=0.1936
+  tasks_with_allocation: n=20 mean=27.4563 std=3.9330 min=18.0125 max=35.6750
+level=0.75x level_value=0.7500 policy=fifo
+  completed_deals: n=20 mean=4.0000 std=0.0000 min=4.0000 max=4.0000
+  target_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  nontarget_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_x_eq_1: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  completion_day: n=80 mean=42.1375 std=11.7836 min=23.0000 max=73.0000 median=43.0000 n_deals=80
+  utilization_ae: n=20 mean=0.9321 std=0.0586 min=0.7270 max=0.9921 idle_none=0.0131 idle_despite=0.0548
+  utilization_legal: n=20 mean=0.7146 std=0.0730 min=0.5938 max=0.8343 idle_none=0.2738 idle_despite=0.0115
+  utilization_sales_engineer: n=20 mean=0.4679 std=0.0758 min=0.3174 max=0.5869 idle_none=0.4716 idle_despite=0.0604
+  utilization_security: n=20 mean=0.4212 std=0.0995 min=0.2637 max=0.5860 idle_none=0.5649 idle_despite=0.0139
+  utilization_solutions_architect: n=20 mean=0.5158 std=0.0829 min=0.3562 max=0.6535 idle_none=0.4716 idle_despite=0.0126
+  herfindahl: n=20 mean=0.3291 std=0.0351 min=0.2750 max=0.4006
+  tasks_with_allocation: n=20 mean=4.5309 std=0.4107 min=3.4932 max=5.1702
+level=0.75x level_value=0.7500 policy=bottleneck
+  completed_deals: n=20 mean=4.0000 std=0.0000 min=4.0000 max=4.0000
+  target_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  nontarget_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_x_eq_1: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  completion_day: n=80 mean=52.2250 std=9.3172 min=26.0000 max=73.0000 median=53.0000 n_deals=80
+  utilization_ae: n=20 mean=0.8881 std=0.0735 min=0.7592 max=0.9981 idle_none=0.0546 idle_despite=0.0573
+  utilization_legal: n=20 mean=0.6769 std=0.0858 min=0.4562 max=0.8084 idle_none=0.3113 idle_despite=0.0118
+  utilization_sales_engineer: n=20 mean=0.4455 std=0.0700 min=0.3518 max=0.5753 idle_none=0.5133 idle_despite=0.0412
+  utilization_security: n=20 mean=0.3809 std=0.0866 min=0.2450 max=0.6014 idle_none=0.6093 idle_despite=0.0098
+  utilization_solutions_architect: n=20 mean=0.4771 std=0.0788 min=0.3623 max=0.6293 idle_none=0.5133 idle_despite=0.0097
+  herfindahl: n=20 mean=0.3388 std=0.0363 min=0.2721 max=0.3980
+  tasks_with_allocation: n=20 mean=4.2802 std=0.4052 min=3.7391 max=5.0816
+level=1.00x level_value=1.0000 policy=random
+  completed_deals: n=20 mean=0.1500 std=0.4894 min=0.0000 max=2.0000
+  target_progress: n=20 mean=0.2586 std=0.1943 min=0.0230 max=0.8770
+  nontarget_progress: n=20 mean=0.9117 std=0.0608 min=0.7786 max=1.0000
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.2546 std=0.0913 min=0.0513 max=0.4419
+  fraction_x_eq_1: n=20 mean=0.7454 std=0.0913 min=0.5581 max=0.9487
+  completion_day: n=3 mean=74.0000 std=4.0000 min=70.0000 max=78.0000 median=74.0000 n_deals=3
+  utilization_ae: n=20 mean=0.9929 std=0.0077 min=0.9663 max=0.9991 idle_none=0.0000 idle_despite=0.0071
+  utilization_legal: n=20 mean=0.8839 std=0.1089 min=0.5322 max=0.9690 idle_none=0.0688 idle_despite=0.0473
+  utilization_sales_engineer: n=20 mean=0.6732 std=0.1052 min=0.4727 max=0.8459 idle_none=0.2712 idle_despite=0.0556
+  utilization_security: n=20 mean=0.5602 std=0.1417 min=0.3032 max=0.8347 idle_none=0.3075 idle_despite=0.1323
+  utilization_solutions_architect: n=20 mean=0.7016 std=0.1046 min=0.4921 max=0.8700 idle_none=0.2712 idle_despite=0.0272
+  herfindahl: n=20 mean=0.1390 std=0.0198 min=0.1141 max=0.1965
+  tasks_with_allocation: n=20 mean=27.2387 std=3.8867 min=17.6625 max=35.4750
+level=1.00x level_value=1.0000 policy=fifo
+  completed_deals: n=20 mean=4.0000 std=0.0000 min=4.0000 max=4.0000
+  target_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  nontarget_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_x_eq_1: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  completion_day: n=80 mean=41.9500 std=11.6954 min=22.0000 max=73.0000 median=42.5000 n_deals=80
+  utilization_ae: n=20 mean=0.9312 std=0.0556 min=0.7417 max=0.9921 idle_none=0.0121 idle_despite=0.0566
+  utilization_legal: n=20 mean=0.7133 std=0.0735 min=0.5937 max=0.8343 idle_none=0.2745 idle_despite=0.0123
+  utilization_sales_engineer: n=20 mean=0.4391 std=0.0707 min=0.2944 max=0.5513 idle_none=0.4965 idle_despite=0.0644
+  utilization_security: n=20 mean=0.4128 std=0.0957 min=0.2598 max=0.5742 idle_none=0.5693 idle_despite=0.0178
+  utilization_solutions_architect: n=20 mean=0.4914 std=0.0793 min=0.3367 max=0.6136 idle_none=0.4965 idle_despite=0.0120
+  herfindahl: n=20 mean=0.3375 std=0.0331 min=0.2830 max=0.3951
+  tasks_with_allocation: n=20 mean=4.4536 std=0.3868 min=3.4521 max=5.0851
+level=1.00x level_value=1.0000 policy=bottleneck
+  completed_deals: n=20 mean=4.0000 std=0.0000 min=4.0000 max=4.0000
+  target_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  nontarget_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_x_eq_1: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  completion_day: n=80 mean=51.8375 std=9.3110 min=26.0000 max=72.0000 median=52.5000 n_deals=80
+  utilization_ae: n=20 mean=0.8923 std=0.0646 min=0.7867 max=0.9939 idle_none=0.0484 idle_despite=0.0593
+  utilization_legal: n=20 mean=0.6793 std=0.0834 min=0.4643 max=0.8084 idle_none=0.3082 idle_despite=0.0125
+  utilization_sales_engineer: n=20 mean=0.4210 std=0.0656 min=0.3351 max=0.5480 idle_none=0.5334 idle_despite=0.0457
+  utilization_security: n=20 mean=0.3774 std=0.0854 min=0.2432 max=0.5922 idle_none=0.6110 idle_despite=0.0115
+  utilization_solutions_architect: n=20 mean=0.4557 std=0.0749 min=0.3529 max=0.6122 idle_none=0.5334 idle_despite=0.0109
+  herfindahl: n=20 mean=0.3462 std=0.0317 min=0.2886 max=0.4007
+  tasks_with_allocation: n=20 mean=4.2457 std=0.3932 min=3.7222 max=5.0408
+level=1.25x level_value=1.2500 policy=random
+  completed_deals: n=20 mean=0.2500 std=0.5501 min=0.0000 max=2.0000
+  target_progress: n=20 mean=0.2819 std=0.1972 min=0.0295 max=0.8349
+  nontarget_progress: n=20 mean=0.9143 std=0.0612 min=0.7735 max=1.0000
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.2460 std=0.0983 min=0.0513 max=0.4186
+  fraction_x_eq_1: n=20 mean=0.7540 std=0.0983 min=0.5814 max=0.9487
+  completion_day: n=5 mean=72.2000 std=4.3243 min=67.0000 max=77.0000 median=72.0000 n_deals=5
+  utilization_ae: n=20 mean=0.9921 std=0.0102 min=0.9529 max=0.9992 idle_none=0.0000 idle_despite=0.0079
+  utilization_legal: n=20 mean=0.8897 std=0.0947 min=0.6241 max=0.9715 idle_none=0.0619 idle_despite=0.0485
+  utilization_sales_engineer: n=20 mean=0.6533 std=0.0937 min=0.4515 max=0.8198 idle_none=0.2938 idle_despite=0.0530
+  utilization_security: n=20 mean=0.5534 std=0.1321 min=0.3242 max=0.8024 idle_none=0.3075 idle_despite=0.1391
+  utilization_solutions_architect: n=20 mean=0.6726 std=0.0962 min=0.4577 max=0.8435 idle_none=0.2938 idle_despite=0.0337
+  herfindahl: n=20 mean=0.1401 std=0.0192 min=0.1134 max=0.2012
+  tasks_with_allocation: n=20 mean=27.0481 std=3.7730 min=18.1750 max=35.0125
+level=1.25x level_value=1.2500 policy=fifo
+  completed_deals: n=20 mean=4.0000 std=0.0000 min=4.0000 max=4.0000
+  target_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  nontarget_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_x_eq_1: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  completion_day: n=80 mean=42.0625 std=11.6568 min=23.0000 max=73.0000 median=42.5000 n_deals=80
+  utilization_ae: n=20 mean=0.9333 std=0.0601 min=0.7188 max=0.9950 idle_none=0.0121 idle_despite=0.0546
+  utilization_legal: n=20 mean=0.7143 std=0.0720 min=0.6060 max=0.8343 idle_none=0.2739 idle_despite=0.0117
+  utilization_sales_engineer: n=20 mean=0.4253 std=0.0699 min=0.2865 max=0.5367 idle_none=0.5070 idle_despite=0.0677
+  utilization_security: n=20 mean=0.4093 std=0.0969 min=0.2541 max=0.5790 idle_none=0.5742 idle_despite=0.0164
+  utilization_solutions_architect: n=20 mean=0.4623 std=0.0755 min=0.3123 max=0.5679 idle_none=0.5070 idle_despite=0.0307
+  herfindahl: n=20 mean=0.3370 std=0.0353 min=0.2835 max=0.4157
+  tasks_with_allocation: n=20 mean=4.4384 std=0.3988 min=3.3973 max=5.0638
+level=1.25x level_value=1.2500 policy=bottleneck
+  completed_deals: n=20 mean=4.0000 std=0.0000 min=4.0000 max=4.0000
+  target_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  nontarget_progress: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  fraction_x_eq_0: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_0_lt_x_lt_1: n=20 mean=0.0000 std=0.0000 min=0.0000 max=0.0000
+  fraction_x_eq_1: n=20 mean=1.0000 std=0.0000 min=1.0000 max=1.0000
+  completion_day: n=80 mean=51.6000 std=9.4059 min=26.0000 max=72.0000 median=52.5000 n_deals=80
+  utilization_ae: n=20 mean=0.8955 std=0.0648 min=0.7795 max=0.9926 idle_none=0.0449 idle_despite=0.0597
+  utilization_legal: n=20 mean=0.6807 std=0.0813 min=0.4728 max=0.8084 idle_none=0.3065 idle_despite=0.0127
+  utilization_sales_engineer: n=20 mean=0.4061 std=0.0644 min=0.3264 max=0.5391 idle_none=0.5458 idle_despite=0.0481
+  utilization_security: n=20 mean=0.3765 std=0.0857 min=0.2432 max=0.5850 idle_none=0.6109 idle_despite=0.0126
+  utilization_solutions_architect: n=20 mean=0.4289 std=0.0704 min=0.3379 max=0.5672 idle_none=0.5458 idle_despite=0.0253
+  herfindahl: n=20 mean=0.3478 std=0.0320 min=0.2896 max=0.4115
+  tasks_with_allocation: n=20 mean=4.2393 std=0.3908 min=3.7083 max=5.0204
