@@ -1,0 +1,27 @@
+Deal timeline coding against the V1 task-to-resource map.
+Sheet: records/world_map.md, section "Coding sheet".
+Comparison target: SUITABLE_RESOURCES in src/dealos/generator/generate.py.
+commercial, procurement, and executive map to ae.
+technical maps to sales_engineer and solutions_architect.
+legal maps to legal.
+security maps to security.
+
+Corpus search: the repository has the synthetic generator, the experiment records, and the world map. It has no closed-deal timeline, no interview notes, and no CRM export of recorded progress against later completion.
+
+Deals coded: 0.
+Events coded: 0.
+
+Counts:
+  actor is not the V1 resource: 0
+  approver is not the worker: 0
+  involvement change that is not readiness: 0
+  external advance with no internal allocation: 0
+
+These zeros are empty counts. They are not evidence that the collapses are rare.
+
+Result: no new object is forced. Stop.
+No screen is opened.
+No department, authority state, involvement set, or observation map is added to V1.
+The simulator, policies, generator, and experiments 0-9 are unchanged.
+
+The coding can be repeated when a real timeline is available. Fill the sheet from that record and recompute the four counts. A positive count on approvals, involvement, or external advances is what would force the next object.

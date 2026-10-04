@@ -1,0 +1,65 @@
+Experimental program summary
+Seeds 0-19. Horizon T=80. Policies: random, fifo, bottleneck.
+This summary does not rank policies and does not claim statistical significance.
+
+1. Methodology
+Each seed starts from one balanced scenario. Editors copy that scenario and change only the declared factors. A multiplier of 1 leaves that field untouched. Density 1 keeps the original edges. Any other density sets the extra-edge probability to multiplier times 0.08 and redraws only edges, on a stream that is not the scenario generator. assert_only_changed runs before every rollout. The 1.00x cell of every sweep reproduced Experiment 0: FIFO and Bottleneck complete 4 deals on every seed, and Random's mean is 0.15.
+
+2. Frozen baseline
+Preset balanced. T=80. Capacities: ae 2, sales_engineer 2, legal 1, security 1, solutions_architect 1. Extra-edge probability 0.08. q drawn in [0.7, 1] on suitable pairs and 0 elsewhere. Alpha drawn in [0.2, 0.35]. Objective: number of completed deals. Reference record: records/exp0_baseline.txt.
+
+3. Experiment matrix
+Experiment 0: baseline replication. Already stored.
+Experiment 2: one-resource capacity multipliers 0.25x to 1.25x. Already stored.
+Experiment 3: density 0.25x, 0.50x, 0.75x, 1.00x, 1.25x. 300 rollouts.
+Experiment 4: density {0.50, 1.00, 1.50} by AE capacity {0.50, 1.00, 1.50}. 540 rollouts.
+Experiment 5: q {0.50, 0.75, 1.00, 1.25, 1.50}. 300 rollouts.
+Experiment 6: alpha {0.50, 0.75, 1.00, 1.25, 1.50}. 300 rollouts.
+Experiment 7: q {0.75, 1.00, 1.25} by alpha {0.75, 1.00, 1.25}. 540 rollouts.
+Experiment 8: the Experiment 4 grid for legal, sales engineer, security, and solutions architect. AE is cited from Experiment 4 and was not rerun. 2160 rollouts.
+Experiment 9: full factorial of density, AE, q, and alpha at {0.75, 1.00, 1.25}. 81 cells. 4860 rollouts.
+Total new rollouts: 9000.
+
+4-6. Variables
+Independent variables are named in each record. Frozen unless declared: T, seeds, task and deal identities, targets, capacities, edges, initial progress, phi, q, alpha, objective, and simulator dynamics.
+
+7. Experiment 0
+Random completed 0.15 (0.49), mean completion day 74.00 on 3 deals, target progress 0.259.
+FIFO completed 4.00, mean day 41.95 (11.70), median 42.5.
+Bottleneck completed 4.00, mean day 51.84 (9.31), median 52.5.
+
+8. Experiment 2
+AE capacity and legal capacity moved the completed-deal count inside 0.25x-1.25x of baseline. Sales-engineer capacity moved completion day and left the count at 4. Security moved FIFO's count only at 0.25x. Solutions-architect capacity left both the count and the day near the baseline. Where a cut removed completions, that resource was highly allocated and other resources showed a large no-eligible share.
+
+9. Experiment 3
+Mean edges across four deals moved only from 45.40 at 0.25x to 47.60 at 1.25x. Mean depth stayed near 3.21 (baseline 3.221) and max depth near 7.1. FIFO and Bottleneck completed 4 deals at every density. FIFO's mean completion day stayed between 41.49 and 41.95. Bottleneck's stayed between 51.48 and 52.34. Random's completed mean stayed between 0.15 and 0.30. The 1.00x row matches Experiment 0.
+
+10. Experiment 4
+Raising AE from 0.50x to 1.50x changed FIFO's completed mean by +1.80, +1.80, and +1.70 at densities 0.50x, 1.00x, and 1.50x. Bottleneck's change was +2.40 at all three densities. The completion-day change for FIFO was about -27.5 days at each density, and for Bottleneck about -29.3 days. Inside this edge-probability band, the AE effect does not depend on density.
+
+11. Experiment 5
+q 0.50x: FIFO completed 1.95, day 62.64; Bottleneck completed 0.45, day 68.22; Random completed 0. Positive q values clipped at 1: 0 at 0.50x and 0.75x, 0.672 at 1.25x, and 1.000 at 1.50x. FIFO's day moves from 62.64 to 53.99 to 41.95 to 36.06 to 35.23. The last step is small because every positive q is already clipped. The relationship is not a straight line, and the top of the curve is the clip.
+
+12. Experiment 6
+Alpha has no clip. At 0.50x and 0.75x the completed counts, days, residuals, and Herfindahl match Experiment 5's q rows exactly. At 1.25x they separate: FIFO day 33.96 under alpha versus 36.06 under q. At 1.50x alpha, FIFO day is 28.61 and Random completed mean is 3.90. Alpha 1.50x still moves the day after q 1.50x has flattened.
+
+13. Experiment 7
+q 1.00 with alpha 0.75 matches q 0.75 with alpha 1.00 on every reported figure. Nominal product 0.75, and no q value clips. q 1.00 with alpha 1.25 does not match q 1.25 with alpha 1.00. Only 0.328 of suitable pairs have the same alpha*q, because 1.25x q clips. Random completed 2.20 versus 1.45. FIFO days are 33.96 versus 36.06. The same split appears for nominal product 0.9375: q 0.75 alpha 1.25 finishes 4 FIFO deals at day 44.93, while q 1.25 alpha 0.75 finishes 3.95 at day 47.56.
+
+14. Experiment 8
+Legal, from capacity 0.50x to 1.50x: FIFO completed mean changes by +0.85 at density 0.50x and 1.00x, and +0.85 at 1.50x. Bottleneck changes by +1.40, +1.40, and +1.45. Sales engineer, security, and solutions architect change FIFO and Bottleneck completed means by 0.00 at every density in this grid. Their completion-day changes are about 1 day or less, except Bottleneck under sales engineer, about -3.8 days. Density does not change those margins inside this band. The 0.50x-1.50x capacity grid sits above the region where Experiment 2 saw security's count move, which was at 0.25x.
+
+15. Experiment 9
+The untouched cell again matches Experiment 0. The low corner d0.75-ae0.75-q0.75-a0.75 has FIFO completed 1.35 and Bottleneck 0.10. The high corner d1.25-ae1.25-q1.25-a1.25 has all three policies at 4 completed deals; FIFO's mean day is 27.43 and Bottleneck's is 33.09. Random reaches 4.00 in that high corner and is at 0.00 in the low corner. Cells that share an unclipped product, such as d0.75-ae1.25-q0.75-a1.00 and d0.75-ae1.25-q1.00-a0.75, match each other. Density changes of this size do not rearrange the AE, q, or alpha pattern.
+
+16-17. Tests and reproducibility
+Identity checks passed for every cell, including the requirement that each 1.00x cell match Experiment 0. Per-seed completed counts are in each record. Sample means, sample standard deviations, medians, and min/max are in the tables. No significance test was applied.
+
+18-19. Observations and limitations
+Behavior consistent with the capacity phase: at T=80, FIFO and Bottleneck already finish every baseline deal, so a factor moves their completed count only when it slows the portfolio, and otherwise it moves the completion day. AE and legal still move the count. Sales engineer, security, and solutions architect do not, inside 0.50x-1.50x.
+Patterns measured here: density multipliers 0.25x-1.50x of p=0.08 add about two edges across four deals and leave depth near 3.2. They do not change the AE or legal margins. Uniform alpha and uniform q scales match while q stays below 1, and they separate once q clips.
+Not implied by the capacity phase alone: the alpha/q split is a property of the clip at 1, not of two different roles inside the update. Random's completed count keeps moving after FIFO and Bottleneck are already at 4, and it reaches 4 only in the high corner of Experiment 9.
+Limitations: the density band is narrow because baseline p is 0.08. A separate depth intervention was not run. q scaling is capped at 1. The interaction grids for security, sales engineer, and solutions architect use capacity levels where Experiment 2 already showed a completed count of 4. Results describe this synthetic balanced portfolio at T=80. They are not a claim about real sales operations.
+
+20. Proposed next experiment
+If density is still the question, widen the edge probability itself, for example p in {0, 0.08, 0.25, 0.50, 0.75}, still editing only edges on the frozen scenario. The present multipliers do not move the graph enough to test an interaction with capacity.
