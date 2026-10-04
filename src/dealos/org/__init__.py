@@ -16,12 +16,15 @@ from dealos.org.macro import (
     OrganizationRecord,
     OrganizationRecordError,
     OrgSystem,
+    SystemAccount,
     ResourceControl,
     ResourceRight,
     Role,
     Side,
+    active_roles,
     check_against_micro,
     describe_binding,
+    describe_system,
 )
 
 __all__ = [
@@ -44,6 +47,9 @@ __all__ = [
     "ResourceRight",
     "Role",
     "Side",
+    "SystemAccount",
+    "active_roles",
     "check_against_micro",
     "describe_binding",
+    "describe_system",
 ]

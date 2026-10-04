@@ -6,8 +6,10 @@ that state and does not implement a decision function.
 
 A record here can name systems, roles, actors, discrete authority, information
 links, resource-control rights, and the bridge from a deal task type to those
-objects. Every statement carries an epistemic label. Candidate department
-names are data a caller may store. This module loads none of them.
+objects. `describe_system` reads that record. It does not store a second graph.
+`active_roles` replays one deal's involvement log. The company record stays
+put. Every statement carries an epistemic label. Candidate department names
+are data a caller may store. This module loads none of them.
 
 Company evolution is outside this record. There is no reporting hierarchy,
 because seniority is not authority.
@@ -60,9 +62,12 @@ class InvolvementChange(Enum):
 
 
 class InvolvementReason(Enum):
+    """Candidate reasons. The set is not a claim that these are the only ones."""
+
     TASK_READY = "task_ready"
     ESCALATION = "escalation"
     EXTERNAL = "external"
+    INFORMATION_REQUIREMENT = "information_requirement"
     OTHER = "other"
     UNKNOWN = "unknown"
 
@@ -222,6 +227,26 @@ class BindingAccount:
     escalation_rules: tuple[EscalationRule, ...]
 
 
+@dataclass(frozen=True)
+class SystemAccount:
+    """Read-only view of one system and the links already stored on the record.
+
+    Inputs, state kinds, decisions, actions, and outputs stay on `system`.
+    Dependencies are the information links, not a second graph and not task edges.
+    """
+
+    system: OrgSystem
+    roles: tuple[Role, ...]
+    actors: tuple[Actor, ...]
+    grants: tuple[AuthorityGrant, ...]
+    controls: tuple[ResourceControl, ...]
+    incoming: tuple[InformationLink, ...]
+    outgoing: tuple[InformationLink, ...]
+    depends_on: tuple[str, ...]
+    feeds: tuple[str, ...]
+    escalation_rules: tuple[EscalationRule, ...]
+
+
 def structure_errors(record: OrganizationRecord) -> list[str]:
     """Structural checks. They do not compare the record with a micro scenario."""
 
@@ -363,6 +388,62 @@ def check_against_micro(
             errors.append(f"binding task type {binding.task_type} is not a micro task type")
     if errors:
         raise OrganizationRecordError(errors)
+
+
+def describe_system(record: OrganizationRecord, system_id: str) -> SystemAccount:
+    """Collect the roles, grants, information links, and escalations of one system."""
+
+    system = next((item for item in record.systems if item.system_id == system_id), None)
+    if system is None:
+        raise OrganizationRecordError([f"unknown system {system_id}"])
+    roles = tuple(role for role in record.roles if role.system_id == system_id)
+    role_ids = {role.role_id for role in roles}
+    incoming = tuple(link for link in record.links if link.consumer_system_id == system_id)
+    outgoing = tuple(link for link in record.links if link.producer_system_id == system_id)
+    return SystemAccount(
+        system=system,
+        roles=roles,
+        actors=tuple(actor for actor in record.actors if actor.role_ids & role_ids),
+        grants=tuple(grant for grant in record.grants if grant.role_id in role_ids),
+        controls=tuple(control for control in record.controls if control.role_id in role_ids),
+        incoming=incoming,
+        outgoing=outgoing,
+        depends_on=tuple(sorted({link.producer_system_id for link in incoming})),
+        feeds=tuple(sorted({link.consumer_system_id for link in outgoing})),
+        escalation_rules=tuple(rule for rule in record.escalations if rule.from_role_id in role_ids),
+    )
+
+
+def active_roles(
+    record: OrganizationRecord,
+    deal_id: str,
+    *,
+    through: str | None = None,
+) -> frozenset[str]:
+    """Roles involved in one deal after replaying its involvement log.
+
+    The company record is unchanged. `through` keeps events in stored order up to
+    and including the last event with that time label. The label is not a micro
+    simulator day.
+    """
+
+    if not isinstance(deal_id, str) or not deal_id.strip():
+        raise OrganizationRecordError(["involvement deal id is empty"])
+    indexed = [(index, event) for index, event in enumerate(record.involvement) if event.deal_id == deal_id]
+    if through is None:
+        chosen = indexed
+    else:
+        last = max((index for index, event in indexed if event.time_label == through), default=None)
+        if last is None:
+            raise OrganizationRecordError([f"deal {deal_id} has no involvement at {through}"])
+        chosen = [(index, event) for index, event in indexed if index <= last]
+    active: set[str] = set()
+    for _index, event in chosen:
+        if event.change is InvolvementChange.ENTER:
+            active.add(event.role_id)
+        else:
+            active.discard(event.role_id)
+    return frozenset(active)
 
 
 def describe_binding(record: OrganizationRecord, binding: DealTaskBinding) -> BindingAccount:

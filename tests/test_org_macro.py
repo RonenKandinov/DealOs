@@ -25,8 +25,10 @@ from dealos.org.macro import (
     ResourceRight,
     Role,
     Side,
+    active_roles,
     check_against_micro,
     describe_binding,
+    describe_system,
 )
 from dealos.policies.fifo import FIFOPolicy
 
@@ -236,6 +238,107 @@ def test_bridge_identifiers_must_exist_on_the_micro_model() -> None:
         assert any("not a micro resource" in message for message in error.messages)
     else:
         raise AssertionError("unknown resource control was accepted")
+
+
+def test_system_account_reads_information_links_without_copying_them() -> None:
+    record = OrganizationRecord(
+        name="hypothesis-legal-to-sales",
+        systems=(
+            OrgSystem(
+                "legal",
+                "legal",
+                frozenset({"commercial_terms"}),
+                frozenset({"unresolved_clauses"}),
+                frozenset({"approve_contract"}),
+                frozenset({"redline"}),
+                frozenset({"legal_approval"}),
+                H,
+            ),
+            OrgSystem(
+                "sales",
+                "sales",
+                frozenset({"legal_approval"}),
+                frozenset(),
+                frozenset(),
+                frozenset(),
+                frozenset({"commercial_terms"}),
+                H,
+            ),
+        ),
+        roles=(Role("counsel", "legal", H), Role("ae", "sales", H)),
+        grants=(
+            AuthorityGrant("counsel", "approve_contract", frozenset(), AuthorityState.APPROVE, H),
+            AuthorityGrant(
+                "counsel",
+                "approve_contract",
+                frozenset({"exception_to_policy"}),
+                AuthorityState.NONE,
+                H,
+            ),
+        ),
+        links=(
+            InformationLink("sales", "commercial_terms", "legal", frozenset({"counsel"}), H),
+            InformationLink("legal", "legal_approval", "sales", frozenset({"ae"}), H),
+        ),
+        controls=(ResourceControl("legal", "counsel", ResourceRight.ALLOCATE, H),),
+        escalations=(
+            EscalationRule(
+                "approve_contract",
+                frozenset({"exception_to_policy"}),
+                "counsel",
+                "ae",
+                H,
+            ),
+        ),
+    )
+    legal = describe_system(record, "legal")
+    sales = describe_system(record, "sales")
+    assert legal.system.decision_kinds == frozenset({"approve_contract"})
+    assert legal.system.output_kinds == frozenset({"legal_approval"})
+    assert {role.role_id for role in legal.roles} == {"counsel"}
+    assert {grant.state for grant in legal.grants} == {AuthorityState.APPROVE, AuthorityState.NONE}
+    assert legal.depends_on == ("sales",)
+    assert legal.feeds == ("sales",)
+    assert sales.depends_on == ("legal",)
+    assert legal.incoming[0].info_kind == "commercial_terms"
+    assert legal.outgoing[0].info_kind == "legal_approval"
+    assert legal.controls[0].right is ResourceRight.ALLOCATE
+    assert legal.escalation_rules[0].to_role_id == "ae"
+    assert not hasattr(legal.incoming[0], "task_type")
+    assert record.links == legal.incoming + legal.outgoing or set(record.links) == set(legal.incoming + legal.outgoing)
+
+
+def test_active_roles_change_for_one_deal_and_leave_the_company_record() -> None:
+    record = _security_bridge()
+    company_systems = record.systems
+    assert active_roles(record, "deal-1", through="day-1") == frozenset({"reviewer"})
+    assert active_roles(record, "deal-1", through="day-30") == frozenset({"reviewer", "executive_sponsor"})
+    assert record.systems == company_systems
+    extended = OrganizationRecord(
+        name=record.name,
+        systems=record.systems,
+        roles=record.roles,
+        actors=record.actors,
+        grants=record.grants,
+        links=record.links,
+        controls=record.controls,
+        bindings=record.bindings,
+        escalations=record.escalations,
+        involvement=record.involvement
+        + (
+            InvolvementEvent(
+                "deal-1",
+                "day-31",
+                "executive_sponsor",
+                InvolvementChange.LEAVE,
+                InvolvementReason.INFORMATION_REQUIREMENT,
+                H,
+            ),
+        ),
+        scale_band=record.scale_band,
+    )
+    assert active_roles(extended, "deal-1", through="day-31") == frozenset({"reviewer"})
+    assert extended.involvement[-1].reason is InvolvementReason.INFORMATION_REQUIREMENT
 
 
 def test_micro_rollout_is_unchanged() -> None:
