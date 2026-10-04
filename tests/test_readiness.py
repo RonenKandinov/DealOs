@@ -1,4 +1,4 @@
-from dealos.domain.models import AllocationAction
+from dealos.domain.models import primary_occurrence_id, AllocationAction
 from dealos.domain.readiness import AndMinReadiness
 from dealos.sim.env import SalesEnvironment
 from tests.builders import make_scenario
@@ -44,6 +44,6 @@ def test_new_progress_is_scaled_by_minimum_predecessor() -> None:
     env = SalesEnvironment(scenario)
     env.reset()
     state, _info = env.step(
-        AllocationAction({("deal_00", "deal_00:join", "ae"): 1.0})
+        AllocationAction({("deal_00", primary_occurrence_id("deal_00", "deal_00:join"), "ae"): 1.0})
     )
     assert state.task_progress[("deal_00", "deal_00:join")] == 0.25

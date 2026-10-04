@@ -1,5 +1,5 @@
 from dealos.diagnostics.manual_scenario import manual_scenario
-from dealos.domain.models import AllocationAction
+from dealos.domain.models import primary_occurrence_id, AllocationAction
 from dealos.experiments.structure import measure_scenario
 from dealos.sim.env import SalesEnvironment
 
@@ -24,7 +24,7 @@ def test_two_hand_calculated_transitions() -> None:
     state = env.reset()
     assert all(value == 0.0 for value in state.task_progress.values())
 
-    state, _info = env.step(AllocationAction({("deal_00", "deal_00:start", "ae"): 1.0}))
+    state, _info = env.step(AllocationAction({("deal_00", primary_occurrence_id("deal_00", "deal_00:start"), "ae"): 1.0}))
     assert state.time == 1
     assert state.task_progress[("deal_00", "deal_00:start")] == 1.0
     assert state.task_progress[("deal_00", "deal_00:left")] == 0.0
@@ -39,8 +39,8 @@ def test_two_hand_calculated_transitions() -> None:
     state, _info = env.step(
         AllocationAction(
             {
-                ("deal_00", "deal_00:left", "ae"): 0.4,
-                ("deal_00", "deal_00:right", "ae"): 0.6,
+                ("deal_00", primary_occurrence_id("deal_00", "deal_00:left"), "ae"): 0.4,
+                ("deal_00", primary_occurrence_id("deal_00", "deal_00:right"), "ae"): 0.6,
             }
         )
     )

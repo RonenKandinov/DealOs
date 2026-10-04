@@ -3,7 +3,7 @@
 from dataclasses import replace
 
 from dealos.diagnostics.manual_scenario import chain_debug_scenario
-from dealos.domain.models import AllocationAction, Resource
+from dealos.domain.models import primary_occurrence_id, AllocationAction, Resource
 from dealos.experiments.diagnostics import (
     diagnose_actions,
     diagnose_rollout,
@@ -101,8 +101,8 @@ def test_idle_split_and_herfindahl_on_the_chain():
     scenario = chain_debug_scenario()
     zeros = _progress()
     both = AllocationAction({
-        ("deal_A", "deal_A:A1", "ae"): 0.25,
-        ("deal_B", "deal_B:B1", "ae"): 0.75,
+        ("deal_A", primary_occurrence_id("deal_A", "deal_A:A1"), "ae"): 0.25,
+        ("deal_B", primary_occurrence_id("deal_B", "deal_B:B1"), "ae"): 0.75,
     })
     idle = step_idle(scenario, zeros, both)
     # A1 and B1 are eligible. Capacity is 1, so nothing is left idle.
@@ -111,7 +111,7 @@ def test_idle_split_and_herfindahl_on_the_chain():
     assert concentration.tasks_with_allocation == 2
     assert concentration.herfindahl == 0.25**2 + 0.75**2
 
-    partial = AllocationAction({("deal_A", "deal_A:A1", "ae"): 0.25})
+    partial = AllocationAction({("deal_A", primary_occurrence_id("deal_A", "deal_A:A1"), "ae"): 0.25})
     partial_idle = step_idle(scenario, zeros, partial)
     # Eligible work exists, and 0.75 of capacity is left unused.
     assert partial_idle["ae"].allocated == 0.25
@@ -136,8 +136,8 @@ def test_idle_split_and_herfindahl_on_the_chain():
 
     # Two resource keys on one task are one task in the Herfindahl.
     collapsed = AllocationAction({
-        ("deal_A", "deal_A:A1", "ae"): 0.25,
-        ("deal_A", "deal_A:A1", "legal"): 0.75,
+        ("deal_A", primary_occurrence_id("deal_A", "deal_A:A1"), "ae"): 0.25,
+        ("deal_A", primary_occurrence_id("deal_A", "deal_A:A1"), "legal"): 0.75,
     })
     assert step_concentration(collapsed).tasks_with_allocation == 1
     assert step_concentration(collapsed).herfindahl == 1.0
@@ -153,7 +153,7 @@ def test_unsuitable_resource_is_unused_because_no_compatible_work():
     resources = dict(scenario.resources)
     resources["legal"] = Resource("legal", "Legal", 1.0)
     scenario = replace(scenario, resources=resources, suitability=suitability, alpha=alpha)
-    action = AllocationAction({("deal_A", "deal_A:A1", "ae"): 1.0})
+    action = AllocationAction({("deal_A", primary_occurrence_id("deal_A", "deal_A:A1"), "ae"): 1.0})
     idle = step_idle(scenario, _progress(), action)
     assert idle["ae"].unused_despite_eligible == 0.0
     assert idle["ae"].allocated == 1.0
@@ -164,7 +164,7 @@ def test_unsuitable_resource_is_unused_because_no_compatible_work():
 
 def test_one_step_chain_matches_hand_calculation():
     scenario = chain_debug_scenario()
-    action = AllocationAction({("deal_A", "deal_A:A1", "ae"): 1.0})
+    action = AllocationAction({("deal_A", primary_occurrence_id("deal_A", "deal_A:A1"), "ae"): 1.0})
     diagnosis = diagnose_actions(scenario, [action])
     # Same-day rule: only A1 moves. phi = alpha = q = readiness = 1, so A1 ends at 1.
     assert diagnosis.steps == 1
