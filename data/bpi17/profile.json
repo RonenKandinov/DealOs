@@ -1,0 +1,36 @@
+{
+  "selection": {
+    "cases": 3000,
+    "events": 113903
+  },
+  "global": {
+    "activities": 25,
+    "resources": 143,
+    "event_origins": 3,
+    "actions": 5,
+    "lifecycle_transitions": 7,
+    "events_with_offer_id": 14667
+  },
+  "case_summary": {
+    "median_events": 35.0,
+    "p90_events": 59.0,
+    "max_events": 148,
+    "median_resources": 6.0,
+    "p90_resources": 11.0,
+    "max_resources": 24,
+    "median_duration_days": 18.88833206597222,
+    "p90_duration_days": 35.39820088657407,
+    "max_duration_days": 101.75553626157408,
+    "cases_with_repeated_activity": 3000,
+    "cases_with_handoff": 2992,
+    "cases_with_gt24h_gap": 2964,
+    "cases_with_multiple_offers": 3000
+  },
+  "interpretation": [
+    "FACT: all numeric counts above are computed from the selected 3,000-case XES sample.",
+    "INFERENCE: A_* events are application-object events; O_* events are offer-object events; W_* events are workflow/task-like activities, based on source naming.",
+    "INFERENCE: org:resource is an actor/resource identifier; it is not automatically an organizational role or authority.",
+    "INFERENCE: timestamp gaps and resource changes are observable structural signals, not automatic proof of waiting, blocking, or causality.",
+    "HYPOTHESIS: repeated activities and resource handoffs are candidates for rework and organizational-transfer mechanisms."
+  ]
+}

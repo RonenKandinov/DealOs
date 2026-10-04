@@ -1,0 +1,26 @@
+candidate_object_family,activity,events
+Workflow,W_Validate application,19836
+Workflow,W_Call after offers,18070
+Workflow,W_Call incomplete files,15619
+Workflow,W_Complete application,14036
+Workflow,W_Handle leads,4501
+Offer,O_Create Offer,4196
+Offer,O_Created,4196
+Offer,O_Sent (mail and online),3880
+Application,A_Validating,3657
+Application,A_Accepted,3000
+Application,A_Create Application,3000
+Application,A_Concept,3000
+Application,A_Complete,2975
+Offer,O_Returned,2222
+Application,A_Incomplete,2157
+Offer,O_Cancelled,2067
+Application,A_Submitted,1939
+Application,A_Pending,1593
+Offer,O_Accepted,1593
+Application,A_Cancelled,1002
+Offer,O_Refused,512
+Application,A_Denied,393
+Workflow,W_Assess potential fraud,249
+Offer,O_Sent (online only),197
+Workflow,W_Shortened completion ,13
