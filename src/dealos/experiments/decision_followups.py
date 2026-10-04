@@ -5,7 +5,7 @@ V1 is not modified. Screening band matches the previous decision-gate runs.
 
 from __future__ import annotations
 
-from dealos.domain.models import AllocationAction, Scenario
+from dealos.domain.models import AllocationAction, Scenario, task_of_occurrence
 from dealos.experiments.controlled import assert_only_changed, write_report
 from dealos.experiments.decision_screens import (
     RECORDS,
@@ -33,7 +33,7 @@ from dealos.experiments.model_validation import (
     summarize_rows,
 )
 from dealos.experiments.runner import default_policy_factories
-from dealos.policies.base import eligible_tasks, greedy_allocate
+from dealos.policies.base import greedy_allocate
 from dealos.policies.fifo import FIFOPolicy
 from dealos.sim.env import SalesEnvironment
 
@@ -241,9 +241,9 @@ def _observation_rollout(scenario, policy, mode: str, magnitude: float, seed: in
         true_state = env.get_state()
         viewed = _view_for(env, mode, magnitude, seed, true_state.time)
         action = policy.select_action(viewed, scenario)
-        for (deal_id, task_id, _), amount in action.allocations.items():
+        for (deal_id, occurrence_id, _), amount in action.allocations.items():
             if amount > 0.0:
-                support.add((deal_id, task_id))
+                support.add((deal_id, task_of_occurrence(deal_id, occurrence_id)))
         _state, info = env.step(action)
         steps += 1
         blocked += info.blocked_count
@@ -324,7 +324,7 @@ def _focus_rollout(scenario: Scenario, high_deals: set[str]) -> Trajectory:
 
     while not env.is_done():
         state = env.get_state()
-        order = [key for key in _fifo_order(state, scenario) if key[0] in high_deals]
+        order = [item for item in _fifo_order(state, scenario) if item.deal_id in high_deals]
         action = greedy_allocate(order, state, scenario)
         _require_feasible(scenario, action)
         _state, info = env.step(action)

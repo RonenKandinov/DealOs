@@ -1,6 +1,6 @@
 import pytest
 
-from dealos.domain.models import Resource, Scenario
+from dealos.domain.models import primary_occurrence_id, Resource, Scenario
 from dealos.policies.bottleneck import BottleneckPolicy, downstream_incomplete_count
 from dealos.policies.fifo import FIFOPolicy
 from dealos.policies.optimization import OptimizationPolicy
@@ -10,11 +10,11 @@ from dealos.sim.env import SalesEnvironment
 from tests.builders import make_scenario
 
 
-def _assert_feasible(scenario: Scenario, action) -> None:
+def _assert_feasible(scenario: Scenario, action, state) -> None:
     validate_action(
         action,
         capacities={resource_id: resource.capacity for resource_id, resource in scenario.resources.items()},
-        task_keys=set(scenario.task_keys()),
+        occurrence_ids=set(state.occurrences),
         tolerance=scenario.simulation.capacity_tolerance,
     )
     used = action.used_by_resource()
@@ -37,9 +37,9 @@ def test_fifo_serves_the_longest_waiting_task_first() -> None:
     state.ready_since[("deal_00", "deal_00:late")] = 4
     state.ready_since[("deal_01", "deal_01:early")] = 1
     action = FIFOPolicy().select_action(state, scenario)
-    assert ("deal_01", "deal_01:early", "ae") in action.allocations
-    assert ("deal_00", "deal_00:late", "ae") not in action.allocations
-    _assert_feasible(scenario, action)
+    assert ("deal_01", primary_occurrence_id("deal_01", "deal_01:early"), "ae") in action.allocations
+    assert ("deal_00", primary_occurrence_id("deal_00", "deal_00:late"), "ae") not in action.allocations
+    _assert_feasible(scenario, action, state)
 
 
 def test_bottleneck_prefers_the_task_with_more_incomplete_descendants() -> None:
@@ -63,8 +63,8 @@ def test_bottleneck_prefers_the_task_with_more_incomplete_descendants() -> None:
     assert leaf == 0
     assert root > leaf
     action = BottleneckPolicy().select_action(state, scenario)
-    assert ("deal_00", "deal_00:root", "ae") in action.allocations
-    assert ("deal_01", "deal_01:leaf", "ae") not in action.allocations
+    assert ("deal_00", primary_occurrence_id("deal_00", "deal_00:root"), "ae") in action.allocations
+    assert ("deal_01", primary_occurrence_id("deal_01", "deal_01:leaf"), "ae") not in action.allocations
 
 
 def test_policies_stay_feasible_with_a_zero_capacity_resource() -> None:
@@ -95,7 +95,7 @@ def test_policies_stay_feasible_with_a_zero_capacity_resource() -> None:
             if env.is_done():
                 break
             action = policy.select_action(state, scenario)
-            _assert_feasible(scenario, action)
+            _assert_feasible(scenario, action, state)
             assert action.used_by_resource().get("legal", 0.0) == 0.0
             state, _info = env.step(action)
 
@@ -125,7 +125,7 @@ def test_random_policy_is_reproducible() -> None:
         snapshots = []
         while not env.is_done():
             action = policy.select_action(state, short)
-            _assert_feasible(short, action)
+            _assert_feasible(short, action, state)
             state, _info = env.step(action)
             assert all(0.0 <= value <= 1.0 for value in state.task_progress.values())
             snapshots.append(dict(state.task_progress))

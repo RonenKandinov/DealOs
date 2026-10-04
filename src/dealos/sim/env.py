@@ -7,12 +7,22 @@ actions produce identical states.
 from __future__ import annotations
 
 import copy
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from dealos.domain.dynamics import apply_progress, classify_status, delta_x, is_complete
 from dealos.domain.graph import predecessors
-from dealos.domain.models import AllocationAction, PortfolioState, Scenario, TaskStatus
+from dealos.domain.models import (
+    AllocationAction,
+    OccurrenceLifecycle,
+    Offer,
+    PortfolioState,
+    ReadinessSource,
+    Scenario,
+    TaskOccurrence,
+    TaskStatus,
+)
 from dealos.domain.readiness import AndMinReadiness, ReadinessRule
+from dealos.policies.base import occurrence_ready
 from dealos.sim.constraints import validate_action
 
 
@@ -45,6 +55,7 @@ class SalesEnvironment:
         if scenario is not None:
             self.scenario = scenario
         progress = {key: float(self.scenario.initial_progress[key]) for key in self.scenario.task_keys()}
+        occurrences, primary = self._initial_occurrences(progress)
         self._state = self._derive(
             progress=progress,
             time=0,
@@ -52,6 +63,9 @@ class SalesEnvironment:
             previous_ready_since={},
             previous_task_completed_at={},
             previous_deal_completed_at={},
+            occurrences=occurrences,
+            offers={},
+            primary_occurrence=primary,
         )
         self._done_reason = self._reason(self._state)
         return self.get_state()
@@ -80,35 +94,53 @@ class SalesEnvironment:
         validate_action(
             action,
             capacities=dict(current.capacities),
-            task_keys=set(scenario.task_keys()),
+            occurrence_ids=set(current.occurrences),
             tolerance=scenario.simulation.capacity_tolerance,
         )
         tolerance = scenario.simulation.completion_tolerance
-        new_progress: dict[tuple[str, str], float] = {}
-        deltas: dict[tuple[str, str], float] = {}
+        new_progress = dict(current.task_progress)
+        deltas = {key: 0.0 for key in scenario.task_keys()}
         wasted = 0.0
-        for deal_id, task_id in scenario.task_keys():
-            key = (deal_id, task_id)
-            previous = current.task_progress[key]
-            if is_complete(previous, tolerance):
-                new_progress[key] = 1.0
-                deltas[key] = 0.0
-                for resource_id in scenario.resources:
-                    wasted += action.get(deal_id, task_id, resource_id)
+        occurrences = dict(current.occurrences)
+        by_occurrence: dict[str, dict[str, float]] = {}
+        for (deal_id, occurrence_id, resource_id), amount in action.allocations.items():
+            if amount == 0.0:
                 continue
-            ready = self._ready(current.task_progress, deal_id, task_id)
+            if occurrences[occurrence_id].deal_id != deal_id:
+                raise ValueError(f"occurrence {occurrence_id} is not in deal {deal_id}")
+            bucket = by_occurrence.setdefault(occurrence_id, {})
+            bucket[resource_id] = bucket.get(resource_id, 0.0) + amount
+        for occurrence_id, by_resource in by_occurrence.items():
+            occurrence = occurrences[occurrence_id]
+            key = (occurrence.deal_id, occurrence.task_id)
+            allocated = sum(by_resource.values())
+            if not _receives_progress(occurrence, current, scenario):
+                wasted += allocated
+                if is_complete(current.task_progress[key], tolerance) and occurrence_id == current.primary_occurrence[key]:
+                    new_progress[key] = 1.0
+                continue
+            ready = occurrence_ready(occurrence, current, scenario)
+            if ready is None:
+                wasted += allocated
+                continue
             resource_terms = 0.0
-            for resource_id in scenario.resources:
-                amount = action.get(deal_id, task_id, resource_id)
+            for resource_id, amount in by_resource.items():
                 resource_terms += (
-                    scenario.alpha[(deal_id, task_id, resource_id)]
-                    * scenario.suitability[(deal_id, task_id, resource_id)]
+                    scenario.alpha[(occurrence.deal_id, occurrence.task_id, resource_id)]
+                    * scenario.suitability[(occurrence.deal_id, occurrence.task_id, resource_id)]
                     * amount
                 )
             raw_delta = delta_x(scenario.phi[key], ready, resource_terms)
-            updated = apply_progress(previous, raw_delta, tolerance)
-            new_progress[key] = updated
-            deltas[key] = updated - previous
+            if occurrence_id == current.primary_occurrence[key]:
+                updated = apply_progress(current.task_progress[key], raw_delta, tolerance)
+                new_progress[key] = updated
+                deltas[key] = updated - current.task_progress[key]
+            else:
+                updated = apply_progress(occurrence.progress, raw_delta, tolerance)
+                lifecycle = occurrence.lifecycle
+                if is_complete(updated, tolerance):
+                    lifecycle = OccurrenceLifecycle.COMPLETED
+                occurrences[occurrence_id] = replace(occurrence, progress=updated, lifecycle=lifecycle)
         applied = {
             key: amount
             for key, amount in action.allocations.items()
@@ -121,6 +153,9 @@ class SalesEnvironment:
             previous_ready_since=current.ready_since,
             previous_task_completed_at=current.task_completed_at,
             previous_deal_completed_at=current.deal_completed_at,
+            occurrences=occurrences,
+            offers=dict(current.offers),
+            primary_occurrence=dict(current.primary_occurrence),
         )
         newly_tasks = tuple(
             key
@@ -168,6 +203,9 @@ class SalesEnvironment:
         previous_ready_since: dict[tuple[str, str], int | None],
         previous_task_completed_at: dict[tuple[str, str], int | None],
         previous_deal_completed_at: dict[str, int | None],
+        occurrences: dict[str, TaskOccurrence] | None = None,
+        offers: dict[str, Offer] | None = None,
+        primary_occurrence: dict[tuple[str, str], str] | None = None,
     ) -> PortfolioState:
         scenario = self.scenario
         config = scenario.simulation
@@ -214,6 +252,12 @@ class SalesEnvironment:
             else:
                 deal_complete[deal_id] = 0
                 deal_completed_at[deal_id] = None
+        carried = self._carry_occurrences(
+            occurrences or {},
+            progress,
+            primary_occurrence or {},
+            config.completion_tolerance,
+        )
         return PortfolioState(
             time=time,
             task_progress=progress,
@@ -229,7 +273,128 @@ class SalesEnvironment:
             task_completed_at=task_completed_at,
             deal_completed_at=deal_completed_at,
             deal_complete=deal_complete,
+            occurrences=carried,
+            offers=dict(offers or {}),
+            primary_occurrence=dict(primary_occurrence or {}),
         )
+
+    def open_occurrence(self, deal_id: str, task_id: str) -> TaskOccurrence:
+        """Append a scheduled occurrence of an existing task type. Does not add an offer or an edge."""
+
+        state = self._require_state()
+        key = (deal_id, task_id)
+        if key not in self.scenario.task_keys():
+            raise ValueError(f"unknown task {deal_id}:{task_id}")
+        existing = sum(
+            1
+            for occurrence in state.occurrences.values()
+            if occurrence.deal_id == deal_id and occurrence.task_id == task_id
+        )
+        occurrence = TaskOccurrence(
+            occurrence_id=f"{deal_id}:{task_id}#{existing + 1}",
+            deal_id=deal_id,
+            task_id=task_id,
+            lifecycle=OccurrenceLifecycle.SCHEDULED,
+            progress=0.0,
+            offer_id=None,
+            readiness_source=ReadinessSource.UNRESOLVED,
+        )
+        state.occurrences[occurrence.occurrence_id] = occurrence
+        return occurrence
+
+    def set_lifecycle(self, occurrence_id: str, lifecycle: OccurrenceLifecycle) -> TaskOccurrence:
+        """Record a lifecycle. Abort and withdraw do not set progress to 1."""
+
+        state = self._require_state()
+        current = state.occurrences.get(occurrence_id)
+        if current is None:
+            raise KeyError(occurrence_id)
+        if not isinstance(lifecycle, OccurrenceLifecycle):
+            raise TypeError("lifecycle must be an OccurrenceLifecycle")
+        updated = replace(current, lifecycle=lifecycle)
+        state.occurrences[occurrence_id] = updated
+        return updated
+
+    def declare_ready(self, occurrence_id: str) -> TaskOccurrence:
+        """Fixture declaration that this extra occurrence may receive progress.
+
+        This is not a predecessor rule. Primary occurrences keep type-level AND-min.
+        """
+
+        state = self._require_state()
+        current = state.occurrences.get(occurrence_id)
+        if current is None:
+            raise KeyError(occurrence_id)
+        if state.primary_occurrence.get((current.deal_id, current.task_id)) == occurrence_id:
+            raise ValueError("primary occurrence readiness stays on the type DAG")
+        updated = replace(current, readiness_source=ReadinessSource.DECLARED)
+        state.occurrences[occurrence_id] = updated
+        return updated
+
+    def record_offer(self, case_id: str, offer_id: str) -> Offer | None:
+        """Store an offer only when OfferID is non-empty. Workflow occurrences are not attached."""
+
+        state = self._require_state()
+        if case_id not in self.scenario.deals:
+            raise ValueError(f"unknown case {case_id}")
+        if not offer_id or not offer_id.strip():
+            return None
+        existing = state.offers.get(offer_id)
+        if existing is not None:
+            if existing.case_id != case_id:
+                raise ValueError(f"offer {offer_id} already belongs to {existing.case_id}")
+            return existing
+        offer = Offer(offer_id=offer_id, case_id=case_id)
+        state.offers[offer_id] = offer
+        return offer
+
+    def _require_state(self) -> PortfolioState:
+        if self._state is None:
+            raise RuntimeError("reset() has not been called")
+        return self._state
+
+    def _initial_occurrences(
+        self, progress: dict[tuple[str, str], float]
+    ) -> tuple[dict[str, TaskOccurrence], dict[tuple[str, str], str]]:
+        tolerance = self.scenario.simulation.completion_tolerance
+        occurrences: dict[str, TaskOccurrence] = {}
+        primary: dict[tuple[str, str], str] = {}
+        for (deal_id, task_id), value in progress.items():
+            occurrence_id = f"{deal_id}:{task_id}#1"
+            lifecycle = (
+                OccurrenceLifecycle.COMPLETED
+                if is_complete(value, tolerance)
+                else OccurrenceLifecycle.ACTIVE
+            )
+            occurrences[occurrence_id] = TaskOccurrence(
+                occurrence_id=occurrence_id,
+                deal_id=deal_id,
+                task_id=task_id,
+                lifecycle=lifecycle,
+                progress=value,
+            )
+            primary[(deal_id, task_id)] = occurrence_id
+        return occurrences, primary
+
+    def _carry_occurrences(
+        self,
+        occurrences: dict[str, TaskOccurrence],
+        progress: dict[tuple[str, str], float],
+        primary: dict[tuple[str, str], str],
+        tolerance: float,
+    ) -> dict[str, TaskOccurrence]:
+        carried: dict[str, TaskOccurrence] = {}
+        for occurrence_id, occurrence in occurrences.items():
+            key = (occurrence.deal_id, occurrence.task_id)
+            if primary.get(key) != occurrence_id:
+                carried[occurrence_id] = occurrence
+                continue
+            value = progress[key]
+            lifecycle = occurrence.lifecycle
+            if lifecycle is OccurrenceLifecycle.ACTIVE and is_complete(value, tolerance):
+                lifecycle = OccurrenceLifecycle.COMPLETED
+            carried[occurrence_id] = replace(occurrence, progress=value, lifecycle=lifecycle)
+        return carried
 
     def _reason(self, state: PortfolioState) -> str | None:
         reasons: list[str] = []
@@ -240,3 +405,21 @@ class SalesEnvironment:
         if not reasons:
             return None
         return "+".join(reasons)
+
+
+def _receives_progress(occurrence: TaskOccurrence, state: PortfolioState, scenario: Scenario) -> bool:
+    """Whether this step may add progress. Suspended and unresolved occurrences may not.
+
+    A primary occurrence that is active still uses the type-level formula, including
+    a readiness of zero. That keeps a blocked allocation from moving progress and
+    from being recorded as waste.
+    """
+
+    if occurrence.lifecycle is not OccurrenceLifecycle.ACTIVE:
+        return False
+    if occurrence.readiness_source is ReadinessSource.UNRESOLVED:
+        return False
+    if occurrence.readiness_source is ReadinessSource.DECLARED:
+        return True
+    key = (occurrence.deal_id, occurrence.task_id)
+    return not is_complete(state.task_progress[key], scenario.simulation.completion_tolerance)

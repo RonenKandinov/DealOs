@@ -23,6 +23,12 @@ class RunResult:
     steps: int
     done_reason: str | None
     unfinished_deals: int
+    occurrence_count: int = 0
+    active_occurrence_count: int = 0
+    completed_occurrence_count: int = 0
+    suspended_occurrence_count: int = 0
+    aborted_occurrence_count: int = 0
+    withdrawn_occurrence_count: int = 0
 
 
 @dataclass
@@ -202,7 +208,14 @@ def format_seed_details(report: ExperimentReport) -> str:
                     f"active_deals: {run.mean_active_deals:.6f}",
                     f"throughput: {run.throughput:.6f}",
                     f"steps: {run.steps}",
+                    f"occurrence_count: {run.occurrence_count}",
+                    f"active_occurrence_count: {run.active_occurrence_count}",
+                    f"completed_occurrence_count: {run.completed_occurrence_count}",
+                    f"suspended_occurrence_count: {run.suspended_occurrence_count}",
+                    f"aborted_occurrence_count: {run.aborted_occurrence_count}",
+                    f"withdrawn_occurrence_count: {run.withdrawn_occurrence_count}",
                     f"completed_deal_ids: {completed_ids}",
+                    "completed_deals counts primary targets only and is not a BPI17 success label.",
                     "completion_times:",
                 ]
             )

@@ -25,18 +25,18 @@ def validate_action(
     action: AllocationAction,
     *,
     capacities: dict[str, float],
-    task_keys: set[tuple[str, str]],
+    occurrence_ids: set[str],
     tolerance: float,
 ) -> None:
     used = {resource_id: 0.0 for resource_id in capacities}
-    for (deal_id, task_id, resource_id), amount in action.allocations.items():
-        if (deal_id, task_id) not in task_keys:
-            raise ActionBoundsError(f"unknown task {deal_id}:{task_id}")
+    for (deal_id, occurrence_id, resource_id), amount in action.allocations.items():
+        if occurrence_id not in occurrence_ids:
+            raise ActionBoundsError(f"unknown occurrence {deal_id}:{occurrence_id}")
         if resource_id not in capacities:
             raise ActionBoundsError(f"unknown resource {resource_id}")
         if amount < -tolerance or amount > 1.0 + tolerance:
             raise ActionBoundsError(
-                f"allocation {deal_id}:{task_id}:{resource_id}={amount} is outside [0, 1]"
+                f"allocation {deal_id}:{occurrence_id}:{resource_id}={amount} is outside [0, 1]"
             )
         if amount > 0.0:
             used[resource_id] += amount

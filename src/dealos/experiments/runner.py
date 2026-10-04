@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Callable, Sequence
 from dataclasses import replace
 
-from dealos.domain.models import Scenario, SimulationConfig
+from dealos.domain.models import OccurrenceLifecycle, Scenario, SimulationConfig
 from dealos.experiments.metrics import ExperimentReport, RunResult, summarize
 from dealos.generator.generate import generate_scenario
 from dealos.generator.presets import get_preset
@@ -69,6 +69,22 @@ def rollout(scenario: Scenario, policy: Policy) -> RunResult:
         steps=steps,
         done_reason=env.done_reason,
         unfinished_deals=sum(1 for value in state.deal_complete.values() if value == 0),
+        occurrence_count=len(state.occurrences),
+        active_occurrence_count=sum(
+            item.lifecycle is OccurrenceLifecycle.ACTIVE for item in state.occurrences.values()
+        ),
+        completed_occurrence_count=sum(
+            item.lifecycle is OccurrenceLifecycle.COMPLETED for item in state.occurrences.values()
+        ),
+        suspended_occurrence_count=sum(
+            item.lifecycle is OccurrenceLifecycle.SUSPENDED for item in state.occurrences.values()
+        ),
+        aborted_occurrence_count=sum(
+            item.lifecycle is OccurrenceLifecycle.ABORTED for item in state.occurrences.values()
+        ),
+        withdrawn_occurrence_count=sum(
+            item.lifecycle is OccurrenceLifecycle.WITHDRAWN for item in state.occurrences.values()
+        ),
     )
 
 

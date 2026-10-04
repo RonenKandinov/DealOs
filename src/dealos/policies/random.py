@@ -5,14 +5,15 @@ from __future__ import annotations
 import random
 
 from dealos.domain.models import AllocationAction, PortfolioState, Scenario
-from dealos.policies.base import eligible_tasks
+from dealos.policies.base import eligible_occurrences
 
 
 class RandomPolicy:
-    """Shuffle eligible tasks and assign random feasible fractions of remaining capacity.
+    """Shuffle eligible occurrences and assign random feasible fractions of remaining capacity.
 
     Construct a new instance per run. Calls advance an internal random.Random(seed),
     so the same seed and the same sequence of states reproduce the same actions.
+    With one occurrence per task type, the shuffled sequence matches the historical task list.
     """
 
     name = "random"
@@ -23,14 +24,16 @@ class RandomPolicy:
 
     def select_action(self, state: PortfolioState, scenario: Scenario) -> AllocationAction:
         tolerance = scenario.simulation.capacity_tolerance
-        keys = eligible_tasks(state, scenario)
-        self._rng.shuffle(keys)
+        occurrences = eligible_occurrences(state, scenario)
+        self._rng.shuffle(occurrences)
         remaining = {
             resource_id: resource.capacity for resource_id, resource in scenario.resources.items()
         }
         allocations: dict[tuple[str, str, str], float] = {}
         resource_ids = sorted(scenario.resources)
-        for deal_id, task_id in keys:
+        for occurrence in occurrences:
+            deal_id = occurrence.deal_id
+            task_id = occurrence.task_id
             suitable = [
                 resource_id
                 for resource_id in resource_ids
@@ -46,6 +49,6 @@ class RandomPolicy:
                 if amount <= tolerance:
                     continue
                 amount = min(amount, remaining[resource_id])
-                allocations[(deal_id, task_id, resource_id)] = amount
+                allocations[(deal_id, occurrence.occurrence_id, resource_id)] = amount
                 remaining[resource_id] -= amount
         return AllocationAction(allocations)

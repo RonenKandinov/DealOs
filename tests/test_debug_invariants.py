@@ -9,7 +9,7 @@ from pathlib import Path
 from dealos.diagnostics.manual_scenario import chain_debug_scenario
 from dealos.domain.dynamics import is_complete
 from dealos.domain.graph import has_cycle, predecessors
-from dealos.domain.models import AllocationAction
+from dealos.domain.models import AllocationAction, primary_occurrence_id, task_of_occurrence
 from dealos.domain.readiness import AndMinReadiness
 from dealos.experiments.runner import rollout
 from dealos.generator.generate import generate_scenario
@@ -66,11 +66,11 @@ def test_chain_hand_transitions_delay_successor_by_one_day() -> None:
     env = SalesEnvironment(scenario)
     state = env.reset()
     schedule = [
-        {("deal_A", "deal_A:A1", "ae"): 1.0},
-        {("deal_A", "deal_A:A2", "ae"): 1.0},
-        {("deal_B", "deal_B:B1", "ae"): 1.0},
-        {("deal_A", "deal_A:A3", "ae"): 1.0},
-        {("deal_B", "deal_B:B2", "ae"): 1.0},
+        {("deal_A", primary_occurrence_id("deal_A", "deal_A:A1"), "ae"): 1.0},
+        {("deal_A", primary_occurrence_id("deal_A", "deal_A:A2"), "ae"): 1.0},
+        {("deal_B", primary_occurrence_id("deal_B", "deal_B:B1"), "ae"): 1.0},
+        {("deal_A", primary_occurrence_id("deal_A", "deal_A:A3"), "ae"): 1.0},
+        {("deal_B", primary_occurrence_id("deal_B", "deal_B:B2"), "ae"): 1.0},
     ]
     expected = [
         {"deal_A:A1": 1.0, "deal_A:A2": 0.0, "deal_A:A3": 0.0, "deal_B:B1": 0.0, "deal_B:B2": 0.0},
@@ -123,8 +123,8 @@ def test_same_day_allocation_to_successor_adds_no_progress() -> None:
     state, info = env.step(
         AllocationAction(
             {
-                ("deal_A", "deal_A:A1", "ae"): 0.5,
-                ("deal_A", "deal_A:A2", "ae"): 0.5,
+                ("deal_A", primary_occurrence_id("deal_A", "deal_A:A1"), "ae"): 0.5,
+                ("deal_A", primary_occurrence_id("deal_A", "deal_A:A2"), "ae"): 0.5,
             }
         )
     )
@@ -161,7 +161,7 @@ def test_incomplete_target_blocks_deal_completion() -> None:
     state = env.reset()
     assert state.task_progress[("deal_A", "deal_A:A3")] == 0.0
     assert state.deal_complete["deal_A"] == 0
-    state, info = env.step(AllocationAction({("deal_A", "deal_A:A3", "ae"): 1.0}))
+    state, info = env.step(AllocationAction({("deal_A", primary_occurrence_id("deal_A", "deal_A:A3"), "ae"): 1.0}))
     assert state.deal_complete["deal_A"] == 1
     assert info.newly_completed_deals == ("deal_A",)
     assert state.deal_complete["deal_B"] == 0
@@ -171,7 +171,7 @@ def test_completed_task_gains_no_further_progress() -> None:
     scenario = chain_debug_scenario(initial={("deal_B", "deal_B:B1"): 1.0})
     env = SalesEnvironment(scenario)
     env.reset()
-    state, info = env.step(AllocationAction({("deal_B", "deal_B:B1", "ae"): 1.0}))
+    state, info = env.step(AllocationAction({("deal_B", primary_occurrence_id("deal_B", "deal_B:B1"), "ae"): 1.0}))
     assert state.task_progress[("deal_B", "deal_B:B1")] == 1.0
     assert info.deltas[("deal_B", "deal_B:B1")] == 0.0
     assert info.wasted_allocation == 1.0
@@ -183,7 +183,7 @@ def test_progress_is_bounded_and_monotone_on_the_chain() -> None:
     state = env.reset()
     previous = dict(state.task_progress)
     for _ in range(5):
-        state, _info = env.step(AllocationAction({("deal_A", "deal_A:A1", "ae"): 1.0}))
+        state, _info = env.step(AllocationAction({("deal_A", primary_occurrence_id("deal_A", "deal_A:A1"), "ae"): 1.0}))
         for key, value in state.task_progress.items():
             assert 0.0 <= value <= 1.0
             assert value + 1e-12 >= previous[key]
@@ -206,13 +206,14 @@ def test_policies_respect_bounds_eligibility_and_capacity() -> None:
                     validate_action(
                         action,
                         capacities={rid: res.capacity for rid, res in scenario.resources.items()},
-                        task_keys=set(scenario.task_keys()),
+                        occurrence_ids=set(state.occurrences),
                         tolerance=scenario.simulation.capacity_tolerance,
                     )
                 except Exception as exc:  # noqa: BLE001 - record the violation for the log
                     violations.append(f"{preset_name}:{policy.name}: {exc}")
                 eligible = set(eligible_tasks(state, scenario))
-                for (deal_id, task_id, resource_id), amount in action.allocations.items():
+                for (deal_id, occurrence_id, resource_id), amount in action.allocations.items():
+                    task_id = task_of_occurrence(deal_id, occurrence_id)
                     if amount < 0.0 or amount > 1.0 + scenario.simulation.capacity_tolerance:
                         violations.append(f"bounds {policy.name} {amount}")
                     if scenario.suitability[(deal_id, task_id, resource_id)] == 0.0 and amount > 0.0:

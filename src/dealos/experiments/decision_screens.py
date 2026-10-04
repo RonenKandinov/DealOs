@@ -13,7 +13,7 @@ import subprocess
 from dataclasses import dataclass, replace
 from pathlib import Path
 
-from dealos.domain.models import AllocationAction, DealGraph, Scenario, Task
+from dealos.domain.models import AllocationAction, DealGraph, Scenario, Task, task_of_occurrence
 from dealos.experiments.controlled import (
     assert_only_changed,
     baseline_scenario,
@@ -40,7 +40,7 @@ from dealos.experiments.model_validation import (
     zero_task_q,
 )
 from dealos.experiments.runner import default_policy_factories
-from dealos.policies.base import eligible_tasks, greedy_allocate
+from dealos.policies.base import eligible_occurrences, greedy_allocate
 from dealos.policies.fifo import FIFOPolicy
 from dealos.sim.env import SalesEnvironment
 
@@ -460,9 +460,9 @@ def _noisy_rollout(scenario: Scenario, policy, epsilon: float, seed: int) -> tup
         true_state = env.get_state()
         viewed = true_state if epsilon == 0.0 else _observed_state(env, epsilon, seed, true_state.time)
         action = policy.select_action(viewed, scenario)
-        for (deal_id, task_id, _), amount in action.allocations.items():
+        for (deal_id, occurrence_id, _), amount in action.allocations.items():
             if amount > 0.0:
-                support.add((deal_id, task_id))
+                support.add((deal_id, task_of_occurrence(deal_id, occurrence_id)))
         _state, info = env.step(action)
         steps += 1
         blocked += info.blocked_count
@@ -537,9 +537,9 @@ def _wait_rollout(env_scenario, view_scenario, policy, waiting: set[tuple[str, s
         state = env.get_state()
         action = policy.select_action(state, view_scenario)
         action = _strip(action, waiting)
-        for (deal_id, task_id, _), amount in action.allocations.items():
+        for (deal_id, occurrence_id, _), amount in action.allocations.items():
             if amount > 0.0:
-                support.add((deal_id, task_id))
+                support.add((deal_id, task_of_occurrence(deal_id, occurrence_id)))
         _state, info = env.step(action)
         steps += 1
         blocked += info.blocked_count
@@ -601,9 +601,9 @@ def _swap_rollout(scenario: Scenario, fast_id: str, slow_id: str) -> tuple[Traje
         state = env.get_state()
         action = _reassign_fast_to_slow(state, scenario, policy, fast_id, slow_id)
         _require_feasible(scenario, action)
-        for (deal_id, task_id, _), amount in action.allocations.items():
+        for (deal_id, occurrence_id, _), amount in action.allocations.items():
             if amount > 0.0:
-                support.add((deal_id, task_id))
+                support.add((deal_id, task_of_occurrence(deal_id, occurrence_id)))
         _state, info = env.step(action)
         steps += 1
         blocked += info.blocked_count
@@ -633,7 +633,7 @@ def _reassign_fast_to_slow(state, scenario: Scenario, policy: FIFOPolicy, fast_i
     pour = scenario
     for resource_id in scenario.resources:
         pour = with_capacity(pour, resource_id, freed.get(resource_id, 0.0))
-    order = [key for key in _fifo_order(state, scenario) if key[0] == slow_id]
+    order = [item for item in _fifo_order(state, scenario) if item.deal_id == slow_id]
     extra = greedy_allocate(order, state, pour)
     merged = dict(kept)
     for key, amount in extra.allocations.items():
@@ -646,13 +646,14 @@ def _reassign_fast_to_slow(state, scenario: Scenario, policy: FIFOPolicy, fast_i
     return AllocationAction(merged)
 
 
-def _fifo_order(state, scenario: Scenario) -> list[tuple[str, str]]:
-    def sort_key(key: tuple[str, str]) -> tuple[int, str, str]:
+def _fifo_order(state, scenario: Scenario):
+    def sort_key(occurrence) -> tuple[int, str, str, str]:
+        key = (occurrence.deal_id, occurrence.task_id)
         ready_since = state.ready_since.get(key)
         waiting_since = state.time if ready_since is None else ready_since
-        return (waiting_since, key[0], key[1])
+        return (waiting_since, occurrence.deal_id, occurrence.task_id, occurrence.occurrence_id)
 
-    return sorted(eligible_tasks(state, scenario), key=sort_key)
+    return sorted(eligible_occurrences(state, scenario), key=sort_key)
 
 
 def _require_feasible(scenario: Scenario, action: AllocationAction) -> None:
@@ -707,9 +708,9 @@ def _disturb_rollout(scenario: Scenario, policy, mode: str, seed: int):
     while not env.is_done():
         state = env.get_state()
         action = policy.select_action(state, env.scenario)
-        for (deal_id, task_id, _), amount in action.allocations.items():
+        for (deal_id, occurrence_id, _), amount in action.allocations.items():
             if amount > 0.0:
-                support.add((deal_id, task_id))
+                support.add((deal_id, task_of_occurrence(deal_id, occurrence_id)))
         _state, info = env.step(action)
         steps += 1
         blocked += info.blocked_count

@@ -288,11 +288,13 @@ def _fill_to_count(
 
 
 def _strip(action: AllocationAction, banned: set[tuple[str, str]]) -> AllocationAction:
+    from dealos.domain.models import task_of_occurrence
+
     return AllocationAction(
         {
             key: value
             for key, value in action.allocations.items()
-            if (key[0], key[1]) not in banned and value > 0.0
+            if (key[0], task_of_occurrence(key[0], key[1])) not in banned and value > 0.0
         }
     )
 

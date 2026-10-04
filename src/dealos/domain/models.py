@@ -19,6 +19,44 @@ class TaskStatus(Enum):
     COMPLETED = "completed"
 
 
+class OccurrenceLifecycle(Enum):
+    """Execution state of one task occurrence. Resume is suspended → active, not a stored value."""
+
+    SCHEDULED = "scheduled"
+    ACTIVE = "active"
+    SUSPENDED = "suspended"
+    COMPLETED = "completed"
+    ABORTED = "aborted"
+    WITHDRAWN = "withdrawn"
+
+
+class ReadinessSource(Enum):
+    """Where an occurrence's readiness comes from.
+
+    type_and_min is the existing predecessor rule on the type DAG.
+    unresolved means no occurrence-level predecessor rule has been supplied.
+    declared is a fixture statement, not a causal inference.
+    """
+
+    TYPE_AND_MIN = "type_and_min"
+    UNRESOLVED = "unresolved"
+    DECLARED = "declared"
+
+
+def primary_occurrence_id(deal_id: str, task_id: str) -> str:
+    return f"{deal_id}:{task_id}#1"
+
+
+def task_of_occurrence(deal_id: str, occurrence_id: str) -> str:
+    """Recover the task id stored in `{deal_id}:{task_id}#{n}`."""
+
+    prefix = f"{deal_id}:"
+    if not occurrence_id.startswith(prefix) or "#" not in occurrence_id:
+        raise ValueError(f"occurrence id {occurrence_id} is not in deal {deal_id}")
+    body, _number = occurrence_id.rsplit("#", 1)
+    return body[len(prefix) :]
+
+
 @dataclass(frozen=True)
 class SimulationConfig:
     """Assumptions the simulator applies on every step.
@@ -62,6 +100,43 @@ class Task:
     deal_id: str
     task_type: str
     name: str
+
+
+@dataclass(frozen=True)
+class TaskOccurrence:
+    """One execution of a task type. The type stays a vertex of the deal DAG.
+
+    Extra occurrences do not replace the type-level progress used by readiness.
+    offer_id is set only when a caller has a real OfferID. It is not required.
+    """
+
+    occurrence_id: str
+    deal_id: str
+    task_id: str
+    lifecycle: OccurrenceLifecycle
+    progress: float
+    offer_id: str | None = None
+    readiness_source: ReadinessSource = ReadinessSource.TYPE_AND_MIN
+
+    def __post_init__(self) -> None:
+        if not self.occurrence_id or not self.deal_id or not self.task_id:
+            raise ValueError("occurrence identity is empty")
+        if not 0.0 <= self.progress <= 1.0:
+            raise ValueError(f"occurrence progress {self.progress} is outside [0, 1]")
+
+
+@dataclass(frozen=True)
+class Offer:
+    """An offer object identified by OfferID. It does not own workflow occurrences."""
+
+    offer_id: str
+    case_id: str
+
+    def __post_init__(self) -> None:
+        if not self.offer_id.strip():
+            raise ValueError("offer id is empty")
+        if not self.case_id:
+            raise ValueError("offer case id is empty")
 
 
 @dataclass(frozen=True)
@@ -113,16 +188,12 @@ class Resource:
 
 @dataclass
 class AllocationAction:
-    """Fractional allocation a_ijr in [0, 1]. Missing keys mean zero.
-
-    A later discrete assignment type can sit beside this class. The simulator
-    accepts this continuous representation only in V1.
-    """
+    """Fractional allocation in [0, 1], keyed by (deal_id, occurrence_id, resource_id)."""
 
     allocations: dict[tuple[str, str, str], float]
 
-    def get(self, deal_id: str, task_id: str, resource_id: str) -> float:
-        return self.allocations.get((deal_id, task_id, resource_id), 0.0)
+    def get(self, deal_id: str, occurrence_id: str, resource_id: str) -> float:
+        return self.allocations.get((deal_id, occurrence_id, resource_id), 0.0)
 
     def used_by_resource(self) -> dict[str, float]:
         used: dict[str, float] = {}
@@ -146,6 +217,9 @@ class PortfolioState:
     task_completed_at: dict[tuple[str, str], int | None]
     deal_completed_at: dict[str, int | None]
     deal_complete: dict[str, int]
+    occurrences: dict[str, TaskOccurrence] = field(default_factory=dict)
+    offers: dict[str, Offer] = field(default_factory=dict)
+    primary_occurrence: dict[tuple[str, str], str] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -175,6 +249,28 @@ class PortfolioState:
             },
             "deal_completed_at": dict(sorted(self.deal_completed_at.items())),
             "deal_complete": dict(sorted(self.deal_complete.items())),
+            "occurrences": [
+                {
+                    "occurrence_id": occurrence.occurrence_id,
+                    "deal_id": occurrence.deal_id,
+                    "task_id": occurrence.task_id,
+                    "lifecycle": occurrence.lifecycle.value,
+                    "progress": occurrence.progress,
+                    "offer_id": occurrence.offer_id,
+                    "readiness_source": occurrence.readiness_source.value,
+                }
+                for occurrence in (
+                    self.occurrences[key] for key in sorted(self.occurrences)
+                )
+            ],
+            "offers": [
+                {"offer_id": offer.offer_id, "case_id": offer.case_id}
+                for offer in (self.offers[key] for key in sorted(self.offers))
+            ],
+            "primary_occurrence": {
+                f"{deal_id}:{task_id}": occurrence_id
+                for (deal_id, task_id), occurrence_id in sorted(self.primary_occurrence.items())
+            },
         }
 
 
