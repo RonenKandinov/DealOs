@@ -1,0 +1,1313 @@
+{
+  "summary": {
+    "cases": 3000,
+    "events": 113903,
+    "activities": 25,
+    "resources": 143,
+    "median_events": 35.0,
+    "p90_events": 59.0,
+    "max_events": 148,
+    "median_resources": 6.0,
+    "p90_resources": 11.0,
+    "max_resources": 24,
+    "median_duration_days": 18.888332,
+    "p90_duration_days": 35.39820129999999,
+    "max_duration_days": 101.755536,
+    "cases_with_reexecution": 1723,
+    "reexecution_cases_by_origin": {
+      "Application": 1108,
+      "Offer": 860,
+      "Workflow": 1325
+    },
+    "cases_with_return": 1112,
+    "cases_with_self_loop": 330,
+    "cases_with_overlap": 4,
+    "cases_with_resource_change": 2992,
+    "resource_change_events": 20444,
+    "same_activity_resource_change_events": 14528,
+    "cases_with_same_activity_resource_change": 2930,
+    "negative_gaps": 0,
+    "gap_case_counts": {
+      "gt_1h": 2989,
+      "gt_4h": 2983,
+      "gt_8h": 2978,
+      "gt_24h": 2964,
+      "gt_72h": 2885
+    },
+    "gap_event_counts": {
+      "gt_1h": 18309,
+      "gt_4h": 14788,
+      "gt_8h": 13321,
+      "gt_24h": 10427,
+      "gt_72h": 6670
+    },
+    "lifecycle": {
+      "complete": 45662,
+      "schedule": 14109,
+      "withdraw": 2066,
+      "start": 12130,
+      "suspend": 20073,
+      "ate_abort": 7944,
+      "resume": 11919
+    },
+    "lifecycle_cases": {
+      "ate_abort": 2975,
+      "complete": 3000,
+      "resume": 2833,
+      "schedule": 3000,
+      "start": 2996,
+      "suspend": 2989,
+      "withdraw": 1716
+    },
+    "origin": {
+      "Application": 22716,
+      "Workflow": 72324,
+      "Offer": 18863
+    },
+    "family_cases": {
+      "Application": 3000,
+      "Offer": 3000,
+      "Workflow": 3000
+    },
+    "cases_with_application_and_offer": 3000,
+    "cases_with_offer_id": 3000,
+    "cases_with_multiple_offers": 860,
+    "complete_durations": 4083,
+    "cases_with_decision_activity": 3000
+  },
+  "activities": [
+    {
+      "activity": "W_Validate application",
+      "origin": "Workflow",
+      "events": 19836,
+      "cases": 2084,
+      "repeat_cases": 1112,
+      "reexecutions": 1593,
+      "adjacent_reexecutions": 21,
+      "separated_reexecutions": 1590,
+      "same_resource_reexecutions": 165,
+      "different_resource_reexecutions": 1428,
+      "resource_change_rate_into": 0.17493446259326478,
+      "distinct_resources": 112,
+      "lifecycle": {
+        "schedule": 3677,
+        "start": 3725,
+        "suspend": 5489,
+        "ate_abort": 2137,
+        "resume": 3268,
+        "complete": 1540
+      }
+    },
+    {
+      "activity": "W_Call after offers",
+      "origin": "Workflow",
+      "events": 18070,
+      "cases": 2975,
+      "repeat_cases": 327,
+      "reexecutions": 327,
+      "adjacent_reexecutions": 326,
+      "separated_reexecutions": 4,
+      "same_resource_reexecutions": 0,
+      "different_resource_reexecutions": 327,
+      "resource_change_rate_into": 0.27636967349197566,
+      "distinct_resources": 132,
+      "lifecycle": {
+        "schedule": 3302,
+        "start": 2993,
+        "suspend": 5751,
+        "ate_abort": 2944,
+        "withdraw": 311,
+        "resume": 2730,
+        "complete": 39
+      }
+    },
+    {
+      "activity": "W_Call incomplete files",
+      "origin": "Workflow",
+      "events": 15619,
+      "cases": 1420,
+      "repeat_cases": 529,
+      "reexecutions": 737,
+      "adjacent_reexecutions": 5,
+      "separated_reexecutions": 736,
+      "same_resource_reexecutions": 333,
+      "different_resource_reexecutions": 404,
+      "resource_change_rate_into": 0.27620206159165117,
+      "distinct_resources": 121,
+      "lifecycle": {
+        "schedule": 2157,
+        "start": 2167,
+        "suspend": 5530,
+        "resume": 3612,
+        "ate_abort": 1889,
+        "complete": 264
+      }
+    },
+    {
+      "activity": "W_Complete application",
+      "origin": "Workflow",
+      "events": 14036,
+      "cases": 3000,
+      "repeat_cases": 1,
+      "reexecutions": 1,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 1,
+      "same_resource_reexecutions": 0,
+      "different_resource_reexecutions": 1,
+      "resource_change_rate_into": 0.22520661157024793,
+      "distinct_resources": 114,
+      "lifecycle": {
+        "schedule": 3001,
+        "start": 2839,
+        "complete": 1865,
+        "withdraw": 184,
+        "suspend": 3075,
+        "resume": 2120,
+        "ate_abort": 952
+      }
+    },
+    {
+      "activity": "W_Handle leads",
+      "origin": "Workflow",
+      "events": 4501,
+      "cases": 1939,
+      "repeat_cases": 1,
+      "reexecutions": 1,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 1,
+      "same_resource_reexecutions": 0,
+      "different_resource_reexecutions": 1,
+      "resource_change_rate_into": 0.10775383248167074,
+      "distinct_resources": 65,
+      "lifecycle": {
+        "schedule": 1940,
+        "withdraw": 1571,
+        "start": 372,
+        "complete": 348,
+        "suspend": 135,
+        "resume": 114,
+        "ate_abort": 21
+      }
+    },
+    {
+      "activity": "O_Create Offer",
+      "origin": "Offer",
+      "events": 4196,
+      "cases": 3000,
+      "repeat_cases": 860,
+      "reexecutions": 1196,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 1196,
+      "same_resource_reexecutions": 556,
+      "different_resource_reexecutions": 640,
+      "resource_change_rate_into": 0.1553860819828408,
+      "distinct_resources": 108,
+      "lifecycle": {
+        "complete": 4196
+      }
+    },
+    {
+      "activity": "O_Created",
+      "origin": "Offer",
+      "events": 4196,
+      "cases": 3000,
+      "repeat_cases": 860,
+      "reexecutions": 1196,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 1196,
+      "same_resource_reexecutions": 556,
+      "different_resource_reexecutions": 640,
+      "resource_change_rate_into": 0.0,
+      "distinct_resources": 108,
+      "lifecycle": {
+        "complete": 4196
+      }
+    },
+    {
+      "activity": "O_Sent (mail and online)",
+      "origin": "Offer",
+      "events": 3880,
+      "cases": 2940,
+      "repeat_cases": 697,
+      "reexecutions": 940,
+      "adjacent_reexecutions": 368,
+      "separated_reexecutions": 572,
+      "same_resource_reexecutions": 445,
+      "different_resource_reexecutions": 495,
+      "resource_change_rate_into": 0.003865979381443299,
+      "distinct_resources": 100,
+      "lifecycle": {
+        "complete": 3880
+      }
+    },
+    {
+      "activity": "A_Validating",
+      "origin": "Application",
+      "events": 3657,
+      "cases": 2084,
+      "repeat_cases": 1107,
+      "reexecutions": 1573,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 1573,
+      "same_resource_reexecutions": 163,
+      "different_resource_reexecutions": 1410,
+      "resource_change_rate_into": 0.0,
+      "distinct_resources": 102,
+      "lifecycle": {
+        "complete": 3657
+      }
+    },
+    {
+      "activity": "A_Accepted",
+      "origin": "Application",
+      "events": 3000,
+      "cases": 3000,
+      "repeat_cases": 0,
+      "reexecutions": 0,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 0,
+      "same_resource_reexecutions": 0,
+      "different_resource_reexecutions": 0,
+      "resource_change_rate_into": 0.32233333333333336,
+      "distinct_resources": 107,
+      "lifecycle": {
+        "complete": 3000
+      }
+    },
+    {
+      "activity": "A_Concept",
+      "origin": "Application",
+      "events": 3000,
+      "cases": 3000,
+      "repeat_cases": 0,
+      "reexecutions": 0,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 0,
+      "same_resource_reexecutions": 0,
+      "different_resource_reexecutions": 0,
+      "resource_change_rate_into": 0.0,
+      "distinct_resources": 102,
+      "lifecycle": {
+        "complete": 3000
+      }
+    },
+    {
+      "activity": "A_Create Application",
+      "origin": "Application",
+      "events": 3000,
+      "cases": 3000,
+      "repeat_cases": 0,
+      "reexecutions": 0,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 0,
+      "same_resource_reexecutions": 0,
+      "different_resource_reexecutions": 0,
+      "resource_change_rate_into": 0.0,
+      "distinct_resources": 98,
+      "lifecycle": {
+        "complete": 3000
+      }
+    },
+    {
+      "activity": "A_Complete",
+      "origin": "Application",
+      "events": 2975,
+      "cases": 2975,
+      "repeat_cases": 0,
+      "reexecutions": 0,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 0,
+      "same_resource_reexecutions": 0,
+      "different_resource_reexecutions": 0,
+      "resource_change_rate_into": 0.0,
+      "distinct_resources": 105,
+      "lifecycle": {
+        "complete": 2975
+      }
+    },
+    {
+      "activity": "O_Returned",
+      "origin": "Offer",
+      "events": 2222,
+      "cases": 2076,
+      "repeat_cases": 145,
+      "reexecutions": 146,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 146,
+      "same_resource_reexecutions": 6,
+      "different_resource_reexecutions": 140,
+      "resource_change_rate_into": 0.06255625562556255,
+      "distinct_resources": 42,
+      "lifecycle": {
+        "complete": 2222
+      }
+    },
+    {
+      "activity": "A_Incomplete",
+      "origin": "Application",
+      "events": 2157,
+      "cases": 1420,
+      "repeat_cases": 529,
+      "reexecutions": 737,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 737,
+      "same_resource_reexecutions": 333,
+      "different_resource_reexecutions": 404,
+      "resource_change_rate_into": 0.0,
+      "distinct_resources": 57,
+      "lifecycle": {
+        "complete": 2157
+      }
+    },
+    {
+      "activity": "O_Cancelled",
+      "origin": "Offer",
+      "events": 2067,
+      "cases": 1513,
+      "repeat_cases": 400,
+      "reexecutions": 554,
+      "adjacent_reexecutions": 484,
+      "separated_reexecutions": 70,
+      "same_resource_reexecutions": 486,
+      "different_resource_reexecutions": 68,
+      "resource_change_rate_into": 0.010643444605708756,
+      "distinct_resources": 109,
+      "lifecycle": {
+        "complete": 2067
+      }
+    },
+    {
+      "activity": "A_Submitted",
+      "origin": "Application",
+      "events": 1939,
+      "cases": 1939,
+      "repeat_cases": 0,
+      "reexecutions": 0,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 0,
+      "same_resource_reexecutions": 0,
+      "different_resource_reexecutions": 0,
+      "resource_change_rate_into": 0.0,
+      "distinct_resources": 1,
+      "lifecycle": {
+        "complete": 1939
+      }
+    },
+    {
+      "activity": "A_Pending",
+      "origin": "Application",
+      "events": 1593,
+      "cases": 1593,
+      "repeat_cases": 0,
+      "reexecutions": 0,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 0,
+      "same_resource_reexecutions": 0,
+      "different_resource_reexecutions": 0,
+      "resource_change_rate_into": 0.0,
+      "distinct_resources": 38,
+      "lifecycle": {
+        "complete": 1593
+      }
+    },
+    {
+      "activity": "O_Accepted",
+      "origin": "Offer",
+      "events": 1593,
+      "cases": 1593,
+      "repeat_cases": 0,
+      "reexecutions": 0,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 0,
+      "same_resource_reexecutions": 0,
+      "different_resource_reexecutions": 0,
+      "resource_change_rate_into": 0.7376020087884495,
+      "distinct_resources": 38,
+      "lifecycle": {
+        "complete": 1593
+      }
+    },
+    {
+      "activity": "A_Cancelled",
+      "origin": "Application",
+      "events": 1002,
+      "cases": 1002,
+      "repeat_cases": 0,
+      "reexecutions": 0,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 0,
+      "same_resource_reexecutions": 0,
+      "different_resource_reexecutions": 0,
+      "resource_change_rate_into": 0.8143712574850299,
+      "distinct_resources": 74,
+      "lifecycle": {
+        "complete": 1002
+      }
+    },
+    {
+      "activity": "O_Refused",
+      "origin": "Offer",
+      "events": 512,
+      "cases": 386,
+      "repeat_cases": 93,
+      "reexecutions": 126,
+      "adjacent_reexecutions": 126,
+      "separated_reexecutions": 0,
+      "same_resource_reexecutions": 126,
+      "different_resource_reexecutions": 0,
+      "resource_change_rate_into": 0.0,
+      "distinct_resources": 40,
+      "lifecycle": {
+        "complete": 512
+      }
+    },
+    {
+      "activity": "A_Denied",
+      "origin": "Application",
+      "events": 393,
+      "cases": 393,
+      "repeat_cases": 0,
+      "reexecutions": 0,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 0,
+      "same_resource_reexecutions": 0,
+      "different_resource_reexecutions": 0,
+      "resource_change_rate_into": 0.44529262086513993,
+      "distinct_resources": 45,
+      "lifecycle": {
+        "complete": 393
+      }
+    },
+    {
+      "activity": "W_Assess potential fraud",
+      "origin": "Workflow",
+      "events": 249,
+      "cases": 26,
+      "repeat_cases": 2,
+      "reexecutions": 2,
+      "adjacent_reexecutions": 2,
+      "separated_reexecutions": 1,
+      "same_resource_reexecutions": 1,
+      "different_resource_reexecutions": 1,
+      "resource_change_rate_into": 0.23293172690763053,
+      "distinct_resources": 20,
+      "lifecycle": {
+        "schedule": 28,
+        "start": 29,
+        "suspend": 89,
+        "resume": 75,
+        "complete": 27,
+        "ate_abort": 1
+      }
+    },
+    {
+      "activity": "O_Sent (online only)",
+      "origin": "Offer",
+      "events": 197,
+      "cases": 181,
+      "repeat_cases": 11,
+      "reexecutions": 16,
+      "adjacent_reexecutions": 9,
+      "separated_reexecutions": 7,
+      "same_resource_reexecutions": 12,
+      "different_resource_reexecutions": 4,
+      "resource_change_rate_into": 0.0,
+      "distinct_resources": 69,
+      "lifecycle": {
+        "complete": 197
+      }
+    },
+    {
+      "activity": "W_Shortened completion ",
+      "origin": "Workflow",
+      "events": 13,
+      "cases": 4,
+      "repeat_cases": 0,
+      "reexecutions": 0,
+      "adjacent_reexecutions": 0,
+      "separated_reexecutions": 0,
+      "same_resource_reexecutions": 0,
+      "different_resource_reexecutions": 0,
+      "resource_change_rate_into": 0.07692307692307693,
+      "distinct_resources": 3,
+      "lifecycle": {
+        "schedule": 4,
+        "start": 5,
+        "suspend": 4
+      }
+    }
+  ],
+  "resources": {
+    "resources": 143,
+    "concentrated_resources": 0,
+    "broad_resources": 136,
+    "median_activity_share": 0.3333333333333333,
+    "median_activities_per_resource": 14
+  },
+  "gaps": {
+    "counts": {
+      "gt_1h": 18309,
+      "gt_4h": 14788,
+      "gt_8h": 13321,
+      "gt_24h": 10427,
+      "gt_72h": 6670
+    },
+    "resource_changes": {
+      "gt_1h": 17384,
+      "gt_4h": 14314,
+      "gt_8h": 12927,
+      "gt_24h": 10168,
+      "gt_72h": 6472
+    },
+    "same_activity": {
+      "gt_1h": 12904,
+      "gt_4h": 10167,
+      "gt_8h": 9053,
+      "gt_24h": 7174,
+      "gt_72h": 4847
+    },
+    "edges": {
+      "gt_1h": [
+        {
+          "from": "W_Call after offers",
+          "to": "W_Call after offers",
+          "events": 4535
+        },
+        {
+          "from": "W_Call incomplete files",
+          "to": "W_Call incomplete files",
+          "events": 3587
+        },
+        {
+          "from": "W_Validate application",
+          "to": "W_Validate application",
+          "events": 3261
+        },
+        {
+          "from": "A_Concept",
+          "to": "W_Complete application",
+          "events": 1321
+        },
+        {
+          "from": "W_Complete application",
+          "to": "W_Complete application",
+          "events": 1250
+        },
+        {
+          "from": "W_Call after offers",
+          "to": "A_Cancelled",
+          "events": 777
+        },
+        {
+          "from": "W_Validate application",
+          "to": "O_Accepted",
+          "events": 605
+        },
+        {
+          "from": "W_Complete application",
+          "to": "A_Accepted",
+          "events": 590
+        }
+      ],
+      "gt_4h": [
+        {
+          "from": "W_Call after offers",
+          "to": "W_Call after offers",
+          "events": 4446
+        },
+        {
+          "from": "W_Validate application",
+          "to": "W_Validate application",
+          "events": 2383
+        },
+        {
+          "from": "W_Call incomplete files",
+          "to": "W_Call incomplete files",
+          "events": 2203
+        },
+        {
+          "from": "A_Concept",
+          "to": "W_Complete application",
+          "events": 1216
+        },
+        {
+          "from": "W_Complete application",
+          "to": "W_Complete application",
+          "events": 971
+        },
+        {
+          "from": "W_Call after offers",
+          "to": "A_Cancelled",
+          "events": 767
+        },
+        {
+          "from": "W_Validate application",
+          "to": "O_Accepted",
+          "events": 411
+        },
+        {
+          "from": "W_Complete application",
+          "to": "A_Accepted",
+          "events": 387
+        }
+      ],
+      "gt_8h": [
+        {
+          "from": "W_Call after offers",
+          "to": "W_Call after offers",
+          "events": 4416
+        },
+        {
+          "from": "W_Validate application",
+          "to": "W_Validate application",
+          "events": 2019
+        },
+        {
+          "from": "W_Call incomplete files",
+          "to": "W_Call incomplete files",
+          "events": 1661
+        },
+        {
+          "from": "A_Concept",
+          "to": "W_Complete application",
+          "events": 1140
+        },
+        {
+          "from": "W_Complete application",
+          "to": "W_Complete application",
+          "events": 817
+        },
+        {
+          "from": "W_Call after offers",
+          "to": "A_Cancelled",
+          "events": 759
+        },
+        {
+          "from": "W_Call after offers",
+          "to": "O_Create Offer",
+          "events": 349
+        },
+        {
+          "from": "W_Validate application",
+          "to": "O_Accepted",
+          "events": 327
+        }
+      ],
+      "gt_24h": [
+        {
+          "from": "W_Call after offers",
+          "to": "W_Call after offers",
+          "events": 4312
+        },
+        {
+          "from": "W_Validate application",
+          "to": "W_Validate application",
+          "events": 1290
+        },
+        {
+          "from": "W_Call incomplete files",
+          "to": "W_Call incomplete files",
+          "events": 1005
+        },
+        {
+          "from": "W_Call after offers",
+          "to": "A_Cancelled",
+          "events": 753
+        },
+        {
+          "from": "A_Concept",
+          "to": "W_Complete application",
+          "events": 702
+        },
+        {
+          "from": "W_Complete application",
+          "to": "W_Complete application",
+          "events": 532
+        },
+        {
+          "from": "W_Call after offers",
+          "to": "O_Create Offer",
+          "events": 317
+        },
+        {
+          "from": "W_Call incomplete files",
+          "to": "O_Accepted",
+          "events": 261
+        }
+      ],
+      "gt_72h": [
+        {
+          "from": "W_Call after offers",
+          "to": "W_Call after offers",
+          "events": 3661
+        },
+        {
+          "from": "W_Call after offers",
+          "to": "A_Cancelled",
+          "events": 719
+        },
+        {
+          "from": "W_Validate application",
+          "to": "W_Validate application",
+          "events": 548
+        },
+        {
+          "from": "W_Call incomplete files",
+          "to": "W_Call incomplete files",
+          "events": 507
+        },
+        {
+          "from": "W_Call incomplete files",
+          "to": "O_Accepted",
+          "events": 206
+        },
+        {
+          "from": "W_Call after offers",
+          "to": "O_Create Offer",
+          "events": 206
+        },
+        {
+          "from": "O_Sent (mail and online)",
+          "to": "W_Call after offers",
+          "events": 182
+        },
+        {
+          "from": "W_Complete application",
+          "to": "W_Complete application",
+          "events": 122
+        }
+      ]
+    }
+  },
+  "workflow": {
+    "variants": [
+      {
+        "cases": 560,
+        "length": 3,
+        "sequence": [
+          "W_Handle leads",
+          "W_Complete application",
+          "W_Call after offers"
+        ]
+      },
+      {
+        "cases": 354,
+        "length": 4,
+        "sequence": [
+          "W_Handle leads",
+          "W_Complete application",
+          "W_Call after offers",
+          "W_Validate application"
+        ]
+      },
+      {
+        "cases": 320,
+        "length": 6,
+        "sequence": [
+          "W_Handle leads",
+          "W_Complete application",
+          "W_Call after offers",
+          "W_Validate application",
+          "W_Call incomplete files",
+          "W_Validate application"
+        ]
+      },
+      {
+        "cases": 243,
+        "length": 3,
+        "sequence": [
+          "W_Complete application",
+          "W_Call after offers",
+          "W_Validate application"
+        ]
+      },
+      {
+        "cases": 216,
+        "length": 2,
+        "sequence": [
+          "W_Complete application",
+          "W_Call after offers"
+        ]
+      },
+      {
+        "cases": 201,
+        "length": 5,
+        "sequence": [
+          "W_Complete application",
+          "W_Call after offers",
+          "W_Validate application",
+          "W_Call incomplete files",
+          "W_Validate application"
+        ]
+      },
+      {
+        "cases": 178,
+        "length": 5,
+        "sequence": [
+          "W_Handle leads",
+          "W_Complete application",
+          "W_Call after offers",
+          "W_Validate application",
+          "W_Call incomplete files"
+        ]
+      },
+      {
+        "cases": 103,
+        "length": 8,
+        "sequence": [
+          "W_Handle leads",
+          "W_Complete application",
+          "W_Call after offers",
+          "W_Validate application",
+          "W_Call incomplete files",
+          "W_Validate application",
+          "W_Call incomplete files",
+          "W_Validate application"
+        ]
+      }
+    ],
+    "variant_count": 69,
+    "full_variant_count": 2053,
+    "full_variants": [
+      {
+        "cases": 98,
+        "length": 18,
+        "sequence": [
+          "A_Create Application",
+          "W_Complete application",
+          "W_Complete application",
+          "A_Concept",
+          "A_Accepted",
+          "O_Create Offer",
+          "O_Created",
+          "O_Sent (mail and online)",
+          "W_Complete application",
+          "W_Call after offers",
+          "W_Call after offers",
+          "A_Complete",
+          "W_Call after offers",
+          "W_Call after offers",
+          "W_Call after offers",
+          "A_Cancelled",
+          "O_Cancelled",
+          "W_Call after offers"
+        ]
+      },
+      {
+        "cases": 96,
+        "length": 21,
+        "sequence": [
+          "A_Create Application",
+          "A_Submitted",
+          "W_Handle leads",
+          "W_Handle leads",
+          "W_Complete application",
+          "A_Concept",
+          "W_Complete application",
+          "A_Accepted",
+          "O_Create Offer",
+          "O_Created",
+          "O_Sent (mail and online)",
+          "W_Complete application",
+          "W_Call after offers",
+          "W_Call after offers",
+          "A_Complete",
+          "W_Call after offers",
+          "W_Call after offers",
+          "W_Call after offers",
+          "A_Cancelled",
+          "O_Cancelled",
+          "W_Call after offers"
+        ]
+      },
+      {
+        "cases": 64,
+        "length": 22,
+        "sequence": [
+          "A_Create Application",
+          "A_Submitted",
+          "W_Handle leads",
+          "W_Handle leads",
+          "W_Complete application",
+          "A_Concept",
+          "W_Complete application",
+          "W_Complete application",
+          "A_Accepted",
+          "O_Create Offer",
+          "O_Created",
+          "O_Sent (mail and online)",
+          "W_Complete application",
+          "W_Call after offers",
+          "W_Call after offers",
+          "A_Complete",
+          "W_Call after offers",
+          "W_Call after offers",
+          "W_Call after offers",
+          "A_Cancelled",
+          "O_Cancelled",
+          "W_Call after offers"
+        ]
+      },
+      {
+        "cases": 38,
+        "length": 23,
+        "sequence": [
+          "A_Create Application",
+          "A_Submitted",
+          "W_Handle leads",
+          "W_Handle leads",
+          "W_Complete application",
+          "A_Concept",
+          "W_Complete application",
+          "W_Complete application",
+          "W_Complete application",
+          "A_Accepted",
+          "O_Create Offer",
+          "O_Created",
+          "O_Sent (mail and online)",
+          "W_Complete application",
+          "W_Call after offers",
+          "W_Call after offers",
+          "A_Complete",
+          "W_Call after offers",
+          "W_Call after offers",
+          "W_Call after offers",
+          "A_Cancelled",
+          "O_Cancelled",
+          "W_Call after offers"
+        ]
+      },
+      {
+        "cases": 24,
+        "length": 24,
+        "sequence": [
+          "A_Create Application",
+          "W_Complete application",
+          "W_Complete application",
+          "A_Concept",
+          "A_Accepted",
+          "O_Create Offer",
+          "O_Created",
+          "O_Sent (mail and online)",
+          "W_Complete application",
+          "W_Call after offers",
+          "W_Call after offers",
+          "A_Complete",
+          "W_Call after offers",
+          "W_Call after offers",
+          "W_Call after offers",
+          "W_Call after offers",
+          "W_Validate application",
+          "W_Validate application",
+          "A_Validating",
+          "O_Returned",
+          "W_Validate application",
+          "O_Accepted",
+          "A_Pending",
+          "W_Validate application"
+        ]
+      }
+    ],
+    "dfg": [
+      {
+        "from": "W_Complete application",
+        "to": "W_Call after offers",
+        "events": 2973
+      },
+      {
+        "from": "W_Validate application",
+        "to": "W_Call incomplete files",
+        "events": 2156
+      },
+      {
+        "from": "W_Call after offers",
+        "to": "W_Validate application",
+        "events": 2085
+      },
+      {
+        "from": "W_Handle leads",
+        "to": "W_Complete application",
+        "events": 1939
+      },
+      {
+        "from": "W_Call incomplete files",
+        "to": "W_Validate application",
+        "events": 1572
+      },
+      {
+        "from": "W_Call after offers",
+        "to": "W_Call after offers",
+        "events": 326
+      },
+      {
+        "from": "W_Validate application",
+        "to": "W_Assess potential fraud",
+        "events": 23
+      },
+      {
+        "from": "W_Assess potential fraud",
+        "to": "W_Validate application",
+        "events": 17
+      },
+      {
+        "from": "W_Validate application",
+        "to": "W_Validate application",
+        "events": 3
+      },
+      {
+        "from": "W_Complete application",
+        "to": "W_Shortened completion ",
+        "events": 2
+      },
+      {
+        "from": "W_Shortened completion ",
+        "to": "W_Call after offers",
+        "events": 2
+      },
+      {
+        "from": "W_Call after offers",
+        "to": "W_Shortened completion ",
+        "events": 2
+      },
+      {
+        "from": "W_Call incomplete files",
+        "to": "W_Assess potential fraud",
+        "events": 1
+      },
+      {
+        "from": "W_Assess potential fraud",
+        "to": "W_Call after offers",
+        "events": 1
+      },
+      {
+        "from": "W_Complete application",
+        "to": "W_Assess potential fraud",
+        "events": 1
+      }
+    ],
+    "successors": {
+      "W_Assess potential fraud": [
+        "W_Assess potential fraud",
+        "W_Call after offers",
+        "W_Complete application",
+        "W_Handle leads",
+        "W_Validate application"
+      ],
+      "W_Call after offers": [
+        "W_Assess potential fraud",
+        "W_Call after offers",
+        "W_Shortened completion ",
+        "W_Validate application"
+      ],
+      "W_Call incomplete files": [
+        "W_Assess potential fraud",
+        "W_Call incomplete files",
+        "W_Validate application"
+      ],
+      "W_Complete application": [
+        "W_Assess potential fraud",
+        "W_Call after offers",
+        "W_Shortened completion "
+      ],
+      "W_Handle leads": [
+        "W_Assess potential fraud",
+        "W_Complete application"
+      ],
+      "W_Shortened completion ": [
+        "W_Call after offers"
+      ],
+      "W_Validate application": [
+        "W_Assess potential fraud",
+        "W_Call incomplete files",
+        "W_Validate application"
+      ]
+    },
+    "predecessors": {
+      "W_Assess potential fraud": [
+        "W_Assess potential fraud",
+        "W_Call after offers",
+        "W_Call incomplete files",
+        "W_Complete application",
+        "W_Handle leads",
+        "W_Validate application"
+      ],
+      "W_Call after offers": [
+        "W_Assess potential fraud",
+        "W_Call after offers",
+        "W_Complete application",
+        "W_Shortened completion "
+      ],
+      "W_Call incomplete files": [
+        "W_Call incomplete files",
+        "W_Validate application"
+      ],
+      "W_Complete application": [
+        "W_Assess potential fraud",
+        "W_Handle leads"
+      ],
+      "W_Handle leads": [
+        "W_Assess potential fraud"
+      ],
+      "W_Shortened completion ": [
+        "W_Call after offers",
+        "W_Complete application"
+      ],
+      "W_Validate application": [
+        "W_Assess potential fraud",
+        "W_Call after offers",
+        "W_Call incomplete files",
+        "W_Validate application"
+      ]
+    }
+  },
+  "fields": {
+    "accepted": {
+      "true": 2886,
+      "false": 1310
+    },
+    "selected": {
+      "true": 2076,
+      "false": 2120
+    },
+    "offered_amount_nonempty_events": 4196,
+    "offered_amount_values_capped": {
+      "5000.0": 513,
+      "15000.0": 507,
+      "10000.0": 418,
+      "25000.0": 244,
+      "20000.0": 226,
+      "30000.0": 125,
+      "6000.0": 122,
+      "12000.0": 97
+    },
+    "by_activity": {
+      "O_Create Offer": {
+        "accepted": 4196,
+        "selected": 4196,
+        "offered_amount": 4196
+      }
+    },
+    "offer_id_activities": {
+      "O_Created": 4196,
+      "O_Sent (mail and online)": 3880,
+      "O_Returned": 2222,
+      "O_Accepted": 1593,
+      "O_Cancelled": 2067,
+      "O_Refused": 512,
+      "O_Sent (online only)": 197
+    }
+  },
+  "decisions": {
+    "events": {
+      "A_Accepted": 3000,
+      "O_Accepted": 1593,
+      "A_Cancelled": 1002,
+      "O_Cancelled": 2067,
+      "A_Denied": 393,
+      "O_Refused": 512
+    },
+    "cases": {
+      "A_Accepted": 3000,
+      "A_Cancelled": 1002,
+      "A_Denied": 393,
+      "O_Accepted": 1593,
+      "O_Cancelled": 1513,
+      "O_Refused": 386
+    }
+  },
+  "durations_seconds": {
+    "count": 4083,
+    "median": 1603.417,
+    "p90": 280473.1030000002
+  },
+  "mismatches": [
+    {
+      "id": "M1",
+      "observed_count": 1723,
+      "case_share": 0.5743,
+      "current_object": "one-shot monotone task completion",
+      "layer": "micro",
+      "status": "FACT",
+      "recurring": true,
+      "extension_candidate": true,
+      "note": "A new occurrence of an activity inside the same case. Lifecycle rows of one workflow occurrence are excluded."
+    },
+    {
+      "id": "M2",
+      "observed_count": 3000,
+      "case_share": 1.0,
+      "current_object": "a single task DAG",
+      "layer": "object",
+      "status": "FACT",
+      "recurring": true,
+      "extension_candidate": true,
+      "note": "Application events and Offer events co-occur, and offers carry OfferID. The deal graph has no second object."
+    },
+    {
+      "id": "M3",
+      "observed_count": 2964,
+      "case_share": 0.988,
+      "current_object": "a cause for unrecorded time",
+      "layer": "temporal",
+      "status": "FACT",
+      "recurring": true,
+      "extension_candidate": false,
+      "note": "A gap above 24 hours is observed. The log does not say whether it is internal work, an external wait, or time with no recorded event."
+    },
+    {
+      "id": "M4",
+      "observed_count": 2992,
+      "case_share": 0.9973,
+      "current_object": "named actor transitions",
+      "layer": "macro",
+      "status": "INFERENCE",
+      "recurring": true,
+      "extension_candidate": false,
+      "note": "Consecutive events name different org:resource values. That is not yet evidence of a handoff, a role, or authority."
+    },
+    {
+      "id": "M5",
+      "observed_count": 2989,
+      "case_share": 0.9963,
+      "current_object": "a single progress value in [0, 1]",
+      "layer": "micro",
+      "status": "FACT",
+      "recurring": true,
+      "extension_candidate": true,
+      "note": "Workflow events use suspend, resume, ate_abort, and withdraw. Those are not points on a monotone progress bar."
+    },
+    {
+      "id": "M6",
+      "observed_count": 1112,
+      "case_share": 0.3707,
+      "current_object": "an acyclic one-shot task graph",
+      "layer": "micro",
+      "status": "FACT",
+      "recurring": false,
+      "extension_candidate": false,
+      "note": "A workflow activity occurs, other workflow activities occur, and the first activity occurs again."
+    },
+    {
+      "id": "M7",
+      "observed_count": 3000,
+      "case_share": 1.0,
+      "current_object": "a discrete authority grant",
+      "layer": "macro",
+      "status": "HYPOTHESIS",
+      "recurring": true,
+      "extension_candidate": false,
+      "note": "Accept, deny, refuse, and cancel appear as activity names. The log does not name who is allowed to decide."
+    },
+    {
+      "id": "M8",
+      "observed_count": 0,
+      "case_share": 0.0,
+      "current_object": "an information link between systems",
+      "layer": "observation",
+      "status": "HYPOTHESIS",
+      "recurring": false,
+      "extension_candidate": false,
+      "note": "No field records that one system's output is another system's input. Absence here is not evidence that the link exists."
+    }
+  ]
+}

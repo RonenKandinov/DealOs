@@ -1,0 +1,26 @@
+activity,origin,events,cases,repeat_cases,reexecutions,adjacent_reexecutions,separated_reexecutions,same_resource_reexecutions,different_resource_reexecutions,resource_change_rate_into,distinct_resources,lifecycle_ate_abort,lifecycle_complete,lifecycle_resume,lifecycle_schedule,lifecycle_start,lifecycle_suspend,lifecycle_withdraw
+W_Validate application,Workflow,19836,2084,1112,1593,21,1590,165,1428,0.17493446259326478,112,2137,1540,3268,3677,3725,5489,
+W_Call after offers,Workflow,18070,2975,327,327,326,4,0,327,0.27636967349197566,132,2944,39,2730,3302,2993,5751,311
+W_Call incomplete files,Workflow,15619,1420,529,737,5,736,333,404,0.27620206159165117,121,1889,264,3612,2157,2167,5530,
+W_Complete application,Workflow,14036,3000,1,1,0,1,0,1,0.22520661157024793,114,952,1865,2120,3001,2839,3075,184
+W_Handle leads,Workflow,4501,1939,1,1,0,1,0,1,0.10775383248167074,65,21,348,114,1940,372,135,1571
+O_Create Offer,Offer,4196,3000,860,1196,0,1196,556,640,0.1553860819828408,108,,4196,,,,,
+O_Created,Offer,4196,3000,860,1196,0,1196,556,640,0.0,108,,4196,,,,,
+O_Sent (mail and online),Offer,3880,2940,697,940,368,572,445,495,0.003865979381443299,100,,3880,,,,,
+A_Validating,Application,3657,2084,1107,1573,0,1573,163,1410,0.0,102,,3657,,,,,
+A_Accepted,Application,3000,3000,0,0,0,0,0,0,0.32233333333333336,107,,3000,,,,,
+A_Concept,Application,3000,3000,0,0,0,0,0,0,0.0,102,,3000,,,,,
+A_Create Application,Application,3000,3000,0,0,0,0,0,0,0.0,98,,3000,,,,,
+A_Complete,Application,2975,2975,0,0,0,0,0,0,0.0,105,,2975,,,,,
+O_Returned,Offer,2222,2076,145,146,0,146,6,140,0.06255625562556255,42,,2222,,,,,
+A_Incomplete,Application,2157,1420,529,737,0,737,333,404,0.0,57,,2157,,,,,
+O_Cancelled,Offer,2067,1513,400,554,484,70,486,68,0.010643444605708756,109,,2067,,,,,
+A_Submitted,Application,1939,1939,0,0,0,0,0,0,0.0,1,,1939,,,,,
+A_Pending,Application,1593,1593,0,0,0,0,0,0,0.0,38,,1593,,,,,
+O_Accepted,Offer,1593,1593,0,0,0,0,0,0,0.7376020087884495,38,,1593,,,,,
+A_Cancelled,Application,1002,1002,0,0,0,0,0,0,0.8143712574850299,74,,1002,,,,,
+O_Refused,Offer,512,386,93,126,126,0,126,0,0.0,40,,512,,,,,
+A_Denied,Application,393,393,0,0,0,0,0,0,0.44529262086513993,45,,393,,,,,
+W_Assess potential fraud,Workflow,249,26,2,2,2,1,1,1,0.23293172690763053,20,1,27,75,28,29,89,
+O_Sent (online only),Offer,197,181,11,16,9,7,12,4,0.0,69,,197,,,,,
+W_Shortened completion ,Workflow,13,4,0,0,0,0,0,0,0.07692307692307693,3,,,,4,5,4,

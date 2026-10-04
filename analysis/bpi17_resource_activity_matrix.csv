@@ -1,0 +1,1911 @@
+resource,activity,events
+User_1,A_Cancelled,740
+User_1,A_Concept,1595
+User_1,A_Create Application,1939
+User_1,A_Submitted,1939
+User_1,O_Cancelled,961
+User_1,W_Assess potential fraud,18
+User_1,W_Call after offers,1487
+User_1,W_Call incomplete files,30
+User_1,W_Complete application,1605
+User_1,W_Handle leads,3535
+User_1,W_Validate application,100
+User_10,A_Accepted,73
+User_10,A_Cancelled,10
+User_10,A_Complete,81
+User_10,A_Concept,40
+User_10,A_Create Application,34
+User_10,A_Denied,1
+User_10,A_Incomplete,2
+User_10,A_Validating,9
+User_10,O_Cancelled,15
+User_10,O_Create Offer,114
+User_10,O_Created,114
+User_10,O_Sent (mail and online),108
+User_10,O_Sent (online only),4
+User_10,W_Call after offers,253
+User_10,W_Call incomplete files,97
+User_10,W_Complete application,295
+User_10,W_Handle leads,16
+User_10,W_Validate application,29
+User_100,A_Accepted,1
+User_100,A_Complete,1
+User_100,A_Concept,1
+User_100,A_Create Application,1
+User_100,A_Denied,24
+User_100,A_Incomplete,224
+User_100,A_Pending,83
+User_100,A_Validating,8
+User_100,O_Accepted,83
+User_100,O_Cancelled,23
+User_100,O_Create Offer,2
+User_100,O_Created,2
+User_100,O_Refused,34
+User_100,O_Returned,6
+User_100,O_Sent (mail and online),1
+User_100,O_Sent (online only),1
+User_100,W_Assess potential fraud,13
+User_100,W_Call after offers,4
+User_100,W_Call incomplete files,687
+User_100,W_Complete application,3
+User_100,W_Validate application,718
+User_101,A_Accepted,1
+User_101,A_Complete,1
+User_101,A_Concept,1
+User_101,A_Create Application,1
+User_101,A_Denied,7
+User_101,A_Incomplete,97
+User_101,A_Validating,2
+User_101,O_Create Offer,1
+User_101,O_Created,1
+User_101,O_Refused,7
+User_101,O_Returned,1
+User_101,O_Sent (online only),1
+User_101,W_Call after offers,3
+User_101,W_Call incomplete files,290
+User_101,W_Complete application,3
+User_101,W_Validate application,125
+User_102,A_Accepted,1
+User_102,A_Complete,1
+User_102,A_Concept,1
+User_102,A_Create Application,1
+User_102,A_Denied,10
+User_102,A_Incomplete,67
+User_102,A_Pending,87
+User_102,A_Validating,3
+User_102,O_Accepted,87
+User_102,O_Cancelled,23
+User_102,O_Create Offer,1
+User_102,O_Created,1
+User_102,O_Refused,13
+User_102,O_Returned,1
+User_102,O_Sent (mail and online),1
+User_102,W_Call after offers,3
+User_102,W_Call incomplete files,206
+User_102,W_Complete application,3
+User_102,W_Validate application,317
+User_103,A_Accepted,2
+User_103,A_Concept,1
+User_103,O_Create Offer,1
+User_103,O_Created,1
+User_103,W_Complete application,9
+User_103,W_Handle leads,6
+User_103,W_Validate application,3
+User_104,A_Accepted,22
+User_104,A_Cancelled,1
+User_104,A_Complete,20
+User_104,O_Cancelled,1
+User_104,O_Create Offer,22
+User_104,O_Created,22
+User_104,O_Sent (mail and online),21
+User_104,O_Sent (online only),1
+User_104,W_Call after offers,71
+User_104,W_Complete application,110
+User_105,A_Accepted,8
+User_105,A_Complete,8
+User_105,O_Create Offer,11
+User_105,O_Created,11
+User_105,O_Sent (mail and online),10
+User_105,O_Sent (online only),1
+User_105,W_Call after offers,24
+User_105,W_Complete application,36
+User_106,A_Accepted,3
+User_106,A_Complete,2
+User_106,A_Concept,3
+User_106,A_Create Application,3
+User_106,A_Denied,2
+User_106,A_Incomplete,12
+User_106,A_Pending,1
+User_106,A_Validating,3
+User_106,O_Accepted,1
+User_106,O_Create Offer,3
+User_106,O_Created,3
+User_106,O_Refused,3
+User_106,O_Returned,1
+User_106,O_Sent (mail and online),1
+User_106,O_Sent (online only),1
+User_106,W_Assess potential fraud,3
+User_106,W_Call after offers,6
+User_106,W_Call incomplete files,37
+User_106,W_Complete application,10
+User_106,W_Validate application,98
+User_107,A_Accepted,1
+User_107,A_Complete,1
+User_107,A_Concept,1
+User_107,A_Create Application,1
+User_107,A_Denied,1
+User_107,A_Incomplete,15
+User_107,A_Pending,34
+User_107,A_Validating,19
+User_107,O_Accepted,34
+User_107,O_Cancelled,17
+User_107,O_Create Offer,1
+User_107,O_Created,1
+User_107,O_Refused,1
+User_107,O_Returned,17
+User_107,O_Sent (online only),1
+User_107,W_Call after offers,19
+User_107,W_Call incomplete files,75
+User_107,W_Complete application,5
+User_107,W_Validate application,87
+User_108,A_Accepted,7
+User_108,A_Complete,7
+User_108,A_Concept,1
+User_108,A_Create Application,1
+User_108,O_Cancelled,1
+User_108,O_Create Offer,10
+User_108,O_Created,10
+User_108,O_Sent (mail and online),9
+User_108,W_Call after offers,21
+User_108,W_Complete application,46
+User_109,A_Accepted,5
+User_109,A_Cancelled,3
+User_109,A_Complete,4
+User_109,A_Concept,2
+User_109,A_Create Application,2
+User_109,A_Denied,21
+User_109,A_Incomplete,129
+User_109,A_Pending,108
+User_109,A_Validating,2
+User_109,O_Accepted,108
+User_109,O_Cancelled,51
+User_109,O_Create Offer,3
+User_109,O_Created,3
+User_109,O_Refused,34
+User_109,O_Returned,10
+User_109,O_Sent (mail and online),3
+User_109,O_Sent (online only),1
+User_109,W_Call after offers,15
+User_109,W_Call incomplete files,413
+User_109,W_Complete application,14
+User_109,W_Handle leads,1
+User_109,W_Validate application,322
+User_11,A_Accepted,30
+User_11,A_Cancelled,1
+User_11,A_Complete,29
+User_11,A_Concept,13
+User_11,A_Create Application,12
+User_11,A_Denied,1
+User_11,A_Validating,5
+User_11,O_Cancelled,1
+User_11,O_Create Offer,47
+User_11,O_Created,47
+User_11,O_Refused,1
+User_11,O_Sent (mail and online),43
+User_11,O_Sent (online only),4
+User_11,W_Call after offers,113
+User_11,W_Call incomplete files,92
+User_11,W_Complete application,98
+User_11,W_Handle leads,3
+User_11,W_Validate application,16
+User_110,A_Cancelled,1
+User_110,O_Cancelled,1
+User_110,W_Call after offers,1
+User_110,W_Complete application,2
+User_111,A_Validating,1
+User_111,W_Call incomplete files,1
+User_111,W_Validate application,3
+User_112,A_Incomplete,12
+User_112,A_Pending,31
+User_112,A_Validating,206
+User_112,O_Accepted,31
+User_112,O_Cancelled,9
+User_112,O_Returned,142
+User_112,W_Assess potential fraud,2
+User_112,W_Call after offers,134
+User_112,W_Call incomplete files,128
+User_112,W_Complete application,4
+User_112,W_Validate application,629
+User_113,A_Incomplete,13
+User_113,A_Pending,34
+User_113,A_Validating,231
+User_113,O_Accepted,34
+User_113,O_Cancelled,13
+User_113,O_Returned,151
+User_113,W_Call after offers,143
+User_113,W_Call incomplete files,148
+User_113,W_Validate application,708
+User_114,A_Incomplete,2
+User_114,A_Pending,6
+User_114,A_Validating,86
+User_114,O_Accepted,6
+User_114,O_Cancelled,1
+User_114,O_Returned,48
+User_114,W_Call after offers,47
+User_114,W_Call incomplete files,50
+User_114,W_Validate application,260
+User_115,A_Denied,3
+User_115,A_Incomplete,21
+User_115,A_Pending,74
+User_115,O_Accepted,74
+User_115,O_Cancelled,25
+User_115,O_Refused,3
+User_115,W_Call incomplete files,65
+User_115,W_Validate application,127
+User_116,A_Incomplete,6
+User_116,A_Pending,21
+User_116,A_Validating,279
+User_116,O_Accepted,21
+User_116,O_Cancelled,9
+User_116,O_Returned,157
+User_116,W_Call after offers,155
+User_116,W_Call incomplete files,155
+User_116,W_Validate application,848
+User_117,A_Incomplete,5
+User_117,A_Pending,31
+User_117,A_Validating,215
+User_117,O_Accepted,31
+User_117,O_Cancelled,8
+User_117,O_Create Offer,1
+User_117,O_Created,1
+User_117,O_Returned,151
+User_117,O_Sent (mail and online),1
+User_117,W_Call after offers,152
+User_117,W_Call incomplete files,89
+User_117,W_Validate application,661
+User_118,A_Incomplete,10
+User_118,A_Pending,59
+User_118,A_Validating,202
+User_118,O_Accepted,59
+User_118,O_Cancelled,25
+User_118,O_Returned,154
+User_118,W_Call after offers,143
+User_118,W_Call incomplete files,138
+User_118,W_Validate application,618
+User_119,A_Cancelled,1
+User_119,A_Incomplete,12
+User_119,A_Pending,38
+User_119,A_Validating,161
+User_119,O_Accepted,38
+User_119,O_Cancelled,28
+User_119,O_Returned,123
+User_119,W_Call after offers,119
+User_119,W_Call incomplete files,111
+User_119,W_Validate application,510
+User_12,A_Accepted,61
+User_12,A_Cancelled,1
+User_12,A_Complete,62
+User_12,A_Concept,16
+User_12,A_Create Application,15
+User_12,A_Denied,1
+User_12,A_Validating,4
+User_12,O_Cancelled,6
+User_12,O_Create Offer,79
+User_12,O_Created,79
+User_12,O_Refused,2
+User_12,O_Sent (mail and online),76
+User_12,O_Sent (online only),3
+User_12,W_Call after offers,187
+User_12,W_Call incomplete files,22
+User_12,W_Complete application,200
+User_12,W_Handle leads,1
+User_12,W_Validate application,12
+User_120,A_Concept,1
+User_120,A_Incomplete,32
+User_120,A_Pending,12
+User_120,A_Validating,175
+User_120,O_Accepted,12
+User_120,O_Cancelled,7
+User_120,O_Returned,107
+User_120,W_Assess potential fraud,2
+User_120,W_Call after offers,104
+User_120,W_Call incomplete files,181
+User_120,W_Complete application,3
+User_120,W_Handle leads,3
+User_120,W_Validate application,528
+User_121,A_Incomplete,37
+User_121,A_Pending,20
+User_121,A_Validating,272
+User_121,O_Accepted,20
+User_121,O_Cancelled,5
+User_121,O_Returned,188
+User_121,W_Call after offers,187
+User_121,W_Call incomplete files,212
+User_121,W_Validate application,829
+User_122,A_Incomplete,20
+User_122,A_Pending,16
+User_122,A_Validating,129
+User_122,O_Accepted,16
+User_122,O_Cancelled,5
+User_122,O_Returned,78
+User_122,W_Call after offers,77
+User_122,W_Call incomplete files,121
+User_122,W_Validate application,397
+User_123,A_Incomplete,38
+User_123,A_Pending,18
+User_123,A_Validating,308
+User_123,O_Accepted,18
+User_123,O_Cancelled,2
+User_123,O_Returned,210
+User_123,W_Call after offers,199
+User_123,W_Call incomplete files,238
+User_123,W_Validate application,926
+User_124,A_Incomplete,19
+User_124,O_Returned,1
+User_124,W_Call after offers,2
+User_124,W_Call incomplete files,58
+User_124,W_Validate application,40
+User_125,A_Incomplete,11
+User_125,A_Pending,11
+User_125,A_Validating,107
+User_125,O_Accepted,11
+User_125,O_Cancelled,7
+User_125,O_Returned,71
+User_125,W_Call after offers,72
+User_125,W_Call incomplete files,72
+User_125,W_Validate application,326
+User_126,A_Incomplete,32
+User_126,A_Pending,4
+User_126,A_Validating,208
+User_126,O_Accepted,4
+User_126,O_Cancelled,1
+User_126,O_Returned,155
+User_126,W_Call after offers,152
+User_126,W_Call incomplete files,154
+User_126,W_Validate application,627
+User_127,A_Pending,13
+User_127,A_Validating,19
+User_127,O_Accepted,13
+User_127,O_Cancelled,6
+User_127,O_Returned,12
+User_127,W_Call after offers,12
+User_127,W_Call incomplete files,19
+User_127,W_Validate application,58
+User_128,A_Pending,25
+User_128,O_Accepted,25
+User_128,O_Cancelled,12
+User_128,W_Call incomplete files,27
+User_128,W_Validate application,3
+User_129,A_Incomplete,2
+User_129,A_Pending,22
+User_129,A_Validating,10
+User_129,O_Accepted,22
+User_129,O_Cancelled,9
+User_129,O_Returned,10
+User_129,W_Call after offers,10
+User_129,W_Call incomplete files,27
+User_129,W_Validate application,29
+User_13,A_Accepted,23
+User_13,A_Cancelled,2
+User_13,A_Complete,22
+User_13,A_Concept,22
+User_13,A_Create Application,20
+User_13,A_Validating,2
+User_13,O_Cancelled,3
+User_13,O_Create Offer,26
+User_13,O_Created,26
+User_13,O_Sent (mail and online),24
+User_13,W_Call after offers,127
+User_13,W_Call incomplete files,47
+User_13,W_Complete application,121
+User_13,W_Handle leads,3
+User_13,W_Validate application,6
+User_130,A_Incomplete,4
+User_130,A_Validating,18
+User_130,O_Returned,18
+User_130,W_Call after offers,18
+User_130,W_Call incomplete files,12
+User_130,W_Validate application,54
+User_131,A_Incomplete,20
+User_131,A_Pending,8
+User_131,A_Validating,102
+User_131,O_Accepted,8
+User_131,O_Cancelled,3
+User_131,O_Returned,66
+User_131,W_Call after offers,64
+User_131,W_Call incomplete files,103
+User_131,W_Validate application,308
+User_132,A_Accepted,13
+User_132,A_Cancelled,1
+User_132,A_Complete,14
+User_132,O_Cancelled,4
+User_132,O_Create Offer,16
+User_132,O_Created,16
+User_132,O_Sent (mail and online),14
+User_132,W_Call after offers,179
+User_132,W_Complete application,46
+User_133,A_Incomplete,28
+User_133,A_Pending,12
+User_133,A_Validating,168
+User_133,O_Accepted,12
+User_133,O_Cancelled,5
+User_133,O_Returned,47
+User_133,W_Call after offers,31
+User_133,W_Call incomplete files,232
+User_133,W_Validate application,505
+User_134,A_Incomplete,10
+User_134,A_Pending,2
+User_134,A_Validating,69
+User_134,O_Accepted,2
+User_134,O_Cancelled,2
+User_134,O_Returned,43
+User_134,W_Call after offers,42
+User_134,W_Call incomplete files,59
+User_134,W_Validate application,206
+User_135,A_Accepted,2
+User_135,A_Complete,2
+User_135,O_Create Offer,2
+User_135,O_Created,2
+User_135,O_Sent (mail and online),2
+User_135,W_Call after offers,6
+User_135,W_Complete application,6
+User_136,A_Incomplete,6
+User_136,W_Call incomplete files,18
+User_136,W_Validate application,6
+User_137,A_Incomplete,5
+User_137,A_Validating,25
+User_137,O_Returned,19
+User_137,W_Call after offers,19
+User_137,W_Call incomplete files,20
+User_137,W_Validate application,75
+User_138,A_Denied,5
+User_138,O_Refused,5
+User_138,W_Assess potential fraud,42
+User_138,W_Call after offers,5
+User_138,W_Call incomplete files,1
+User_138,W_Validate application,25
+User_139,O_Returned,3
+User_139,W_Validate application,1
+User_14,A_Accepted,40
+User_14,A_Cancelled,11
+User_14,A_Complete,40
+User_14,A_Concept,62
+User_14,A_Create Application,30
+User_14,A_Denied,2
+User_14,A_Validating,8
+User_14,O_Cancelled,20
+User_14,O_Create Offer,67
+User_14,O_Created,67
+User_14,O_Sent (mail and online),61
+User_14,O_Sent (online only),5
+User_14,W_Call after offers,275
+User_14,W_Call incomplete files,270
+User_14,W_Complete application,246
+User_14,W_Handle leads,67
+User_14,W_Validate application,24
+User_140,A_Validating,3
+User_140,O_Returned,1
+User_140,W_Call incomplete files,3
+User_140,W_Validate application,10
+User_141,A_Concept,1
+User_141,W_Call after offers,13
+User_141,W_Call incomplete files,4
+User_141,W_Complete application,17
+User_141,W_Handle leads,2
+User_143,W_Assess potential fraud,16
+User_143,W_Validate application,21
+User_144,A_Denied,3
+User_144,O_Refused,4
+User_144,W_Assess potential fraud,63
+User_144,W_Call after offers,7
+User_144,W_Complete application,3
+User_144,W_Handle leads,3
+User_144,W_Validate application,15
+User_146,W_Assess potential fraud,2
+User_146,W_Call incomplete files,2
+User_15,A_Accepted,56
+User_15,A_Cancelled,7
+User_15,A_Complete,55
+User_15,A_Concept,37
+User_15,A_Create Application,27
+User_15,A_Validating,8
+User_15,O_Cancelled,11
+User_15,O_Create Offer,68
+User_15,O_Created,68
+User_15,O_Sent (mail and online),62
+User_15,O_Sent (online only),4
+User_15,W_Call after offers,384
+User_15,W_Call incomplete files,169
+User_15,W_Complete application,275
+User_15,W_Handle leads,26
+User_15,W_Validate application,25
+User_16,A_Accepted,41
+User_16,A_Cancelled,14
+User_16,A_Complete,40
+User_16,A_Concept,45
+User_16,A_Create Application,33
+User_16,A_Validating,7
+User_16,O_Cancelled,19
+User_16,O_Create Offer,56
+User_16,O_Created,56
+User_16,O_Sent (mail and online),51
+User_16,O_Sent (online only),2
+User_16,W_Call after offers,384
+User_16,W_Call incomplete files,90
+User_16,W_Complete application,243
+User_16,W_Handle leads,41
+User_16,W_Validate application,23
+User_17,A_Accepted,36
+User_17,A_Cancelled,2
+User_17,A_Complete,37
+User_17,A_Concept,27
+User_17,A_Create Application,17
+User_17,A_Validating,1
+User_17,O_Cancelled,4
+User_17,O_Create Offer,53
+User_17,O_Created,53
+User_17,O_Sent (mail and online),52
+User_17,O_Sent (online only),1
+User_17,W_Call after offers,225
+User_17,W_Call incomplete files,107
+User_17,W_Complete application,190
+User_17,W_Handle leads,22
+User_17,W_Validate application,5
+User_18,A_Accepted,67
+User_18,A_Cancelled,5
+User_18,A_Complete,67
+User_18,A_Concept,30
+User_18,A_Create Application,23
+User_18,A_Denied,1
+User_18,A_Incomplete,1
+User_18,A_Validating,12
+User_18,O_Cancelled,7
+User_18,O_Create Offer,84
+User_18,O_Created,84
+User_18,O_Refused,1
+User_18,O_Sent (mail and online),82
+User_18,O_Sent (online only),1
+User_18,W_Call after offers,409
+User_18,W_Call incomplete files,100
+User_18,W_Complete application,225
+User_18,W_Handle leads,22
+User_18,W_Validate application,35
+User_19,A_Accepted,51
+User_19,A_Cancelled,5
+User_19,A_Complete,54
+User_19,A_Concept,22
+User_19,A_Create Application,19
+User_19,A_Validating,5
+User_19,O_Cancelled,9
+User_19,O_Create Offer,87
+User_19,O_Created,87
+User_19,O_Sent (mail and online),82
+User_19,O_Sent (online only),4
+User_19,W_Call after offers,266
+User_19,W_Call incomplete files,59
+User_19,W_Complete application,170
+User_19,W_Handle leads,9
+User_19,W_Validate application,15
+User_2,A_Accepted,46
+User_2,A_Cancelled,11
+User_2,A_Complete,46
+User_2,A_Concept,47
+User_2,A_Create Application,20
+User_2,A_Denied,1
+User_2,A_Incomplete,1
+User_2,A_Validating,30
+User_2,O_Cancelled,14
+User_2,O_Create Offer,77
+User_2,O_Created,77
+User_2,O_Refused,3
+User_2,O_Returned,11
+User_2,O_Sent (mail and online),70
+User_2,O_Sent (online only),8
+User_2,W_Call after offers,356
+User_2,W_Call incomplete files,675
+User_2,W_Complete application,240
+User_2,W_Handle leads,63
+User_2,W_Shortened completion ,3
+User_2,W_Validate application,110
+User_20,A_Accepted,7
+User_20,A_Cancelled,4
+User_20,A_Complete,7
+User_20,A_Concept,4
+User_20,A_Create Application,4
+User_20,O_Cancelled,6
+User_20,O_Create Offer,10
+User_20,O_Created,10
+User_20,O_Sent (mail and online),9
+User_20,W_Call after offers,55
+User_20,W_Complete application,26
+User_21,A_Accepted,38
+User_21,A_Cancelled,4
+User_21,A_Complete,37
+User_21,A_Concept,19
+User_21,A_Create Application,19
+User_21,A_Validating,7
+User_21,O_Cancelled,9
+User_21,O_Create Offer,59
+User_21,O_Created,59
+User_21,O_Sent (mail and online),51
+User_21,O_Sent (online only),5
+User_21,W_Call after offers,122
+User_21,W_Call incomplete files,53
+User_21,W_Complete application,118
+User_21,W_Handle leads,2
+User_21,W_Validate application,21
+User_22,A_Accepted,17
+User_22,A_Complete,19
+User_22,A_Concept,2
+User_22,A_Create Application,2
+User_22,A_Denied,1
+User_22,A_Validating,1
+User_22,O_Create Offer,21
+User_22,O_Created,21
+User_22,O_Refused,2
+User_22,O_Sent (mail and online),21
+User_22,W_Call after offers,59
+User_22,W_Call incomplete files,10
+User_22,W_Complete application,48
+User_22,W_Validate application,3
+User_23,A_Accepted,20
+User_23,A_Cancelled,3
+User_23,A_Complete,19
+User_23,A_Concept,28
+User_23,A_Create Application,18
+User_23,A_Denied,1
+User_23,A_Incomplete,2
+User_23,A_Validating,17
+User_23,O_Cancelled,7
+User_23,O_Create Offer,28
+User_23,O_Created,28
+User_23,O_Refused,1
+User_23,O_Sent (mail and online),24
+User_23,O_Sent (online only),4
+User_23,W_Call after offers,171
+User_23,W_Call incomplete files,113
+User_23,W_Complete application,113
+User_23,W_Handle leads,26
+User_23,W_Validate application,51
+User_24,A_Accepted,42
+User_24,A_Cancelled,2
+User_24,A_Complete,41
+User_24,A_Concept,24
+User_24,A_Create Application,16
+User_24,A_Denied,2
+User_24,A_Incomplete,1
+User_24,A_Validating,7
+User_24,O_Cancelled,14
+User_24,O_Create Offer,59
+User_24,O_Created,59
+User_24,O_Refused,3
+User_24,O_Sent (mail and online),59
+User_24,W_Call after offers,408
+User_24,W_Call incomplete files,75
+User_24,W_Complete application,233
+User_24,W_Handle leads,23
+User_24,W_Validate application,21
+User_25,A_Accepted,16
+User_25,A_Cancelled,1
+User_25,A_Complete,16
+User_25,A_Concept,17
+User_25,A_Create Application,6
+User_25,O_Cancelled,5
+User_25,O_Create Offer,29
+User_25,O_Created,29
+User_25,O_Sent (mail and online),27
+User_25,O_Sent (online only),1
+User_25,W_Call after offers,48
+User_25,W_Call incomplete files,7
+User_25,W_Complete application,74
+User_25,W_Handle leads,39
+User_26,A_Accepted,21
+User_26,A_Cancelled,8
+User_26,A_Complete,20
+User_26,A_Concept,40
+User_26,A_Create Application,18
+User_26,A_Validating,3
+User_26,O_Cancelled,11
+User_26,O_Create Offer,41
+User_26,O_Created,41
+User_26,O_Sent (mail and online),36
+User_26,O_Sent (online only),5
+User_26,W_Assess potential fraud,4
+User_26,W_Call after offers,171
+User_26,W_Call incomplete files,127
+User_26,W_Complete application,168
+User_26,W_Handle leads,52
+User_26,W_Validate application,9
+User_27,A_Accepted,28
+User_27,A_Cancelled,1
+User_27,A_Complete,32
+User_27,A_Concept,8
+User_27,A_Create Application,8
+User_27,A_Incomplete,23
+User_27,A_Pending,22
+User_27,A_Validating,183
+User_27,O_Accepted,22
+User_27,O_Cancelled,9
+User_27,O_Create Offer,41
+User_27,O_Created,41
+User_27,O_Returned,112
+User_27,O_Sent (mail and online),40
+User_27,O_Sent (online only),2
+User_27,W_Call after offers,235
+User_27,W_Call incomplete files,186
+User_27,W_Complete application,135
+User_27,W_Validate application,552
+User_28,A_Accepted,86
+User_28,A_Cancelled,6
+User_28,A_Complete,83
+User_28,A_Concept,67
+User_28,A_Create Application,42
+User_28,A_Denied,1
+User_28,A_Validating,15
+User_28,O_Cancelled,14
+User_28,O_Create Offer,132
+User_28,O_Created,132
+User_28,O_Refused,1
+User_28,O_Sent (mail and online),114
+User_28,O_Sent (online only),10
+User_28,W_Call after offers,383
+User_28,W_Call incomplete files,356
+User_28,W_Complete application,335
+User_28,W_Handle leads,52
+User_28,W_Validate application,45
+User_29,A_Accepted,2
+User_29,A_Cancelled,1
+User_29,A_Complete,2
+User_29,A_Concept,2
+User_29,A_Create Application,2
+User_29,A_Denied,21
+User_29,A_Incomplete,181
+User_29,A_Pending,165
+User_29,A_Validating,16
+User_29,O_Accepted,165
+User_29,O_Cancelled,65
+User_29,O_Create Offer,2
+User_29,O_Created,2
+User_29,O_Refused,26
+User_29,O_Returned,19
+User_29,O_Sent (online only),2
+User_29,W_Assess potential fraud,6
+User_29,W_Call after offers,9
+User_29,W_Call incomplete files,602
+User_29,W_Complete application,7
+User_29,W_Validate application,709
+User_3,A_Accepted,100
+User_3,A_Cancelled,11
+User_3,A_Complete,103
+User_3,A_Concept,40
+User_3,A_Create Application,27
+User_3,A_Denied,1
+User_3,A_Incomplete,1
+User_3,A_Validating,17
+User_3,O_Cancelled,16
+User_3,O_Create Offer,145
+User_3,O_Created,145
+User_3,O_Refused,2
+User_3,O_Sent (mail and online),138
+User_3,O_Sent (online only),8
+User_3,W_Call after offers,827
+User_3,W_Call incomplete files,389
+User_3,W_Complete application,416
+User_3,W_Handle leads,26
+User_3,W_Validate application,51
+User_30,A_Accepted,1
+User_30,A_Cancelled,1
+User_30,A_Complete,1
+User_30,A_Concept,1
+User_30,A_Create Application,1
+User_30,A_Denied,30
+User_30,A_Incomplete,178
+User_30,A_Pending,91
+User_30,A_Validating,6
+User_30,O_Accepted,91
+User_30,O_Cancelled,26
+User_30,O_Create Offer,1
+User_30,O_Created,1
+User_30,O_Refused,38
+User_30,O_Returned,10
+User_30,O_Sent (mail and online),1
+User_30,W_Assess potential fraud,3
+User_30,W_Call after offers,3
+User_30,W_Call incomplete files,553
+User_30,W_Complete application,3
+User_30,W_Validate application,1052
+User_31,A_Accepted,23
+User_31,A_Cancelled,1
+User_31,A_Complete,22
+User_31,A_Concept,16
+User_31,A_Create Application,16
+User_31,A_Denied,2
+User_31,A_Incomplete,18
+User_31,A_Pending,18
+User_31,A_Validating,3
+User_31,O_Accepted,18
+User_31,O_Cancelled,9
+User_31,O_Create Offer,28
+User_31,O_Created,28
+User_31,O_Refused,2
+User_31,O_Sent (mail and online),23
+User_31,O_Sent (online only),4
+User_31,W_Call after offers,302
+User_31,W_Call incomplete files,115
+User_31,W_Complete application,83
+User_31,W_Handle leads,4
+User_31,W_Validate application,47
+User_32,A_Accepted,39
+User_32,A_Cancelled,2
+User_32,A_Complete,38
+User_32,A_Concept,14
+User_32,A_Create Application,12
+User_32,A_Denied,1
+User_32,A_Validating,4
+User_32,O_Cancelled,5
+User_32,O_Create Offer,54
+User_32,O_Created,54
+User_32,O_Refused,1
+User_32,O_Sent (mail and online),48
+User_32,O_Sent (online only),5
+User_32,W_Call after offers,214
+User_32,W_Call incomplete files,20
+User_32,W_Complete application,169
+User_32,W_Handle leads,9
+User_32,W_Validate application,13
+User_33,A_Accepted,15
+User_33,A_Cancelled,2
+User_33,A_Complete,15
+User_33,A_Concept,7
+User_33,A_Create Application,7
+User_33,A_Incomplete,1
+User_33,A_Validating,5
+User_33,O_Cancelled,13
+User_33,O_Create Offer,29
+User_33,O_Created,29
+User_33,O_Sent (mail and online),21
+User_33,O_Sent (online only),4
+User_33,W_Call after offers,65
+User_33,W_Call incomplete files,294
+User_33,W_Complete application,63
+User_33,W_Handle leads,15
+User_33,W_Validate application,15
+User_34,A_Accepted,19
+User_34,A_Cancelled,1
+User_34,A_Complete,20
+User_34,A_Concept,7
+User_34,A_Create Application,6
+User_34,A_Validating,9
+User_34,O_Cancelled,1
+User_34,O_Create Offer,27
+User_34,O_Created,27
+User_34,O_Sent (mail and online),25
+User_34,O_Sent (online only),1
+User_34,W_Call after offers,79
+User_34,W_Call incomplete files,151
+User_34,W_Complete application,62
+User_34,W_Handle leads,3
+User_34,W_Validate application,45
+User_35,A_Accepted,54
+User_35,A_Cancelled,3
+User_35,A_Complete,51
+User_35,A_Concept,21
+User_35,A_Create Application,21
+User_35,A_Denied,1
+User_35,A_Incomplete,2
+User_35,A_Validating,8
+User_35,O_Cancelled,9
+User_35,O_Create Offer,77
+User_35,O_Created,77
+User_35,O_Sent (mail and online),71
+User_35,O_Sent (online only),5
+User_35,W_Call after offers,219
+User_35,W_Call incomplete files,52
+User_35,W_Complete application,249
+User_35,W_Validate application,24
+User_36,A_Accepted,46
+User_36,A_Cancelled,7
+User_36,A_Complete,45
+User_36,A_Concept,31
+User_36,A_Create Application,27
+User_36,A_Incomplete,1
+User_36,A_Validating,2
+User_36,O_Cancelled,10
+User_36,O_Create Offer,64
+User_36,O_Created,64
+User_36,O_Sent (mail and online),62
+User_36,O_Sent (online only),2
+User_36,W_Assess potential fraud,10
+User_36,W_Call after offers,196
+User_36,W_Call incomplete files,56
+User_36,W_Complete application,162
+User_36,W_Handle leads,34
+User_36,W_Validate application,7
+User_37,A_Accepted,71
+User_37,A_Cancelled,4
+User_37,A_Complete,72
+User_37,A_Concept,16
+User_37,A_Create Application,13
+User_37,A_Validating,6
+User_37,O_Cancelled,17
+User_37,O_Create Offer,95
+User_37,O_Created,95
+User_37,O_Sent (mail and online),91
+User_37,O_Sent (online only),2
+User_37,W_Call after offers,276
+User_37,W_Call incomplete files,93
+User_37,W_Complete application,244
+User_37,W_Handle leads,17
+User_37,W_Validate application,19
+User_38,A_Accepted,38
+User_38,A_Cancelled,3
+User_38,A_Complete,37
+User_38,A_Concept,11
+User_38,A_Create Application,10
+User_38,A_Validating,2
+User_38,O_Cancelled,9
+User_38,O_Create Offer,53
+User_38,O_Created,53
+User_38,O_Sent (mail and online),50
+User_38,W_Call after offers,123
+User_38,W_Call incomplete files,67
+User_38,W_Complete application,187
+User_38,W_Handle leads,3
+User_38,W_Validate application,6
+User_39,A_Accepted,66
+User_39,A_Cancelled,2
+User_39,A_Complete,67
+User_39,A_Concept,23
+User_39,A_Create Application,19
+User_39,A_Denied,1
+User_39,A_Incomplete,1
+User_39,A_Validating,4
+User_39,O_Cancelled,8
+User_39,O_Create Offer,98
+User_39,O_Created,98
+User_39,O_Sent (mail and online),88
+User_39,O_Sent (online only),2
+User_39,W_Call after offers,240
+User_39,W_Call incomplete files,191
+User_39,W_Complete application,241
+User_39,W_Handle leads,15
+User_39,W_Validate application,12
+User_4,A_Accepted,69
+User_4,A_Cancelled,2
+User_4,A_Complete,66
+User_4,A_Concept,37
+User_4,A_Create Application,27
+User_4,A_Denied,1
+User_4,A_Incomplete,1
+User_4,A_Validating,13
+User_4,O_Cancelled,4
+User_4,O_Create Offer,101
+User_4,O_Created,101
+User_4,O_Refused,1
+User_4,O_Sent (mail and online),91
+User_4,O_Sent (online only),7
+User_4,W_Call after offers,240
+User_4,W_Call incomplete files,131
+User_4,W_Complete application,202
+User_4,W_Handle leads,23
+User_4,W_Validate application,45
+User_40,A_Accepted,50
+User_40,A_Cancelled,2
+User_40,A_Complete,49
+User_40,A_Concept,15
+User_40,A_Create Application,10
+User_40,A_Denied,1
+User_40,A_Validating,1
+User_40,O_Cancelled,4
+User_40,O_Create Offer,71
+User_40,O_Created,71
+User_40,O_Refused,1
+User_40,O_Sent (mail and online),64
+User_40,O_Sent (online only),2
+User_40,W_Call after offers,321
+User_40,W_Call incomplete files,96
+User_40,W_Complete application,215
+User_40,W_Handle leads,12
+User_40,W_Validate application,4
+User_41,A_Accepted,45
+User_41,A_Cancelled,4
+User_41,A_Complete,43
+User_41,A_Concept,17
+User_41,A_Create Application,17
+User_41,A_Validating,21
+User_41,O_Cancelled,11
+User_41,O_Create Offer,66
+User_41,O_Created,66
+User_41,O_Sent (mail and online),60
+User_41,O_Sent (online only),5
+User_41,W_Call after offers,226
+User_41,W_Call incomplete files,442
+User_41,W_Complete application,171
+User_41,W_Validate application,63
+User_42,A_Accepted,73
+User_42,A_Cancelled,9
+User_42,A_Complete,73
+User_42,A_Concept,28
+User_42,A_Create Application,26
+User_42,A_Denied,1
+User_42,A_Validating,4
+User_42,O_Cancelled,17
+User_42,O_Create Offer,93
+User_42,O_Created,93
+User_42,O_Refused,1
+User_42,O_Sent (mail and online),88
+User_42,O_Sent (online only),1
+User_42,W_Call after offers,257
+User_42,W_Call incomplete files,147
+User_42,W_Complete application,272
+User_42,W_Handle leads,6
+User_42,W_Shortened completion ,7
+User_42,W_Validate application,13
+User_43,A_Accepted,43
+User_43,A_Cancelled,8
+User_43,A_Complete,30
+User_43,A_Concept,31
+User_43,A_Create Application,21
+User_43,O_Cancelled,13
+User_43,O_Create Offer,40
+User_43,O_Created,40
+User_43,O_Sent (mail and online),36
+User_43,O_Sent (online only),3
+User_43,W_Call after offers,215
+User_43,W_Call incomplete files,28
+User_43,W_Complete application,143
+User_43,W_Handle leads,24
+User_43,W_Shortened completion ,3
+User_44,A_Accepted,46
+User_44,A_Complete,46
+User_44,A_Concept,13
+User_44,A_Create Application,13
+User_44,A_Validating,1
+User_44,O_Cancelled,2
+User_44,O_Create Offer,58
+User_44,O_Created,58
+User_44,O_Sent (mail and online),54
+User_44,O_Sent (online only),4
+User_44,W_Call after offers,135
+User_44,W_Call incomplete files,25
+User_44,W_Complete application,127
+User_44,W_Validate application,3
+User_45,A_Accepted,28
+User_45,A_Cancelled,4
+User_45,A_Complete,23
+User_45,A_Concept,34
+User_45,A_Create Application,22
+User_45,A_Incomplete,1
+User_45,A_Validating,3
+User_45,O_Cancelled,5
+User_45,O_Create Offer,40
+User_45,O_Created,40
+User_45,O_Sent (mail and online),35
+User_45,O_Sent (online only),2
+User_45,W_Call after offers,215
+User_45,W_Call incomplete files,31
+User_45,W_Complete application,147
+User_45,W_Handle leads,26
+User_45,W_Validate application,11
+User_46,A_Accepted,63
+User_46,A_Cancelled,1
+User_46,A_Complete,64
+User_46,A_Concept,20
+User_46,A_Create Application,12
+User_46,A_Incomplete,1
+User_46,A_Validating,2
+User_46,O_Cancelled,10
+User_46,O_Create Offer,91
+User_46,O_Created,91
+User_46,O_Sent (mail and online),85
+User_46,O_Sent (online only),2
+User_46,W_Call after offers,328
+User_46,W_Call incomplete files,72
+User_46,W_Complete application,281
+User_46,W_Handle leads,36
+User_46,W_Validate application,6
+User_47,A_Accepted,14
+User_47,A_Cancelled,1
+User_47,A_Complete,13
+User_47,A_Concept,11
+User_47,A_Create Application,10
+User_47,A_Validating,1
+User_47,O_Cancelled,2
+User_47,O_Create Offer,17
+User_47,O_Created,17
+User_47,O_Sent (mail and online),17
+User_47,W_Call after offers,49
+User_47,W_Call incomplete files,21
+User_47,W_Complete application,43
+User_47,W_Handle leads,3
+User_47,W_Validate application,3
+User_48,A_Accepted,63
+User_48,A_Cancelled,5
+User_48,A_Complete,63
+User_48,A_Concept,11
+User_48,A_Create Application,11
+User_48,A_Validating,4
+User_48,O_Cancelled,11
+User_48,O_Create Offer,79
+User_48,O_Created,79
+User_48,O_Sent (mail and online),75
+User_48,O_Sent (online only),2
+User_48,W_Call after offers,245
+User_48,W_Call incomplete files,185
+User_48,W_Complete application,200
+User_48,W_Validate application,14
+User_49,A_Accepted,103
+User_49,A_Cancelled,10
+User_49,A_Complete,108
+User_49,A_Concept,28
+User_49,A_Create Application,22
+User_49,A_Validating,6
+User_49,O_Cancelled,13
+User_49,O_Create Offer,137
+User_49,O_Created,137
+User_49,O_Sent (mail and online),134
+User_49,O_Sent (online only),3
+User_49,W_Call after offers,423
+User_49,W_Call incomplete files,222
+User_49,W_Complete application,507
+User_49,W_Handle leads,15
+User_49,W_Validate application,28
+User_5,A_Accepted,90
+User_5,A_Cancelled,19
+User_5,A_Complete,83
+User_5,A_Concept,63
+User_5,A_Create Application,44
+User_5,A_Denied,1
+User_5,A_Incomplete,1
+User_5,A_Validating,11
+User_5,O_Cancelled,30
+User_5,O_Create Offer,135
+User_5,O_Created,135
+User_5,O_Refused,1
+User_5,O_Sent (mail and online),119
+User_5,O_Sent (online only),14
+User_5,W_Call after offers,775
+User_5,W_Call incomplete files,292
+User_5,W_Complete application,381
+User_5,W_Handle leads,40
+User_5,W_Validate application,73
+User_50,A_Accepted,2
+User_50,A_Complete,2
+User_50,A_Concept,4
+User_50,A_Create Application,2
+User_50,O_Create Offer,2
+User_50,O_Created,2
+User_50,O_Sent (mail and online),2
+User_50,W_Call after offers,6
+User_50,W_Call incomplete files,2
+User_50,W_Complete application,17
+User_50,W_Handle leads,4
+User_51,A_Accepted,48
+User_51,A_Cancelled,3
+User_51,A_Complete,49
+User_51,A_Concept,10
+User_51,A_Create Application,10
+User_51,A_Denied,1
+User_51,A_Validating,4
+User_51,O_Cancelled,6
+User_51,O_Create Offer,72
+User_51,O_Created,72
+User_51,O_Refused,2
+User_51,O_Sent (mail and online),69
+User_51,O_Sent (online only),2
+User_51,W_Call after offers,228
+User_51,W_Call incomplete files,73
+User_51,W_Complete application,148
+User_51,W_Validate application,12
+User_52,A_Accepted,48
+User_52,A_Cancelled,3
+User_52,A_Complete,47
+User_52,A_Concept,27
+User_52,A_Create Application,25
+User_52,A_Denied,1
+User_52,A_Validating,5
+User_52,O_Cancelled,4
+User_52,O_Create Offer,66
+User_52,O_Created,66
+User_52,O_Sent (mail and online),64
+User_52,O_Sent (online only),1
+User_52,W_Call after offers,164
+User_52,W_Call incomplete files,122
+User_52,W_Complete application,209
+User_52,W_Handle leads,4
+User_52,W_Validate application,15
+User_53,A_Accepted,41
+User_53,A_Complete,40
+User_53,A_Concept,6
+User_53,A_Create Application,6
+User_53,A_Incomplete,8
+User_53,A_Pending,2
+User_53,A_Validating,46
+User_53,O_Accepted,2
+User_53,O_Cancelled,3
+User_53,O_Create Offer,50
+User_53,O_Created,50
+User_53,O_Returned,43
+User_53,O_Sent (mail and online),48
+User_53,W_Call after offers,160
+User_53,W_Call incomplete files,51
+User_53,W_Complete application,180
+User_53,W_Validate application,137
+User_54,A_Accepted,18
+User_54,A_Cancelled,2
+User_54,A_Complete,18
+User_54,A_Concept,17
+User_54,A_Create Application,9
+User_54,A_Validating,13
+User_54,O_Cancelled,8
+User_54,O_Create Offer,39
+User_54,O_Created,39
+User_54,O_Sent (mail and online),37
+User_54,O_Sent (online only),1
+User_54,W_Call after offers,81
+User_54,W_Call incomplete files,304
+User_54,W_Complete application,80
+User_54,W_Handle leads,19
+User_54,W_Validate application,43
+User_55,A_Accepted,12
+User_55,A_Complete,12
+User_55,O_Create Offer,13
+User_55,O_Created,13
+User_55,O_Sent (mail and online),13
+User_55,W_Call after offers,36
+User_55,W_Call incomplete files,2
+User_55,W_Complete application,65
+User_56,A_Accepted,40
+User_56,A_Cancelled,1
+User_56,A_Complete,42
+User_56,A_Concept,6
+User_56,A_Create Application,5
+User_56,A_Denied,1
+User_56,A_Validating,1
+User_56,O_Cancelled,1
+User_56,O_Create Offer,50
+User_56,O_Created,50
+User_56,O_Refused,1
+User_56,O_Sent (mail and online),48
+User_56,W_Call after offers,125
+User_56,W_Call incomplete files,35
+User_56,W_Complete application,180
+User_56,W_Handle leads,2
+User_56,W_Validate application,5
+User_57,A_Accepted,38
+User_57,A_Complete,39
+User_57,A_Concept,10
+User_57,A_Create Application,9
+User_57,A_Incomplete,1
+User_57,A_Validating,1
+User_57,O_Create Offer,53
+User_57,O_Created,53
+User_57,O_Sent (mail and online),52
+User_57,O_Sent (online only),2
+User_57,W_Call after offers,117
+User_57,W_Call incomplete files,40
+User_57,W_Complete application,122
+User_57,W_Handle leads,4
+User_57,W_Validate application,4
+User_58,A_Accepted,26
+User_58,A_Cancelled,3
+User_58,A_Complete,26
+User_58,A_Concept,10
+User_58,A_Create Application,10
+User_58,A_Validating,2
+User_58,O_Cancelled,6
+User_58,O_Create Offer,35
+User_58,O_Created,35
+User_58,O_Sent (mail and online),30
+User_58,O_Sent (online only),1
+User_58,W_Call after offers,159
+User_58,W_Call incomplete files,51
+User_58,W_Complete application,62
+User_58,W_Handle leads,2
+User_58,W_Validate application,6
+User_59,A_Accepted,9
+User_59,A_Complete,11
+User_59,A_Concept,2
+User_59,A_Create Application,2
+User_59,O_Create Offer,13
+User_59,O_Created,13
+User_59,O_Sent (mail and online),13
+User_59,W_Call after offers,33
+User_59,W_Complete application,29
+User_6,A_Accepted,3
+User_6,A_Complete,4
+User_6,A_Concept,3
+User_6,A_Create Application,3
+User_6,O_Create Offer,4
+User_6,O_Created,4
+User_6,O_Sent (mail and online),4
+User_6,W_Call after offers,12
+User_6,W_Complete application,10
+User_60,A_Accepted,60
+User_60,A_Cancelled,1
+User_60,A_Complete,55
+User_60,A_Concept,22
+User_60,A_Create Application,20
+User_60,A_Validating,5
+User_60,O_Cancelled,5
+User_60,O_Create Offer,75
+User_60,O_Created,75
+User_60,O_Sent (mail and online),70
+User_60,W_Call after offers,242
+User_60,W_Call incomplete files,70
+User_60,W_Complete application,207
+User_60,W_Handle leads,9
+User_60,W_Validate application,15
+User_61,A_Accepted,93
+User_61,A_Cancelled,4
+User_61,A_Complete,96
+User_61,A_Concept,33
+User_61,A_Create Application,29
+User_61,A_Validating,9
+User_61,O_Cancelled,5
+User_61,O_Create Offer,127
+User_61,O_Created,127
+User_61,O_Sent (mail and online),120
+User_61,O_Sent (online only),3
+User_61,W_Call after offers,333
+User_61,W_Call incomplete files,102
+User_61,W_Complete application,296
+User_61,W_Handle leads,14
+User_61,W_Validate application,31
+User_62,A_Accepted,12
+User_62,A_Cancelled,1
+User_62,A_Complete,13
+User_62,A_Concept,3
+User_62,A_Create Application,3
+User_62,A_Validating,1
+User_62,O_Cancelled,5
+User_62,O_Create Offer,17
+User_62,O_Created,17
+User_62,O_Sent (mail and online),17
+User_62,W_Call after offers,42
+User_62,W_Call incomplete files,5
+User_62,W_Complete application,44
+User_62,W_Validate application,3
+User_63,A_Accepted,17
+User_63,A_Cancelled,2
+User_63,A_Complete,16
+User_63,A_Concept,10
+User_63,A_Create Application,8
+User_63,A_Denied,1
+User_63,A_Validating,1
+User_63,O_Cancelled,6
+User_63,O_Create Offer,28
+User_63,O_Created,28
+User_63,O_Refused,1
+User_63,O_Sent (mail and online),19
+User_63,O_Sent (online only),5
+User_63,W_Call after offers,128
+User_63,W_Call incomplete files,119
+User_63,W_Complete application,99
+User_63,W_Handle leads,4
+User_63,W_Validate application,4
+User_64,A_Concept,5
+User_64,A_Create Application,1
+User_64,W_Call after offers,6
+User_64,W_Call incomplete files,10
+User_64,W_Complete application,24
+User_64,W_Handle leads,12
+User_65,A_Accepted,12
+User_65,A_Complete,12
+User_65,A_Concept,4
+User_65,A_Create Application,2
+User_65,A_Denied,1
+User_65,O_Cancelled,1
+User_65,O_Create Offer,17
+User_65,O_Created,17
+User_65,O_Refused,2
+User_65,O_Sent (mail and online),17
+User_65,W_Call after offers,101
+User_65,W_Complete application,75
+User_65,W_Handle leads,4
+User_66,A_Accepted,23
+User_66,A_Cancelled,1
+User_66,A_Complete,24
+User_66,A_Concept,7
+User_66,A_Create Application,3
+User_66,A_Validating,2
+User_66,O_Cancelled,2
+User_66,O_Create Offer,30
+User_66,O_Created,30
+User_66,O_Sent (mail and online),28
+User_66,O_Sent (online only),1
+User_66,W_Call after offers,73
+User_66,W_Call incomplete files,150
+User_66,W_Complete application,89
+User_66,W_Handle leads,14
+User_66,W_Validate application,6
+User_67,A_Accepted,33
+User_67,A_Cancelled,8
+User_67,A_Complete,34
+User_67,A_Concept,13
+User_67,A_Create Application,11
+User_67,A_Incomplete,1
+User_67,A_Validating,7
+User_67,O_Cancelled,11
+User_67,O_Create Offer,49
+User_67,O_Created,49
+User_67,O_Sent (mail and online),46
+User_67,O_Sent (online only),4
+User_67,W_Call after offers,104
+User_67,W_Call incomplete files,286
+User_67,W_Complete application,151
+User_67,W_Handle leads,5
+User_67,W_Validate application,21
+User_68,A_Accepted,2
+User_68,A_Complete,1
+User_68,A_Concept,2
+User_68,A_Create Application,2
+User_68,A_Denied,42
+User_68,A_Incomplete,121
+User_68,A_Pending,97
+User_68,A_Validating,3
+User_68,O_Accepted,97
+User_68,O_Cancelled,52
+User_68,O_Create Offer,1
+User_68,O_Created,1
+User_68,O_Refused,55
+User_68,O_Returned,10
+User_68,O_Sent (mail and online),1
+User_68,W_Assess potential fraud,26
+User_68,W_Call after offers,4
+User_68,W_Call incomplete files,433
+User_68,W_Complete application,6
+User_68,W_Validate application,843
+User_69,A_Accepted,14
+User_69,A_Complete,14
+User_69,A_Concept,3
+User_69,A_Create Application,3
+User_69,O_Create Offer,21
+User_69,O_Created,21
+User_69,O_Sent (mail and online),20
+User_69,O_Sent (online only),1
+User_69,W_Call after offers,44
+User_69,W_Call incomplete files,29
+User_69,W_Complete application,104
+User_69,W_Handle leads,4
+User_7,A_Accepted,53
+User_7,A_Cancelled,5
+User_7,A_Complete,53
+User_7,A_Concept,24
+User_7,A_Create Application,23
+User_7,A_Validating,2
+User_7,O_Cancelled,7
+User_7,O_Create Offer,69
+User_7,O_Created,69
+User_7,O_Sent (mail and online),62
+User_7,O_Sent (online only),1
+User_7,W_Call after offers,162
+User_7,W_Call incomplete files,35
+User_7,W_Complete application,188
+User_7,W_Handle leads,13
+User_7,W_Validate application,10
+User_70,A_Accepted,30
+User_70,A_Cancelled,2
+User_70,A_Complete,31
+User_70,A_Concept,13
+User_70,A_Create Application,9
+User_70,A_Validating,7
+User_70,O_Cancelled,2
+User_70,O_Create Offer,46
+User_70,O_Created,46
+User_70,O_Sent (mail and online),45
+User_70,O_Sent (online only),1
+User_70,W_Call after offers,106
+User_70,W_Call incomplete files,54
+User_70,W_Complete application,68
+User_70,W_Handle leads,20
+User_70,W_Validate application,21
+User_71,A_Accepted,53
+User_71,A_Cancelled,1
+User_71,A_Complete,49
+User_71,A_Concept,12
+User_71,A_Create Application,10
+User_71,A_Denied,2
+User_71,A_Validating,2
+User_71,O_Cancelled,4
+User_71,O_Create Offer,72
+User_71,O_Created,72
+User_71,O_Refused,2
+User_71,O_Sent (mail and online),67
+User_71,O_Sent (online only),3
+User_71,W_Call after offers,186
+User_71,W_Call incomplete files,52
+User_71,W_Complete application,216
+User_71,W_Handle leads,8
+User_71,W_Validate application,6
+User_72,A_Accepted,10
+User_72,A_Complete,9
+User_72,A_Concept,1
+User_72,A_Create Application,1
+User_72,O_Cancelled,1
+User_72,O_Create Offer,11
+User_72,O_Created,11
+User_72,O_Sent (mail and online),10
+User_72,W_Call after offers,27
+User_72,W_Call incomplete files,2
+User_72,W_Complete application,68
+User_73,A_Accepted,6
+User_73,A_Cancelled,1
+User_73,A_Complete,7
+User_73,A_Concept,4
+User_73,A_Create Application,4
+User_73,O_Cancelled,2
+User_73,O_Create Offer,16
+User_73,O_Created,16
+User_73,O_Sent (mail and online),15
+User_73,W_Call after offers,24
+User_73,W_Call incomplete files,12
+User_73,W_Complete application,30
+User_74,A_Accepted,13
+User_74,A_Cancelled,1
+User_74,A_Complete,14
+User_74,A_Concept,3
+User_74,A_Create Application,2
+User_74,A_Validating,3
+User_74,O_Cancelled,2
+User_74,O_Create Offer,20
+User_74,O_Created,20
+User_74,O_Sent (mail and online),18
+User_74,O_Sent (online only),1
+User_74,W_Call after offers,42
+User_74,W_Call incomplete files,15
+User_74,W_Complete application,47
+User_74,W_Handle leads,2
+User_74,W_Validate application,10
+User_75,A_Accepted,2
+User_75,A_Cancelled,3
+User_75,A_Concept,2
+User_75,A_Create Application,2
+User_75,A_Denied,40
+User_75,A_Incomplete,149
+User_75,A_Pending,102
+User_75,A_Validating,1
+User_75,O_Accepted,102
+User_75,O_Cancelled,33
+User_75,O_Create Offer,3
+User_75,O_Created,3
+User_75,O_Refused,50
+User_75,O_Returned,3
+User_75,O_Sent (mail and online),1
+User_75,W_Assess potential fraud,6
+User_75,W_Call incomplete files,457
+User_75,W_Complete application,7
+User_75,W_Validate application,483
+User_76,A_Accepted,3
+User_76,A_Cancelled,1
+User_76,A_Complete,5
+User_76,A_Denied,1
+User_76,A_Validating,2
+User_76,O_Cancelled,1
+User_76,O_Create Offer,12
+User_76,O_Created,12
+User_76,O_Refused,1
+User_76,O_Sent (mail and online),11
+User_76,W_Call after offers,15
+User_76,W_Call incomplete files,2
+User_76,W_Complete application,6
+User_76,W_Validate application,6
+User_77,A_Accepted,15
+User_77,A_Cancelled,2
+User_77,A_Complete,13
+User_77,O_Cancelled,7
+User_77,O_Create Offer,20
+User_77,O_Created,20
+User_77,O_Sent (mail and online),17
+User_77,W_Call after offers,51
+User_77,W_Call incomplete files,4
+User_77,W_Complete application,95
+User_78,A_Accepted,28
+User_78,A_Cancelled,2
+User_78,A_Complete,28
+User_78,A_Concept,8
+User_78,A_Create Application,6
+User_78,A_Validating,1
+User_78,O_Cancelled,5
+User_78,O_Create Offer,38
+User_78,O_Created,38
+User_78,O_Sent (mail and online),36
+User_78,O_Sent (online only),2
+User_78,W_Call after offers,99
+User_78,W_Call incomplete files,13
+User_78,W_Complete application,143
+User_78,W_Handle leads,6
+User_78,W_Validate application,3
+User_79,A_Accepted,19
+User_79,A_Complete,20
+User_79,A_Concept,4
+User_79,A_Create Application,3
+User_79,A_Validating,1
+User_79,O_Create Offer,23
+User_79,O_Created,23
+User_79,O_Sent (mail and online),22
+User_79,O_Sent (online only),1
+User_79,W_Call after offers,60
+User_79,W_Call incomplete files,7
+User_79,W_Complete application,85
+User_79,W_Handle leads,2
+User_79,W_Validate application,2
+User_8,A_Accepted,6
+User_8,A_Cancelled,1
+User_8,A_Complete,4
+User_8,A_Concept,4
+User_8,A_Create Application,4
+User_8,O_Cancelled,1
+User_8,O_Create Offer,13
+User_8,O_Created,13
+User_8,O_Sent (mail and online),13
+User_8,W_Call after offers,25
+User_8,W_Complete application,17
+User_80,A_Accepted,25
+User_80,A_Cancelled,1
+User_80,A_Complete,25
+User_80,A_Concept,7
+User_80,A_Create Application,6
+User_80,O_Cancelled,2
+User_80,O_Create Offer,28
+User_80,O_Created,28
+User_80,O_Sent (mail and online),26
+User_80,O_Sent (online only),1
+User_80,W_Assess potential fraud,4
+User_80,W_Call after offers,76
+User_80,W_Complete application,109
+User_80,W_Handle leads,4
+User_81,A_Accepted,14
+User_81,A_Complete,14
+User_81,A_Concept,2
+User_81,A_Create Application,2
+User_81,O_Cancelled,2
+User_81,O_Create Offer,16
+User_81,O_Created,16
+User_81,O_Sent (mail and online),14
+User_81,W_Call after offers,42
+User_81,W_Complete application,60
+User_83,A_Denied,31
+User_83,A_Incomplete,82
+User_83,A_Pending,47
+User_83,A_Validating,2
+User_83,O_Accepted,47
+User_83,O_Cancelled,25
+User_83,O_Refused,42
+User_83,O_Returned,2
+User_83,W_Assess potential fraud,20
+User_83,W_Call incomplete files,286
+User_83,W_Validate application,473
+User_84,A_Accepted,14
+User_84,A_Complete,16
+User_84,A_Concept,1
+User_84,A_Create Application,1
+User_84,A_Validating,1
+User_84,O_Create Offer,21
+User_84,O_Created,21
+User_84,O_Sent (mail and online),20
+User_84,O_Sent (online only),1
+User_84,W_Call after offers,48
+User_84,W_Call incomplete files,42
+User_84,W_Complete application,82
+User_84,W_Validate application,3
+User_85,A_Accepted,19
+User_85,A_Cancelled,1
+User_85,A_Complete,19
+User_85,A_Concept,7
+User_85,A_Create Application,6
+User_85,A_Validating,2
+User_85,O_Cancelled,1
+User_85,O_Create Offer,37
+User_85,O_Created,37
+User_85,O_Sent (mail and online),33
+User_85,O_Sent (online only),1
+User_85,W_Call after offers,161
+User_85,W_Call incomplete files,24
+User_85,W_Complete application,64
+User_85,W_Handle leads,2
+User_85,W_Validate application,6
+User_86,A_Accepted,7
+User_86,A_Cancelled,2
+User_86,A_Complete,7
+User_86,A_Concept,4
+User_86,A_Create Application,4
+User_86,A_Validating,2
+User_86,O_Cancelled,2
+User_86,O_Create Offer,8
+User_86,O_Created,8
+User_86,O_Sent (mail and online),9
+User_86,W_Call after offers,24
+User_86,W_Call incomplete files,25
+User_86,W_Complete application,25
+User_86,W_Validate application,6
+User_87,A_Accepted,5
+User_87,A_Cancelled,1
+User_87,A_Complete,5
+User_87,A_Concept,5
+User_87,A_Create Application,5
+User_87,A_Denied,33
+User_87,A_Incomplete,123
+User_87,A_Pending,65
+User_87,A_Validating,6
+User_87,O_Accepted,65
+User_87,O_Cancelled,23
+User_87,O_Create Offer,5
+User_87,O_Created,5
+User_87,O_Refused,42
+User_87,O_Returned,7
+User_87,O_Sent (mail and online),3
+User_87,O_Sent (online only),2
+User_87,W_Assess potential fraud,3
+User_87,W_Call after offers,15
+User_87,W_Call incomplete files,375
+User_87,W_Complete application,16
+User_87,W_Validate application,1291
+User_88,A_Accepted,6
+User_88,A_Complete,6
+User_88,O_Create Offer,7
+User_88,O_Created,7
+User_88,O_Sent (mail and online),7
+User_88,W_Call after offers,18
+User_88,W_Call incomplete files,32
+User_88,W_Complete application,37
+User_89,A_Accepted,1
+User_89,A_Complete,1
+User_89,O_Create Offer,1
+User_89,O_Created,1
+User_89,O_Sent (mail and online),1
+User_89,W_Call after offers,3
+User_89,W_Complete application,1
+User_9,A_Accepted,4
+User_9,A_Complete,2
+User_9,A_Concept,11
+User_9,A_Create Application,6
+User_9,O_Create Offer,9
+User_9,O_Created,9
+User_9,O_Sent (mail and online),3
+User_9,O_Sent (online only),6
+User_9,W_Call after offers,36
+User_9,W_Call incomplete files,4
+User_9,W_Complete application,38
+User_9,W_Handle leads,14
+User_90,A_Accepted,1
+User_90,A_Complete,1
+User_90,A_Concept,1
+User_90,A_Create Application,1
+User_90,A_Denied,18
+User_90,A_Incomplete,115
+User_90,A_Pending,96
+User_90,A_Validating,3
+User_90,O_Accepted,96
+User_90,O_Cancelled,24
+User_90,O_Create Offer,1
+User_90,O_Created,1
+User_90,O_Refused,26
+User_90,O_Returned,4
+User_90,O_Sent (online only),1
+User_90,W_Call after offers,4
+User_90,W_Call incomplete files,361
+User_90,W_Complete application,3
+User_90,W_Validate application,321
+User_91,A_Accepted,13
+User_91,A_Complete,12
+User_91,A_Concept,1
+User_91,A_Create Application,1
+User_91,O_Create Offer,14
+User_91,O_Created,14
+User_91,O_Sent (mail and online),14
+User_91,W_Call after offers,36
+User_91,W_Complete application,83
+User_92,A_Accepted,8
+User_92,A_Complete,8
+User_92,A_Concept,2
+User_92,A_Create Application,2
+User_92,A_Validating,1
+User_92,O_Create Offer,12
+User_92,O_Created,12
+User_92,O_Sent (mail and online),11
+User_92,W_Call after offers,42
+User_92,W_Call incomplete files,3
+User_92,W_Complete application,25
+User_92,W_Validate application,3
+User_93,A_Accepted,1
+User_93,A_Complete,1
+User_93,A_Concept,1
+User_93,A_Create Application,1
+User_93,A_Denied,11
+User_93,A_Incomplete,56
+User_93,A_Pending,22
+User_93,A_Validating,6
+User_93,O_Accepted,22
+User_93,O_Cancelled,2
+User_93,O_Create Offer,1
+User_93,O_Created,1
+User_93,O_Refused,15
+User_93,O_Returned,1
+User_93,O_Sent (online only),1
+User_93,W_Call after offers,4
+User_93,W_Call incomplete files,172
+User_93,W_Complete application,3
+User_93,W_Validate application,593
+User_94,A_Accepted,15
+User_94,A_Complete,13
+User_94,A_Concept,1
+User_94,A_Create Application,1
+User_94,O_Create Offer,14
+User_94,O_Created,14
+User_94,O_Sent (mail and online),13
+User_94,W_Call after offers,39
+User_94,W_Complete application,59
+User_95,A_Accepted,2
+User_95,A_Complete,2
+User_95,A_Concept,2
+User_95,A_Create Application,2
+User_95,A_Denied,26
+User_95,A_Incomplete,65
+User_95,A_Pending,36
+User_95,A_Validating,4
+User_95,O_Accepted,36
+User_95,O_Cancelled,9
+User_95,O_Create Offer,2
+User_95,O_Created,2
+User_95,O_Refused,31
+User_95,O_Returned,3
+User_95,O_Sent (online only),2
+User_95,W_Assess potential fraud,3
+User_95,W_Call after offers,7
+User_95,W_Call incomplete files,202
+User_95,W_Complete application,6
+User_95,W_Validate application,435
+User_96,A_Accepted,27
+User_96,A_Cancelled,1
+User_96,A_Complete,28
+User_96,A_Concept,5
+User_96,A_Create Application,5
+User_96,O_Cancelled,2
+User_96,O_Create Offer,31
+User_96,O_Created,31
+User_96,O_Sent (mail and online),32
+User_96,W_Call after offers,85
+User_96,W_Complete application,86
+User_97,A_Accepted,12
+User_97,A_Complete,14
+User_97,A_Concept,1
+User_97,A_Create Application,1
+User_97,A_Validating,1
+User_97,O_Create Offer,16
+User_97,O_Created,16
+User_97,O_Sent (mail and online),15
+User_97,W_Call after offers,42
+User_97,W_Call incomplete files,1
+User_97,W_Complete application,76
+User_97,W_Validate application,3
+User_98,A_Accepted,10
+User_98,A_Complete,10
+User_98,A_Concept,1
+User_98,O_Cancelled,1
+User_98,O_Create Offer,13
+User_98,O_Created,13
+User_98,O_Sent (mail and online),13
+User_98,W_Call after offers,30
+User_98,W_Complete application,40
+User_98,W_Handle leads,1
+User_99,A_Accepted,1
+User_99,A_Complete,1
+User_99,A_Concept,1
+User_99,A_Create Application,1
+User_99,A_Denied,35
+User_99,A_Incomplete,130
+User_99,A_Pending,60
+User_99,A_Validating,6
+User_99,O_Accepted,60
+User_99,O_Cancelled,36
+User_99,O_Create Offer,2
+User_99,O_Created,2
+User_99,O_Refused,51
+User_99,O_Returned,6
+User_99,O_Sent (online only),2
+User_99,W_Assess potential fraud,3
+User_99,W_Call after offers,4
+User_99,W_Call incomplete files,439
+User_99,W_Complete application,3
+User_99,W_Validate application,628

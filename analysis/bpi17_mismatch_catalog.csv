@@ -1,0 +1,9 @@
+id,observed_count,case_share,current_object,layer,status,recurring,extension_candidate,note
+M1,1723,0.5743,one-shot monotone task completion,micro,FACT,True,True,A new occurrence of an activity inside the same case. Lifecycle rows of one workflow occurrence are excluded.
+M2,3000,1.0,a single task DAG,object,FACT,True,True,"Application events and Offer events co-occur, and offers carry OfferID. The deal graph has no second object."
+M3,2964,0.988,a cause for unrecorded time,temporal,FACT,True,False,"A gap above 24 hours is observed. The log does not say whether it is internal work, an external wait, or time with no recorded event."
+M4,2992,0.9973,named actor transitions,macro,INFERENCE,True,False,"Consecutive events name different org:resource values. That is not yet evidence of a handoff, a role, or authority."
+M5,2989,0.9963,"a single progress value in [0, 1]",micro,FACT,True,True,"Workflow events use suspend, resume, ate_abort, and withdraw. Those are not points on a monotone progress bar."
+M6,1112,0.3707,an acyclic one-shot task graph,micro,FACT,False,False,"A workflow activity occurs, other workflow activities occur, and the first activity occurs again."
+M7,3000,1.0,a discrete authority grant,macro,HYPOTHESIS,True,False,"Accept, deny, refuse, and cancel appear as activity names. The log does not name who is allowed to decide."
+M8,0,0.0,an information link between systems,observation,HYPOTHESIS,False,False,No field records that one system's output is another system's input. Absence here is not evidence that the link exists.
