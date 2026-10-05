@@ -1,0 +1,33 @@
+slice,activity,cohort,n,small,scheduled,started,suspended,resumed,completed,aborted,withdrawn,median_events,p90_events,max_events,duration_n,median_duration,p90_duration
+overall,,first,46543,False,11448,9693,7866,5767,38467,6316,1755,1,6.0,38,3372,987.7355,315708.7316000001
+overall,,additional,9145,False,2661,2344,2235,1379,7195,1628,311,1,6.0,30,711,19619.382,256311.752
+activity,W_Validate application,first,2084,False,2084,2084,1797,845,932,1152,0,4.0,9.0,23,932,106486.14199999999,446485.75950000004
+activity,W_Validate application,additional,1593,False,1593,1593,1493,734,608,985,0,4,8.0,29,608,34969.6295,250607.20169999998
+activity,A_Validating,first,2084,False,0,0,0,0,2084,0,0,1.0,1.0,1,0,,
+activity,A_Validating,additional,1573,False,0,0,0,0,1573,0,0,1,1.0,1,0,,
+activity,O_Create Offer,first,3000,False,0,0,0,0,3000,0,0,1.0,1.0,1,0,,
+activity,O_Create Offer,additional,1196,False,0,0,0,0,1196,0,0,1.0,1.0,1,0,,
+activity,O_Created,first,3000,False,0,0,0,0,3000,0,0,1.0,1.0,1,0,,
+activity,O_Created,additional,1196,False,0,0,0,0,1196,0,0,1.0,1.0,1,0,,
+activity,O_Sent (mail and online),first,2940,False,0,0,0,0,2940,0,0,1.0,1.0,1,0,,
+activity,O_Sent (mail and online),additional,940,False,0,0,0,0,940,0,0,1.0,1.0,1,0,,
+activity,A_Incomplete,first,1420,False,0,0,0,0,1420,0,0,1.0,1.0,1,0,,
+activity,A_Incomplete,additional,737,False,0,0,0,0,737,0,0,1,1.0,1,0,,
+activity,W_Call incomplete files,first,1420,False,1420,1420,1403,1338,164,1255,0,6.0,10.0,36,164,14505.341,1977522.0469000014
+activity,W_Call incomplete files,additional,737,False,737,737,728,640,100,634,0,6,10.0,30,100,14832.872,586062.2984000001
+activity,O_Cancelled,first,1513,False,0,0,0,0,1513,0,0,1,1.0,1,0,,
+activity,O_Cancelled,additional,554,False,0,0,0,0,554,0,0,1.0,1.0,1,0,,
+activity,W_Call after offers,first,2975,False,2975,2975,2945,2365,39,2936,0,6,6.0,28,39,93.721,259823.0488
+activity,W_Call after offers,additional,327,False,327,10,10,2,0,8,311,2,2.0,14,0,,
+activity,O_Returned,first,2076,False,0,0,0,0,2076,0,0,1.0,1.0,1,0,,
+activity,O_Returned,additional,146,False,0,0,0,0,146,0,0,1.0,1.0,1,0,,
+activity,O_Refused,first,386,False,0,0,0,0,386,0,0,1.0,1.0,1,0,,
+activity,O_Refused,additional,126,False,0,0,0,0,126,0,0,1.0,1.0,1,0,,
+activity,O_Sent (online only),first,181,False,0,0,0,0,181,0,0,1,1.0,1,0,,
+activity,O_Sent (online only),additional,16,True,0,0,0,0,16,0,0,1.0,1.0,1,0,,
+activity,W_Assess potential fraud,first,26,True,26,26,25,24,25,1,0,7.0,16.0,25,25,98529.465,622279.9304000002
+activity,W_Assess potential fraud,additional,2,True,2,2,2,2,2,0,0,6.5,6.8999999999999995,7,2,6625.0895,7018.1171
+activity,W_Complete application,first,3000,False,3000,2816,1605,1126,1865,951,184,4.0,8.0,38,1865,861.059,106111.49480000007
+activity,W_Complete application,additional,1,True,1,1,1,0,0,1,0,4,4.0,4,0,,
+activity,W_Handle leads,first,1939,False,1939,368,87,69,347,21,1571,2,3.0,25,347,86.186,904.8176000000013
+activity,W_Handle leads,additional,1,True,1,1,1,1,1,0,0,11,11.0,11,1,13565.752,13565.752

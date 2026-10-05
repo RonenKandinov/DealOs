@@ -1,0 +1,25 @@
+slice,activity,predecessor_activity,predecessor_lifecycle,n,same_resource_count,different_resource_count,missing_resource_count,same_resource_pct,different_resource_pct,missing_resource_pct,same_resource_same_activity,same_resource_different_activity,different_resource_same_activity,different_resource_different_activity
+overall,,,,9145,8500,645,0,0.9294696555494806,0.07053034445051941,0.0,1318,7182,0,645
+activity,A_Incomplete,,,737,737,0,0,1.0,0.0,0.0,0,737,0,0
+activity,A_Validating,,,1573,1573,0,0,1.0,0.0,0.0,0,1573,0,0
+activity,O_Cancelled,,,554,553,1,0,0.9981949458483754,0.0018050541516245488,0.0,484,69,0,1
+activity,O_Create Offer,,,1196,645,551,0,0.5392976588628763,0.46070234113712377,0.0,0,645,0,551
+activity,O_Created,,,1196,1196,0,0,1.0,0.0,0.0,0,1196,0,0
+activity,O_Refused,,,126,126,0,0,1.0,0.0,0.0,126,0,0,0
+activity,O_Returned,,,146,57,89,0,0.3904109589041096,0.6095890410958904,0.0,0,57,0,89
+activity,O_Sent (mail and online),,,940,936,4,0,0.9957446808510638,0.00425531914893617,0.0,368,568,0,4
+activity,O_Sent (online only),,,16,16,0,0,1.0,0.0,0.0,9,7,0,0
+activity,W_Assess potential fraud,,,2,2,0,0,1.0,0.0,0.0,1,1,0,0
+activity,W_Call after offers,,,327,327,0,0,1.0,0.0,0.0,326,1,0,0
+activity,W_Call incomplete files,,,737,737,0,0,1.0,0.0,0.0,1,736,0,0
+activity,W_Complete application,,,1,1,0,0,1.0,0.0,0.0,0,1,0,0
+activity,W_Handle leads,,,1,1,0,0,1.0,0.0,0.0,0,1,0,0
+activity,W_Validate application,,,1593,1593,0,0,1.0,0.0,0.0,3,1590,0,0
+named_pattern,W_Call after offers,W_Call after offers,ate_abort,326,326,0,0,1.0,0.0,0.0,326,0,0,0
+named_pattern,O_Cancelled,O_Cancelled,complete,484,484,0,0,1.0,0.0,0.0,484,0,0,0
+named_pattern,O_Refused,O_Refused,complete,126,126,0,0,1.0,0.0,0.0,126,0,0,0
+named_pattern,W_Validate application,W_Call incomplete files,ate_abort,1373,1373,0,0,1.0,0.0,0.0,0,1373,0,0
+named_pattern,A_Validating,W_Validate application,start,1573,1573,0,0,1.0,0.0,0.0,0,1573,0,0
+named_pattern,A_Incomplete,W_Call incomplete files,start,737,737,0,0,1.0,0.0,0.0,0,737,0,0
+named_pattern,O_Created,O_Create Offer,complete,1196,1196,0,0,1.0,0.0,0.0,0,1196,0,0
+named_pattern,O_Sent (mail and online),O_Created,complete,545,543,2,0,0.9963302752293578,0.003669724770642202,0.0,0,543,0,2

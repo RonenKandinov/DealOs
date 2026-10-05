@@ -1,0 +1,16 @@
+activity,births,distinct_pairs,top_predecessor_activity,top_predecessor_lifecycle,top_count,top_share,same_resource,same_resource_share,candidate_pair
+W_Validate application,1593,7,W_Call incomplete files,ate_abort,1373,0.8619,1593,1.0,True
+A_Validating,1573,1,W_Validate application,start,1573,1.0,1573,1.0,True
+O_Create Offer,1196,14,O_Created,complete,439,0.3671,645,0.5393,False
+O_Created,1196,1,O_Create Offer,complete,1196,1.0,1196,1.0,True
+O_Sent (mail and online),940,8,O_Created,complete,545,0.5798,936,0.9957,True
+W_Call incomplete files,737,3,W_Validate application,ate_abort,412,0.559,737,1.0,True
+A_Incomplete,737,1,W_Call incomplete files,start,737,1.0,737,1.0,True
+O_Cancelled,554,9,O_Cancelled,complete,484,0.8736,553,0.9982,True
+W_Call after offers,327,2,W_Call after offers,ate_abort,326,0.9969,327,1.0,True
+O_Returned,146,8,W_Call incomplete files,suspend,47,0.3219,57,0.3904,False
+O_Refused,126,1,O_Refused,complete,126,1.0,126,1.0,True
+O_Sent (online only),16,2,O_Sent (online only),complete,9,0.5625,16,1.0,False
+W_Assess potential fraud,2,2,W_Validate application,complete,1,0.5,2,1.0,False
+W_Complete application,1,1,W_Assess potential fraud,complete,1,1.0,1,1.0,False
+W_Handle leads,1,1,W_Assess potential fraud,complete,1,1.0,1,1.0,False
