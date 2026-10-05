@@ -1,6 +1,10 @@
 """Mutations are structural, and the scenario run matches its own checks."""
 
-from dealos.macro_world.experiments.run_macro_world import VALIDATED, execute
+from pathlib import Path
+
+import pytest
+
+from dealos.macro_world.experiments.run_macro_world import VALIDATED, execute, format_cli, main
 from dealos.macro_world.models import Mutation
 from dealos.macro_world.scenarios import scenario_b, scenario_g
 from dealos.macro_world.validator import candidate_representation, mutation_errors, scenario_accepts, validate_scenario
@@ -45,3 +49,20 @@ def test_role_vector_and_full_run() -> None:
     ambiguous = next(result for result in results if result.scenario.scenario_id == "G")
     assert ambiguous.vector.mismatches_unresolved == ("M007",)
     assert ambiguous.vector.epistemic_violations == 0
+
+
+def test_cli_prints_the_masked_events_and_rejects_unknown_arguments(capsys) -> None:
+    results, line = execute(0)
+    text = format_cli(results, line, 0, Path("."))
+    assert "PacketCheck" in text
+    assert "LegalReviewer" not in text
+    assert "ApproveDeal" in text
+    assert "authority=" not in text
+    assert text.strip().splitlines()[-1] == VALIDATED
+    assert main(["--seed", "0"]) == 0
+    with pytest.raises(SystemExit) as caught:
+        main(["--nope"])
+    assert caught.value.code == 2
+    captured = capsys.readouterr()
+    assert "MACRO WORLD VALIDATED" in captured.out
+    assert "unrecognized arguments" in captured.err

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import csv
 from dataclasses import dataclass, fields
 from pathlib import Path
@@ -59,6 +60,11 @@ def execute(seed: int = 0) -> tuple[tuple[ScenarioResult, ...], str]:
 
 def write_outputs(root: Path, seed: int = 0) -> str:
     results, line = execute(seed)
+    _persist(root, results, line, seed)
+    return line
+
+
+def _persist(root: Path, results: tuple[ScenarioResult, ...], line: str, seed: int) -> None:
     analysis = root / "analysis"
     docs = root / "docs"
     analysis.mkdir(parents=True, exist_ok=True)
@@ -66,7 +72,6 @@ def write_outputs(root: Path, seed: int = 0) -> str:
     _write_csv(analysis / "macro_world_scenarios.csv", _scenario_rows(results))
     _write_csv(analysis / "macro_world_evaluation.csv", _evaluation_rows(results))
     (docs / "macro_world_experiment.md").write_text(_report(results, line, seed), encoding="utf-8")
-    return line
 
 
 def _assess(scenario: Scenario, seed: int) -> ScenarioResult:
@@ -203,6 +208,8 @@ def _scenario_rows(results: tuple[ScenarioResult, ...]) -> list[dict]:
                 "candidate": result.candidate_id,
                 "gt_representable": result.gt_representable_candidate,
                 "observable": result.recoverable,
+                "secondary_capability": scenario.secondary_capability,
+                "secondary_recoverable": result.secondary_recoverable if scenario.secondary_capability else "",
                 "decision": scenario.decision,
                 "epistemic_status": scenario.epistemic_status,
                 "ok": result.ok,
@@ -415,10 +422,45 @@ def _write_csv(path: Path, rows: list[dict]) -> None:
         writer.writerows(rows)
 
 
-def main() -> None:
+def format_cli(results: tuple[ScenarioResult, ...], line: str, seed: int, root: Path) -> str:
+    lines = [f"seed {seed}", ""]
+    for result in results:
+        scenario = result.scenario
+        observed = _yes(result.recoverable)
+        if scenario.secondary_capability:
+            observed = (
+                f"{scenario.capability} {_yes(result.recoverable)}, "
+                f"{scenario.secondary_capability} {_yes(result.secondary_recoverable)}"
+            )
+        status = "ok" if result.ok else "FAILED: " + "; ".join(result.failures)
+        lines.append(
+            f"{scenario.scenario_id} {scenario.name}: {scenario.initial.representation_id} -> {result.candidate_id}"
+        )
+        lines.append(f"  ground truth representable: {_yes(result.gt_representable_candidate)}")
+        lines.append(f"  recoverable from events: {observed}")
+        lines.append(f"  {scenario.decision}")
+        lines.append(f"  {status}")
+        for observation in observe(scenario.ground_truth, scenario.mask, seed):
+            shown = ", ".join(f"{name}={value}" for name, value in observation.values)
+            lines.append(f"  event {shown}")
+        lines.append("")
+    lines.append(f"report: {root / 'docs' / 'macro_world_experiment.md'}")
+    lines.append(line)
+    return "\n".join(lines)
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Run the controlled macro-world scenarios and write one report."
+    )
+    parser.add_argument("--seed", type=int, default=0, help="Timestamp seed. The same seed repeats the events.")
+    args = parser.parse_args(argv)
     root = Path(__file__).resolve().parents[4]
-    print(write_outputs(root))
+    results, line = execute(args.seed)
+    _persist(root, results, line, args.seed)
+    print(format_cli(results, line, args.seed, root))
+    return 0 if line == VALIDATED else 1
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
