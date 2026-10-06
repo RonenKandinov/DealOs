@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 
 from dealos.macro_world.models import Representation
@@ -12,54 +13,6 @@ BRIDGE = frozenset({"TaskOccurrence", "TaskType", "Deal", "Task", "Allocation", 
 FACT = "FACT"
 INFERENCE = "INFERENCE"
 HYPOTHESIS = "HYPOTHESIS"
-
-RELATION_ENDS = {
-    "resource_role": ("Resource", "Role"),
-    "role_department": ("Role", "Department"),
-    "department_organization": ("Department", "Organization"),
-    "resource_collaborates": ("Resource", "Resource"),
-    "resource_substitutes": ("Resource", "Resource"),
-    "resource_depends": ("Resource", "Resource"),
-    "role_authority": ("Role", "AuthorityRule"),
-    "resource_authority": ("Resource", "AuthorityRule"),
-    "system_produces_information": ("System", "InformationObject"),
-    "information_consumed_by_system": ("InformationObject", "System"),
-    "system_system": ("System", "System"),
-    "resource_capacity": ("Resource", "CapacityPool"),
-    "role_capacity": ("Role", "CapacityPool"),
-    "department_capacity": ("Department", "CapacityPool"),
-}
-
-REQUIREMENTS = {
-    "resource_role": frozenset({"Role", "ResourceRoleAssociation"}),
-    "role_department": frozenset({"Department", "RoleDepartmentAssociation"}),
-    "department_organization": frozenset({"Organization", "DepartmentOrganizationAssociation"}),
-    "resource_collaborates": frozenset({"CollaboratesWith"}),
-    "resource_substitutes": frozenset({"SubstitutesFor"}),
-    "resource_depends": frozenset({"DependsOn"}),
-    "role_authority": frozenset({"Authority", "RoleAuthorityAssociation"}),
-    "resource_authority": frozenset({"Authority", "ResourceAuthorityAssociation"}),
-    "system_produces_information": frozenset({"InformationObject", "SystemInformationRelation"}),
-    "information_consumed_by_system": frozenset({"InformationObject", "InformationConsumption"}),
-    "system_system": frozenset({"SystemSystemRelation"}),
-    "resource_capacity": frozenset({"CapacityPool", "ResourceCapacityAssociation"}),
-    "role_capacity": frozenset({"CapacityPool", "RoleCapacityAssociation"}),
-    "department_capacity": frozenset({"CapacityPool", "DepartmentCapacityAssociation"}),
-}
-
-VOCABULARY = frozenset(name for names in REQUIREMENTS.values() for name in names)
-AMBIGUOUS = frozenset(
-    {
-        "resource_collaborates",
-        "resource_substitutes",
-        "resource_depends",
-        "role_authority",
-        "resource_authority",
-        "system_system",
-    }
-)
-TYPED_RESOURCE = frozenset({"resource_collaborates", "resource_substitutes", "resource_depends"})
-
 
 def macro_r0() -> Representation:
     return Representation("R_macro_0", MACRO_R0)
@@ -154,3 +107,179 @@ class RelationScenario:
     ground_truth_present: bool
     observation_evidence_present: bool
     negative: bool
+
+
+Rule = Callable[[tuple[RelationObservation, ...], RelationMask], bool]
+
+
+@dataclass(frozen=True)
+class RelationSpec:
+    """Relation-specific evidence and interpretation. The evaluator only calls these rules."""
+
+    name: str
+    source_entity: str
+    target_entity: str
+    primitives: frozenset[str]
+    evidence_rule: Rule
+    interpretation_rule: Rule
+    evidence_fields: tuple[tuple[str, str], ...] = ()
+
+
+def _present(observations: tuple[RelationObservation, ...], key: str) -> bool:
+    return any(observation.get(key) for observation in observations)
+
+
+def requires(*pairs: tuple[str, str]) -> Rule:
+    def rule(observations: tuple[RelationObservation, ...], mask: RelationMask) -> bool:
+        for flag, key in pairs:
+            if not getattr(mask, flag) or not _present(observations, key):
+                return False
+        return True
+
+    return rule
+
+
+def always(_observations: tuple[RelationObservation, ...], _mask: RelationMask) -> bool:
+    return True
+
+
+def never(_observations: tuple[RelationObservation, ...], _mask: RelationMask) -> bool:
+    return False
+
+
+def both_resources(observations: tuple[RelationObservation, ...], mask: RelationMask) -> bool:
+    if not mask.expose_resource_id or not mask.expose_other_resource_id:
+        return False
+    return any(row.get("resource_id") and row.get("other_resource_id") for row in observations)
+
+
+def two_systems(observations: tuple[RelationObservation, ...], mask: RelationMask) -> bool:
+    if not mask.expose_system_id:
+        return False
+    return len({row.get("system_id") for row in observations if row.get("system_id")}) >= 2
+
+
+def _flag(flag: str) -> Rule:
+    def rule(_observations: tuple[RelationObservation, ...], mask: RelationMask) -> bool:
+        return bool(getattr(mask, flag))
+
+    return rule
+
+
+def _spec(
+    name: str,
+    source: str,
+    target: str,
+    primitives: frozenset[str],
+    evidence: Rule,
+    interpretation: Rule,
+    fields: tuple[tuple[str, str], ...],
+) -> RelationSpec:
+    return RelationSpec(name, source, target, primitives, evidence, interpretation, fields)
+
+
+_ROLE_FIELDS = (("expose_resource_id", "resource_id"), ("expose_role", "role_id"))
+_DEPARTMENT_FIELDS = (("expose_role", "role_id"), ("expose_department", "department_id"))
+_ORGANIZATION_FIELDS = (("expose_department", "department_id"), ("expose_organization", "organization_id"))
+_PAIR_FIELDS = (("expose_resource_id", "resource_id"), ("expose_other_resource_id", "other_resource_id"))
+_TYPE_FIELDS = (("expose_relation_type", "relation_type"),)
+_AUTHORITY_FIELDS = (("expose_authority", "authority_holder"), ("expose_holder_kind", "holder_kind"))
+_INFORMATION_FIELDS = (("expose_system_id", "system_id"), ("expose_information", "information_id"))
+_CAPACITY_FIELDS = (
+    ("expose_capacity_pool", "capacity_pool_id"),
+    ("expose_capacity_holder", "capacity_holder_id"),
+    ("expose_capacity_holder", "capacity_holder_kind"),
+)
+_SYSTEM_FIELDS = (("expose_system_id", "system_id"),)
+
+_ROLE = requires(*_ROLE_FIELDS)
+_DEPARTMENT = requires(*_DEPARTMENT_FIELDS)
+_ORGANIZATION = requires(*_ORGANIZATION_FIELDS)
+_PAIR_TYPE = requires(*_TYPE_FIELDS)
+_AUTHORITY = requires(*_AUTHORITY_FIELDS)
+_INFORMATION = requires(*_INFORMATION_FIELDS)
+_CAPACITY = requires(*_CAPACITY_FIELDS)
+_HOLDER = _flag("expose_capacity_holder")
+
+RELATION_SPECS: dict[str, RelationSpec] = {
+    "resource_role": _spec("resource_role", "Resource", "Role", frozenset({"Role", "ResourceRoleAssociation"}), _ROLE, always, _ROLE_FIELDS),
+    "role_department": _spec("role_department", "Role", "Department", frozenset({"Department", "RoleDepartmentAssociation"}), _DEPARTMENT, always, _DEPARTMENT_FIELDS),
+    "department_organization": _spec(
+        "department_organization",
+        "Department",
+        "Organization",
+        frozenset({"Organization", "DepartmentOrganizationAssociation"}),
+        _ORGANIZATION,
+        always,
+        _ORGANIZATION_FIELDS,
+    ),
+    "resource_collaborates": _spec("resource_collaborates", "Resource", "Resource", frozenset({"CollaboratesWith"}), both_resources, _PAIR_TYPE, _PAIR_FIELDS),
+    "resource_substitutes": _spec("resource_substitutes", "Resource", "Resource", frozenset({"SubstitutesFor"}), both_resources, _PAIR_TYPE, _PAIR_FIELDS),
+    "resource_depends": _spec("resource_depends", "Resource", "Resource", frozenset({"DependsOn"}), both_resources, _PAIR_TYPE, _PAIR_FIELDS),
+    "role_authority": _spec("role_authority", "Role", "AuthorityRule", frozenset({"Authority", "RoleAuthorityAssociation"}), _AUTHORITY, _AUTHORITY, _AUTHORITY_FIELDS),
+    "resource_authority": _spec(
+        "resource_authority",
+        "Resource",
+        "AuthorityRule",
+        frozenset({"Authority", "ResourceAuthorityAssociation"}),
+        _AUTHORITY,
+        _AUTHORITY,
+        _AUTHORITY_FIELDS,
+    ),
+    "system_produces_information": _spec(
+        "system_produces_information",
+        "System",
+        "InformationObject",
+        frozenset({"InformationObject", "SystemInformationRelation"}),
+        _INFORMATION,
+        always,
+        _INFORMATION_FIELDS,
+    ),
+    "information_consumed_by_system": _spec(
+        "information_consumed_by_system",
+        "InformationObject",
+        "System",
+        frozenset({"InformationObject", "InformationConsumption"}),
+        _INFORMATION,
+        always,
+        _INFORMATION_FIELDS,
+    ),
+    "system_system": _spec("system_system", "System", "System", frozenset({"SystemSystemRelation"}), two_systems, never, _SYSTEM_FIELDS),
+    "resource_capacity": _spec(
+        "resource_capacity",
+        "Resource",
+        "CapacityPool",
+        frozenset({"CapacityPool", "ResourceCapacityAssociation"}),
+        _CAPACITY,
+        _HOLDER,
+        _CAPACITY_FIELDS,
+    ),
+    "role_capacity": _spec(
+        "role_capacity",
+        "Role",
+        "CapacityPool",
+        frozenset({"CapacityPool", "RoleCapacityAssociation"}),
+        _CAPACITY,
+        _HOLDER,
+        _CAPACITY_FIELDS,
+    ),
+    "department_capacity": _spec(
+        "department_capacity",
+        "Department",
+        "CapacityPool",
+        frozenset({"CapacityPool", "DepartmentCapacityAssociation"}),
+        _CAPACITY,
+        _HOLDER,
+        _CAPACITY_FIELDS,
+    ),
+}
+
+RELATION_ENDS = {name: (spec.source_entity, spec.target_entity) for name, spec in RELATION_SPECS.items()}
+REQUIREMENTS = {name: spec.primitives for name, spec in RELATION_SPECS.items()}
+VOCABULARY = frozenset(primitive for spec in RELATION_SPECS.values() for primitive in spec.primitives)
+
+
+def relation_spec(name: str, specs: Mapping[str, RelationSpec] | None = None) -> RelationSpec:
+    registry = RELATION_SPECS if specs is None else specs
+    return registry[name]
+

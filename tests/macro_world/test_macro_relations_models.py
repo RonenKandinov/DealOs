@@ -5,8 +5,10 @@ from dealos.macro_world.relations.models import (
     MACRO_R0,
     RELATION_ENDS,
     VOCABULARY,
+    RelationMask,
     RelationMutation,
     macro_r0,
+    relation_spec,
 )
 from dealos.macro_world.relations.validate import mutation_errors
 
@@ -15,6 +17,13 @@ def test_the_baseline_is_only_the_phase1_resource_identity_pair() -> None:
     assert macro_r0().primitives == MACRO_R0
     assert "Role" not in macro_r0().primitives
     assert "ResourceRoleAssociation" in VOCABULARY
+
+
+def test_resource_role_spec_names_its_endpoints() -> None:
+    spec = relation_spec("resource_role")
+    assert spec.source_entity == "Resource"
+    assert spec.target_entity == "Role"
+    assert spec.evidence_rule((), RelationMask()) is False
 
 
 def test_relation_endpoints_are_macro_entities() -> None:

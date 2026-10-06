@@ -1,25 +1,27 @@
-"""Structural checks for one macro relation. The parent representation is not mutated."""
+"""Generic checks for one macro relation. Relation-specific rules live on RelationSpec."""
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 
 from dealos.macro_world.models import Representation
 from dealos.macro_world.relations.models import (
-    AMBIGUOUS,
     BRIDGE,
-    FACT,
     HYPOTHESIS,
     OPERATORS,
     VOCABULARY,
     MacroRelation,
     RelationMutation,
     RelationScenario,
+    RelationSpec,
     macro_r0,
+    relation_spec,
 )
 from dealos.macro_world.relations.observe import leak_count, observe
 from dealos.macro_world.relations.queries import (
     activity_is_not_a_role,
+    evidence_present,
     gt_has,
     interpretable,
     recoverable,
@@ -48,11 +50,12 @@ class RelationEvaluation:
     observation_faithfulness: float
 
 
-def mutation_errors(mutation: RelationMutation) -> tuple[str, ...]:
+def mutation_errors(mutation: RelationMutation, allowed: frozenset[str] | None = None) -> tuple[str, ...]:
+    targets = VOCABULARY if allowed is None else allowed
     reasons: list[str] = []
     if mutation.operator not in OPERATORS:
         reasons.append(f"unknown operator {mutation.operator}")
-    if mutation.target not in VOCABULARY or mutation.target in BRIDGE:
+    if mutation.target not in targets or mutation.target in BRIDGE:
         reasons.append(f"rejected target {mutation.target}")
     return tuple(reasons)
 
@@ -65,58 +68,62 @@ def candidate_representation(scenario: RelationScenario) -> Representation:
     return parent.with_primitives(names, f"R1-{scenario.scenario_id}")
 
 
-def commits(scenario: RelationScenario, representable_after: bool) -> bool:
-    if scenario.negative or scenario.relation_name in AMBIGUOUS:
-        return False
-    if not gt_has(scenario.world, scenario.relation_name):
-        return False
-    if not interpretable(scenario.mask, scenario.relation_name):
+def commits(representable_after: bool, ground_truth: bool, negative: bool, ambiguous: bool, schema_ok: bool) -> bool:
+    """Accept a representation extension. Recovery and epistemic status are separate."""
+
+    if negative or ambiguous or not ground_truth or not schema_ok:
         return False
     return representable_after
 
 
-def integrity_errors(scenario: RelationScenario) -> tuple[str, ...]:
-    from dealos.macro_world.relations.models import RELATION_ENDS
-
+def integrity_errors(scenario: RelationScenario, specs: Mapping[str, RelationSpec] | None = None) -> tuple[str, ...]:
     errors: list[str] = []
     for relation in scenario.world.relations:
-        if relation.name not in RELATION_ENDS:
+        try:
+            spec = relation_spec(relation.name, specs)
+        except KeyError:
             errors.append(f"unknown relation {relation.name}")
             continue
-        source, target = RELATION_ENDS[relation.name]
-        if source in BRIDGE or target in BRIDGE:
+        if spec.source_entity in BRIDGE or spec.target_entity in BRIDGE:
             errors.append(f"{relation.name} crosses into the micro graph")
         if not relation.source_id or not relation.target_id:
             errors.append(f"{relation.relation_id} has an empty endpoint")
     return tuple(errors)
 
 
-def assess(scenario: RelationScenario, seed: int = 0) -> tuple[RelationEvaluation, tuple[str, ...]]:
+def assess(
+    scenario: RelationScenario,
+    seed: int = 0,
+    specs: Mapping[str, RelationSpec] | None = None,
+) -> tuple[RelationEvaluation, tuple[str, ...]]:
+    spec = relation_spec(scenario.relation_name, specs)
     parent = macro_r0()
     observations = observe(scenario.world, scenario.mask, seed)
     repeat = observe(scenario.world, scenario.mask, seed)
     candidate = candidate_representation(scenario)
-    before = representable(parent, scenario.relation_name)
-    after = representable(candidate, scenario.relation_name)
-    recovered = recoverable(observations, scenario.mask, scenario.relation_name)
-    ambiguous = scenario.relation_name in AMBIGUOUS or not interpretable(scenario.mask, scenario.relation_name)
-    accepted = commits(scenario, after)
+    before = representable(parent, scenario.relation_name, specs)
+    after = representable(candidate, scenario.relation_name, specs)
+    evidence = evidence_present(observations, scenario.mask, scenario.relation_name, specs)
+    interpreted = interpretable(observations, scenario.mask, scenario.relation_name, specs)
+    recovered = recoverable(observations, scenario.mask, scenario.relation_name, specs)
+    ambiguous = not interpreted
+    allowed = _allowed_targets(specs)
+    schema_ok = all(not mutation_errors(mutation, allowed) for mutation in scenario.mutations)
+    accepted = commits(after, gt_has(scenario.world, scenario.relation_name), scenario.negative, ambiguous, schema_ok)
     leaks = leak_count(scenario.world, observations, scenario.mask)
     violations = _violations(scenario, observations, accepted)
     regression = not parent.primitives <= candidate.primitives
-    evidence = _evidence(observations, scenario.relation_name)
-    source, target = _ends(scenario.relation_name)
     evaluation = RelationEvaluation(
         scenario.scenario_id,
         scenario.relation_name,
-        source,
-        target,
+        spec.source_entity,
+        spec.target_entity,
         gt_has(scenario.world, scenario.relation_name),
         evidence,
         before,
         after,
         recovered,
-        scenario.epistemic_status if _status_ok(scenario, accepted) else "MISMATCH",
+        scenario.epistemic_status,
         ambiguous,
         bool(scenario.mutations),
         accepted,
@@ -125,17 +132,28 @@ def assess(scenario: RelationScenario, seed: int = 0) -> tuple[RelationEvaluatio
         violations,
         1.0 if leaks == 0 else 0.0,
     )
-    failures = _failures(scenario, parent, observations, repeat, evaluation, leaks)
+    failures = _failures(scenario, parent, observations, repeat, evaluation, leaks, specs)
     return evaluation, failures
 
 
-def _failures(scenario, parent, observations, repeat, evaluation: RelationEvaluation, leaks: int) -> tuple[str, ...]:
+def _failures(
+    scenario: RelationScenario,
+    parent: Representation,
+    observations,
+    repeat,
+    evaluation: RelationEvaluation,
+    leaks: int,
+    specs: Mapping[str, RelationSpec] | None,
+) -> tuple[str, ...]:
     failures: list[str] = []
-    if integrity_errors(scenario):
-        failures.append("integrity: " + "; ".join(integrity_errors(scenario)))
+    integrity = integrity_errors(scenario, specs)
+    if integrity:
+        failures.append("integrity: " + "; ".join(integrity))
+    allowed = _allowed_targets(specs)
     for mutation in scenario.mutations:
-        if mutation_errors(mutation):
-            failures.append("schema: " + "; ".join(mutation_errors(mutation)))
+        reasons = mutation_errors(mutation, allowed)
+        if reasons:
+            failures.append("schema: " + "; ".join(reasons))
     if parent.primitives != macro_r0().primitives:
         failures.append("parent representation changed")
     if evaluation.representable_before != scenario.expect_representable_before:
@@ -154,10 +172,8 @@ def _failures(scenario, parent, observations, repeat, evaluation: RelationEvalua
         failures.append("observation evidence disagrees")
     if evaluation.epistemic_status != scenario.epistemic_status:
         failures.append("epistemic status disagrees")
-    if evaluation.mutation_accepted and evaluation.epistemic_status != FACT:
-        failures.append("an accepted relation is not a ground-truth fact")
-    if not evaluation.mutation_accepted and evaluation.epistemic_status == FACT:
-        failures.append("a fact was not accepted")
+    if evaluation.mutation_accepted and evaluation.epistemic_status == HYPOTHESIS:
+        failures.append("a hypothesis was accepted as an established relation")
     if scenario.negative and evaluation.mutation_accepted:
         failures.append("a negative case was accepted")
     if evaluation.ambiguity and evaluation.mutation_accepted:
@@ -192,32 +208,15 @@ def _violations(scenario: RelationScenario, observations, accepted: bool) -> int
             count += 1
         if observation.get("authority_holder") and not scenario.mask.expose_authority:
             count += 1
-    if accepted and scenario.relation_name in AMBIGUOUS:
-        count += 1
     if scenario.epistemic_status == HYPOTHESIS and accepted:
         count += 1
     return count
 
 
-def _status_ok(scenario: RelationScenario, accepted: bool) -> bool:
-    if accepted:
-        return scenario.epistemic_status == FACT
-    return scenario.epistemic_status == HYPOTHESIS
-
-
-def _evidence(observations, relation_name: str) -> bool:
-    if relation_name in {"resource_collaborates", "resource_substitutes", "resource_depends"}:
-        return any(row.get("resource_id") and row.get("other_resource_id") for row in observations)
-    if relation_name == "system_system":
-        systems = {row.get("system_id") for row in observations if row.get("system_id")}
-        return len(systems) >= 2
-    return False
-
-
-def _ends(relation_name: str) -> tuple[str, str]:
-    from dealos.macro_world.relations.models import RELATION_ENDS
-
-    return RELATION_ENDS[relation_name]
+def _allowed_targets(specs: Mapping[str, RelationSpec] | None) -> frozenset[str]:
+    if specs is None:
+        return VOCABULARY
+    return frozenset(primitive for spec in specs.values() for primitive in spec.primitives)
 
 
 def relation_rows(scenario: RelationScenario) -> tuple[MacroRelation, ...]:

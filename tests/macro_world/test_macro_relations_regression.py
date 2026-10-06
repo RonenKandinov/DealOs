@@ -42,8 +42,11 @@ def test_the_relation_package_does_not_import_the_frozen_core_and_the_graph_stay
     text = "\n".join(path.read_text(encoding="utf-8") for path in PACKAGE.rglob("*.py"))
     for name in FORBIDDEN:
         assert name not in text
-    _assessed, edges, line = execute_relations(0)
-    assert line == "MACRO RELATIONS VALIDATED"
-    for edge in edges:
-        assert "Task" not in edge.source_entity and "Task" not in edge.target_entity
-        assert "Deal" not in edge.source_entity and "Deal" not in edge.target_entity
+    _assessed, line = execute_relations(0)
+    assert line == "FIVE HIDDEN FACTS RECOVERABLE WHEN THEIR OWN FIELDS ARE EXPOSED"
+    for _scenario, evaluation, failures in _assessed:
+        if failures:
+            continue
+        for name in (evaluation.source_entity, evaluation.target_entity):
+            assert "Task" not in name
+            assert "Deal" not in name
