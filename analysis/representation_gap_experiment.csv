@@ -1,0 +1,5 @@
+scenario,observations_available,current_model_prediction,observed_outcome,classification,candidate,accepted
+hidden_causal_observation,False,can_progress,hidden,observation_gap,,False
+unexplained_non_progress,True,can_progress,0.0,representation_gap,UnmodeledConstraint,True
+unsupported_causal_story,True,can_progress,0.0,semantic_gap,TimeGapIsWaiting,False
+explained_progress,True,can_progress,1.0,no_gap,,False
