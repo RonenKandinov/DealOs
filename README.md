@@ -4,6 +4,10 @@ Deterministic simulation of an enterprise sales portfolio as a capacity-constrai
 
 V1 is an experimental environment. It exists so we can ask whether this mathematical formulation is meaningful. It does not show that any allocation rule is better than another.
 
+![DealOS Architecture](docs/architecture/dealos_architecture.png)
+
+DealOS combines a Micro model of deal execution with a Macro model of organizational state, connected through an explicit Macro–Micro bridge. Evidence from simulation and controlled worlds is then used to test and evolve the problem representation itself.
+
 ## Business problem
 
 An enterprise deal is not a linear funnel stage. Closing it requires parallel work: commercial, technical, legal, security, procurement, and executive approval. Those work packages depend on each other, and the same people are shared across the portfolio.
@@ -125,6 +129,36 @@ The Micro layers depend on the action, not on which policy built it. Replacing a
 `macro_world` and `problem_evolution` do not touch the simulator. They ask whether a representation can express a fact, whether an event stream can recover it, and whether a proposed primitive survives held-out worlds. Co-occurrence, event order, activity names, and resource changes do not create relations anywhere in the repository.
 
 `analysis/bpi17` reads the public log and reports counts. It imports none of the other layers.
+
+## Conceptual → Implementation Mapping
+
+The figure is the conceptual system. These paths are where that system is implemented.
+
+```
+Micro — Deal Process
+→ src/dealos/domain/
+→ src/dealos/generator/
+→ src/dealos/sim/
+→ src/dealos/policies/
+
+Macro — Organizational State
+→ src/dealos/org/operating/
+
+Macro World / Evidence
+→ src/dealos/macro_world/
+→ src/dealos/analysis/bpi17/
+
+Representation Evolution
+→ src/dealos/experiments/
+→ src/dealos/problem_evolution/
+
+Tests
+→ tests/
+
+Docs / Results
+→ docs/
+→ analysis/
+```
 
 ## Experiment index
 
