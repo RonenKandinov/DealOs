@@ -1,0 +1,16 @@
+scenario,relation_name,source_entity,target_entity,ground_truth_present,observation_evidence_present,representable_after,recoverable,ambiguity,epistemic_status,mutation_accepted
+MR-A,resource_role,Resource,Role,True,False,True,False,False,FACT,True
+MR-B,role_department,Role,Department,True,False,True,False,False,FACT,True
+MR-C,department_organization,Department,Organization,True,False,True,False,False,FACT,True
+MR-D1,resource_collaborates,Resource,Resource,True,True,True,False,True,HYPOTHESIS,False
+MR-D2,resource_substitutes,Resource,Resource,True,True,True,False,True,HYPOTHESIS,False
+MR-D3,resource_depends,Resource,Resource,True,True,True,False,True,HYPOTHESIS,False
+MR-D0,resource_collaborates,Resource,Resource,False,True,True,False,True,HYPOTHESIS,False
+MR-E,role_authority,Role,AuthorityRule,True,False,True,False,True,HYPOTHESIS,False
+MR-F,resource_authority,Resource,AuthorityRule,True,False,True,False,True,HYPOTHESIS,False
+MR-G,system_produces_information,System,InformationObject,True,False,True,False,False,FACT,True
+MR-H,information_consumed_by_system,InformationObject,System,True,False,True,False,False,FACT,True
+MR-I,system_system,System,System,False,True,True,False,True,HYPOTHESIS,False
+MR-J1,resource_capacity,Resource,CapacityPool,True,False,True,False,True,HYPOTHESIS,False
+MR-J2,role_capacity,Role,CapacityPool,True,False,True,False,True,HYPOTHESIS,False
+MR-J3,department_capacity,Department,CapacityPool,False,False,True,False,True,HYPOTHESIS,False

@@ -1,0 +1,8 @@
+scenario,name,missing_primitive,initial,candidate,gt_representable,observable,secondary_capability,secondary_recoverable,decision,epistemic_status,ok
+A,Resource identity,"PersistentResourceIdentifier, ResourceOccurrenceAssociation",R_micro,R1-A,True,True,,,identifier and association are representable and recoverable,FACT,True
+B,Resource to role,"Role, ResourceRoleAssociation",R0,R1-B,True,False,,,role is representable only after the mutation and is not recoverable,FACT,True
+C,Department structure,"Department, RoleDepartmentAssociation",R0,R1-C,True,False,,,department is representable only after the mutation and is not recoverable,FACT,True
+D,Authority,Authority,R0,R1-D,True,False,,,authority is representable only after the mutation and is not recoverable,FACT,True
+E,Information dependency,"InformationObject, InformationDependency",R0,R1-E,True,False,,,information dependency is representable only after the mutation and is not recoverable,FACT,True
+F,Shared resource,none,R0,R0,True,True,capacity_pool,False,shared identity is already representable and the capacity value is not recoverable,FACT,True
+G,Multiple interpretations,none,R0,R0,False,False,,,HYPOTHESIS unresolved,HYPOTHESIS,True

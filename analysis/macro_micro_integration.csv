@@ -1,0 +1,19 @@
+scenario_id,task_id,initial_micro_ready,macro_state_summary,constraint_type,eligible_before,blocking_reason_before,progress_before,event,eligible_after,blocking_reason_after,progress_after,expected_result,passed
+A-capacity,deal_A:A1,True,pool available 1,capacity,True,can_progress,0.0,none,True,can_progress,1.0,can_progress,True
+B-capacity,deal_A:A1,True,pool available 0,capacity,False,capacity_unavailable,0.0,none,False,capacity_unavailable,0.0,capacity_unavailable,True
+C-capacity,deal_A:A1,True,released back to 1,capacity,True,can_progress,0.0,Release,True,can_progress,1.0,can_progress,True
+A-information,deal_A:A1,True,profile available,information,True,can_progress,0.0,none,True,can_progress,1.0,can_progress,True
+B-information,deal_A:A1,True,profile unavailable,information,False,information_unavailable,0.0,none,False,information_unavailable,0.0,information_unavailable,True
+C-information,deal_A:A1,True,ProduceInformation,information,True,can_progress,0.0,ProduceInformation,True,can_progress,1.0,can_progress,True
+A-authority,deal_A:A1,True,"grant approver, no veto",decision,True,can_progress,0.0,none,True,can_progress,1.0,can_progress,True
+B-authority,deal_A:A1,True,"no grant, no delegation",decision,False,authority_unavailable,0.0,none,False,authority_unavailable,0.0,authority_unavailable,True
+C-authority,deal_A:A1,True,AuthorityGrant constructed,decision,True,can_progress,0.0,constructor AuthorityGrant,True,can_progress,1.0,can_progress,True
+D-veto,deal_A:A1,True,grant plus IssueVeto,decision,False,veto,0.0,IssueVeto,False,veto,0.0,veto,True
+D-external-before,deal_A:A1,True,external profile unavailable,external_information,False,external_information_unavailable,0.0,none,False,external_information_unavailable,0.0,external_information_unavailable,True
+D-external-after,deal_A:A1,True,ReceiveExternalInformation,external_information,True,can_progress,0.0,ReceiveExternalInformation,True,can_progress,1.0,can_progress,True
+W1,deal_A:A1,True,capacity available,capacity,True,can_progress,0.0,none,True,can_progress,1.0,can_progress,True
+W2,deal_A:A1,True,capacity exhausted,capacity,False,capacity_unavailable,0.0,none,False,capacity_unavailable,0.0,capacity_unavailable,True
+W3,deal_A:A1,True,information unavailable,information,False,information_unavailable,0.0,none,False,information_unavailable,0.0,information_unavailable,True
+W4,deal_A:A1,True,authority unavailable,decision,False,authority_unavailable,0.0,none,False,authority_unavailable,0.0,authority_unavailable,True
+W5,deal_A:A1,True,active veto,decision,False,veto,0.0,none,False,veto,0.0,veto,True
+W6,deal_A:A1,True,external information unavailable,external_information,False,external_information_unavailable,0.0,none,False,external_information_unavailable,0.0,external_information_unavailable,True

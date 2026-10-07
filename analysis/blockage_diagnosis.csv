@@ -1,0 +1,8 @@
+scenario,category,ambiguity,mutation_accepted,epistemic_status,where_shown,why_shown
+capacity,partially_representable,False,False,FACT,"deal_A:A1 is ready, its progress does not move, and ae is fully used.",The macro capacity pool is not attached to this task.
+information,genuine_gap,False,False,HYPOTHESIS,Micro readiness is predecessor progress. It does not name a missing information object.,Macro can store that a system produces an information object. That link does not name a deal task.
+authority,ambiguous,True,False,HYPOTHESIS,An approval task can still receive allocation. Participation is enough for progress.,Macro does not treat the ApproveDeal activity as an authority rule.
+cross_organization,genuine_gap,False,False,HYPOTHESIS,A deal graph has no organization endpoint.,A department belongs to an organization inside the macro graph only.
+negative_resource_pair,ambiguous,True,False,HYPOTHESIS,Both resource ids are visible.,"collaborates_with, substitutes_for, and depends_on stay undistinguished."
+negative_no_relation,ambiguous,True,False,HYPOTHESIS,Two resources appear together.,No ground-truth relation is invented from that co-presence.
+negative_approval_authority,ambiguous,True,False,HYPOTHESIS,ApproveDeal is visible for two resources.,The activity does not establish who may authorize it.
