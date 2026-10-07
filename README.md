@@ -96,17 +96,67 @@ Progress is monotone. V1 has no rework, decay, or re-blocking. Allocation to a t
 
 ## Architecture
 
+The repository has eight layers. The first four are the Micro deal simulator described above; the simulator is frozen, and nothing below it imports upward.
+
 ```
 src/dealos/
-  domain/        graphs, readiness, dynamics, state
-  generator/     seeded portfolios and presets
-  sim/           capacity checks and SalesEnvironment
-  policies/      random, FIFO, bottleneck, optimization stub
-  experiments/   multi-seed runner and text summary
-tests/
+  domain/             Micro: deal graphs, AND-min readiness, one-step dynamics, state
+  generator/          Micro: seeded portfolios and the five presets
+  sim/                Micro: capacity checks and SalesEnvironment
+  policies/           Micro: random, FIFO, bottleneck, optimization stub
+  diagnostics/        hand-built scenarios for checking the simulator
+  experiments/        multi-seed runner, controlled edits, horizon sweep, decision screens,
+                      blockage diagnosis, Macro-Micro bridge runs, representation-gap runs
+  org/operating/      Macro operating model: OrgState, explicit events, apply(state, event),
+                      TaskConstraint, and the bridge that diagnoses one Micro task
+  macro_world/        Macro ontology experiments: ground-truth worlds, observation masks,
+                      representable versus recoverable queries, relation validation
+  problem_evolution/  mismatch catalogue, structural mutations, candidate evaluation
+  analysis/bpi17/     observational analysis of the BPI Challenge 2017 log
+tests/                one module per layer; see Tests
+docs/                 one report per experiment; see Experiment index
+analysis/             csv and json tables written by the experiment runners
 ```
 
-The simulator depends on the action, not on which policy built it. Replacing a policy does not require a simulator change.
+The Micro layers depend on the action, not on which policy built it. Replacing a policy does not require a simulator change.
+
+`org/operating` is the only organizational model. Its state is a value: capacity pools, information items, decisions, authority grants, delegations, vetoes, governance bodies, and external relations. Every change is an explicit event. A `TaskConstraint` names the pools, information, decision, and external relation a single Micro task requires, and `bridge.diagnose` reports whether that task is organizationally eligible, with the first blocker and the full list of blockers. The bridge reads Micro readiness; it does not change it. A predecessor-blocked task and an organizationally ineligible task remain different facts.
+
+`macro_world` and `problem_evolution` do not touch the simulator. They ask whether a representation can express a fact, whether an event stream can recover it, and whether a proposed primitive survives held-out worlds. Co-occurrence, event order, activity names, and resource changes do not create relations anywhere in the repository.
+
+`analysis/bpi17` reads the public log and reports counts. It imports none of the other layers.
+
+## Experiment index
+
+Each report in `docs/` is the whole experiment: question, setup, tables, and the recorded result. The line quoted here is the result the report records, not a summary of what it means.
+
+| Report | Question | Recorded result |
+| --- | --- | --- |
+| `v2_representation.md` | Task type versus task occurrence; readiness versus lifecycle versus eligibility | Occurrence decisions fixed; `declare_ready` is a test switch, not a BPI17 reading |
+| `blockage_diagnosis.md` | Where a deal is blocked (Micro) and why (Macro), in one model | No new primitive added; capacity is one Micro reading; information, authority, cross-organization stay gaps |
+| `bpi17_validation_report.md` | How the BPI17 log maps onto the Micro and Macro representations | Facts, inferences, and hypotheses kept apart; representation gaps and candidate extensions listed, none installed |
+| `bpi17_micro_experiment_summary.md` | Do births, resource continuity, and lifecycle mixes call for a simulator change | MICRO SHOULD REMAIN FROZEN |
+| `bpi17_occurrence_birth.md`, `_birth_context.md`, `_lifecycle.md`, `_resource_continuity.md` | Counts behind the micro summary | Descriptive tables; no edge written, readiness unchanged |
+| `bpi17_macro_experiment.md` | What `org:resource` lets us observe across cases | MACRO CANDIDATE IDENTIFIED (collected in `bpi17_reports.md`) |
+| `bpi17_resource_identifier_experiment.md` | R0 versus R0 plus a persistent resource identifier | MACRO PRIMITIVE JUSTIFIED |
+| `macro_operating_model.md` | Definition of the organizational state and its transition function | Model definition; no experiment |
+| `macro_state_experiment.md` | Does one explicit event produce the next organizational state | MACRO STATE IMPLEMENTED |
+| `macro_world_experiment.md` | Seven ground-truth worlds under observation masks; representable versus recoverable | MACRO WORLD VALIDATED |
+| `macro_relation_experiment.md` | Fifteen relation scenarios; which hidden facts recover through their own fields | FIVE HIDDEN FACTS RECOVERABLE WHEN THEIR OWN FIELDS ARE EXPOSED |
+| `macro_micro_integration_experiment.md` | Same Micro readiness, different Macro state, different outcome | MACRO MICRO COUPLING DEMONSTRATED (18/18 rows, 0 invariant failures) |
+| `macro_micro_multiconstraint_experiment.md` | Four simultaneous constraints released one event at a time, two orderings | Each event removes only its own blocker; progress waits for the last one |
+| `representation_gap_experiment.md` | Observation gap, representation gap, semantic gap, no gap on one ready task | Four scenarios classified; `UnmodeledConstraint` accepted as a slot, not installed |
+| `representation_gap_ground_truth_experiment.md` | A hidden rule the gate has no field for; candidates fitted on G1-G3, scored on G4-G6 and a 48-world grid | DutyExclusion supported; DecisionQuorum fits the named worlds but fails grid rows where the prior actor is outside the holder set |
+
+## Current limitations
+
+- The Micro simulator is deterministic and AND-only. Parameters `φ`, `α`, `q` are synthetic, capacities are constant, there is no rework, decay, deal value, or calendar.
+- No policy ranking is claimed anywhere. `OptimizationPolicy` documents a linear program and raises `NotImplementedError`.
+- The Macro operating model is a definition exercised on hand-built states. No organizational state in the repository was recovered from a real organization or a real deal log.
+- The Macro-Micro bridge diagnoses one task at a time through a `TaskConstraint`. It does not schedule, allocate, or feed back into readiness.
+- Representation-gap results are about synthetic worlds whose hidden rule the experiment itself defined. Candidate acceptance is not evidence that the primitive exists outside those worlds, and no candidate is installed in the operating model.
+- The BPI17 analysis reports counts. It does not infer handoffs, ownership, authority, or dependencies from resource ids, event order, or activity names.
+- The problem-evolution engine proposes and scores structural mutations as candidate representations. The parent representation and the simulator are not changed by a run.
 
 Presets change only `GeneratorConfig`: number of deals, horizon, capacities, optional-task drop rate, extra AND-edge probability, and which task types are protected from dropping. They do not fork the update rule.
 
@@ -162,10 +212,26 @@ Parameters `φ`, `α`, and `q` are synthetic. Capacities are constant. Dependenc
 
 ```bash
 pip install -e ".[dev]"
-pytest
+python -m pytest -q
 ```
 
-Coverage includes graph construction, AND readiness, capacity rejection, progress bounds, completed tasks, deal completion, seeded reproducibility, state transitions, and feasible policy actions. Edge cases include a task with no predecessors, a task with several predecessors, zero capacity, an already completed task, a one-task deal, and a deal with two branches that merge.
+One module per layer, 191 tests:
+
+| Module | Covers |
+| --- | --- |
+| `tests/test_micro_core.py` | graph construction, AND readiness, dynamics, capacity rejection, occurrences and lifecycle, policies |
+| `tests/test_generation.py` | generator, preset structure, controlled edits, horizon sweep |
+| `tests/test_diagnostics.py` | chain diagnostics, manual scenario, multi-seed runner, model validation, decision screens, blockage diagnosis |
+| `tests/test_debug_invariants.py` | invariant checks against the V1 equations on `chain_debug_scenario` |
+| `tests/test_problem_evolution.py` | BPI17 mismatches, rule-based proposer, candidate generation, validation, evaluation, one engine generation |
+| `tests/test_macro_operating.py` | organizational state, events, transition function |
+| `tests/test_macro_micro.py` | bridge coupling, multi-constraint transitions, invariants, seed-0 fingerprint |
+| `tests/test_representation_evolution.py` | gap classification, ground-truth gap, candidate evaluation, holdout, anti-leakage |
+| `tests/test_bpi17.py` | observational analysis and the resource-identifier experiment |
+| `tests/macro_world/test_macro_world.py` | ground-truth models, scenarios, masks, observations, queries, validator, recoverability screen |
+| `tests/macro_world/test_macro_relations.py` | relation records, scenarios, masks, queries, ambiguity, validation, Phase 1 regression |
+
+Micro edge cases include a task with no predecessors, a task with several predecessors, zero capacity, an already completed task, a one-task deal, and a deal with two branches that merge. The seed-0 FIFO fingerprint (2 completed deals in 40 steps) is asserted in the bridge and representation modules.
 
 ## Planned extensions
 

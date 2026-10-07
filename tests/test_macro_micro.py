@@ -1,5 +1,13 @@
-"""One ready Micro task, several Macro constraints, one explicit change at a time."""
+"""Macro-Micro bridge: single-constraint coupling, multi-constraint transitions, invariants,
+and the Micro fingerprint.
 
+Merged from test_macro_micro_integration and test_macro_micro_multiconstraint. Every test
+body is unchanged. The two experiment modules each export ``invariant_failures``; they are
+imported as ``integration_invariant_failures`` and ``multiconstraint_invariant_failures``.
+"""
+
+from dealos.experiments.macro_micro_integration import comparison_rows, run_all
+from dealos.experiments.macro_micro_integration import invariant_failures as integration_invariant_failures
 from dealos.experiments.macro_micro_multiconstraint import (
     CONSTRAINT,
     DECISION,
@@ -8,11 +16,11 @@ from dealos.experiments.macro_micro_multiconstraint import (
     PROFILE,
     alternate_trace,
     initial_state,
-    invariant_failures,
     isolated_trace,
     primary_trace,
     veto_trace,
 )
+from dealos.experiments.macro_micro_multiconstraint import invariant_failures as multiconstraint_invariant_failures
 from dealos.org.operating.bridge import (
     AUTHORITY_UNAVAILABLE,
     CAN_PROGRESS,
@@ -32,6 +40,39 @@ def _reasons(row) -> set[str]:
 def _evidence(row, reason: str) -> dict[str, str]:
     blocker = next(item for item in row.diagnosis.blocking_reasons if item.reason == reason)
     return dict(blocker.evidence)
+
+
+# ---- Basic Macro-Micro coupling ----
+
+
+def test_same_micro_readiness_gets_different_macro_outcomes() -> None:
+    rows = comparison_rows()
+    assert len({row.progress_before for row in rows}) == 1
+    assert all(row.initial_micro_ready for row in rows)
+    assert [row.blocking_reason_before for row in rows] == [
+        "can_progress",
+        "capacity_unavailable",
+        "information_unavailable",
+        "authority_unavailable",
+        "veto",
+        "external_information_unavailable",
+    ]
+    assert rows[0].progress_after == 1.0
+    assert all(row.progress_after == 0.0 for row in rows[1:])
+    assert all(row.passed for row in rows)
+    assert not any(row.in_blocked_tasks for row in rows)
+
+
+def test_release_produce_receive_and_veto_change_the_gate() -> None:
+    rows = {row.scenario_id: row for row in run_all()}
+    assert rows["C-capacity"].passed
+    assert rows["C-information"].passed
+    assert rows["D-veto"].blocking_reason_before == "veto"
+    assert rows["D-external-after"].progress_after == 1.0
+    assert rows["A-capacity"].diagnosis.evidence
+
+
+# ---- Multi-constraint state transitions ----
 
 
 def test_initial_state_lists_every_blocker_while_micro_stays_ready() -> None:
@@ -136,6 +177,9 @@ def test_veto_blocks_a_granted_decision_and_clearing_it_leaves_other_blockers() 
     assert sole[1].progress_after == 1.0
 
 
+# ---- Macro state invariants ----
+
+
 def test_evidence_matches_the_state_being_diagnosed() -> None:
     state = initial_state()
     state.capacity[POOL] = type(state.capacity[POOL])(POOL, 1.0, 0.0)
@@ -146,6 +190,14 @@ def test_evidence_matches_the_state_being_diagnosed() -> None:
     assert diagnosis.task_id == CONSTRAINT.task_id
 
 
+# ---- Micro regression/fingerprint ----
+
+
+def test_invariants_and_seed_fingerprint() -> None:
+    assert integration_invariant_failures() == ()
+    assert baseline_one_occurrence_matches_v1() is True
+
+
 def test_invariants_and_the_existing_micro_baseline() -> None:
-    assert invariant_failures() == ()
+    assert multiconstraint_invariant_failures() == ()
     assert baseline_one_occurrence_matches_v1() is True

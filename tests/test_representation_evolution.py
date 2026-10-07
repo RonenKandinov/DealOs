@@ -1,10 +1,29 @@
-"""Hidden rule in the world, no field in the gate, candidates scored on held-out worlds."""
+"""Representation evolution: gap classification, the ground-truth representation gap,
+candidate evaluation, holdout generalization, anti-leakage, and regression.
+
+Merged from test_representation_gap and test_representation_gap_ground_truth. Every test
+body is unchanged.
+"""
 
 import inspect
 from dataclasses import fields, replace
 from pathlib import Path
 
-from dealos.experiments.representation_gap import NO_GAP, REPRESENTATION_GAP, SEMANTIC_GAP, classify
+from dealos.experiments.macro_micro_integration import invariant_failures
+from dealos.experiments.macro_micro_multiconstraint import CONSTRAINT, TASK_NAME
+from dealos.experiments.representation_gap import (
+    NO_GAP,
+    OBSERVATION_GAP,
+    REPRESENTATION_GAP,
+    SEMANTIC_GAP,
+    Observation,
+    Proposal,
+    candidate_accepted,
+    classify,
+    integration_still_passes,
+    run_all_gaps,
+    satisfied_state,
+)
 from dealos.experiments.representation_gap_ground_truth import (
     BLOCKED,
     HIDDEN_FIELDS,
@@ -25,13 +44,28 @@ from dealos.experiments.representation_gap_ground_truth import (
     propose,
     run_experiment,
 )
-from dealos.experiments.macro_micro_integration import invariant_failures
 from dealos.org.operating.bridge import CAN_PROGRESS, diagnose
 from dealos.org.operating.entities import TaskConstraint
 from dealos.org.operating.state import OrgState
 from dealos.problem_evolution.engine import baseline_one_occurrence_matches_v1
 
 ROOT = Path(__file__).parents[1]
+
+
+def _by_name():
+    return {row.scenario: row for row in run_all_gaps()}
+
+
+def _complete(progress: float) -> Observation:
+    return Observation(
+        task_ready=True,
+        capacity_available=True,
+        required_information_available=True,
+        external_information_available=True,
+        authority_available=True,
+        veto=False,
+        observed_progress=progress,
+    )
 
 
 def _worlds():
@@ -41,6 +75,78 @@ def _worlds():
 def _results():
     named, grid, candidates, vectors = run_experiment()
     return {r.world.scenario_id: r for r in named}, grid, {c.name: c for c in candidates}, {v.name: v for v in vectors}
+
+
+# ---- Observation/Representation/Semantic gap classification ----
+
+
+def test_satisfied_constraints_predict_can_progress_on_a_ready_task() -> None:
+    diagnosis = diagnose(satisfied_state(), CONSTRAINT)
+    hidden = _by_name()["hidden_causal_observation"]
+    assert diagnosis.reason == CAN_PROGRESS
+    assert diagnosis.blocking_reasons == ()
+    assert diagnosis.ready is True
+    assert hidden.current_model_prediction == CAN_PROGRESS
+    assert TASK_NAME == "deal_A:A1"
+
+
+def test_hidden_outcome_is_an_observation_gap() -> None:
+    row = _by_name()["hidden_causal_observation"]
+    assert row.observations_available is False
+    assert row.observed_outcome == "hidden"
+    assert row.classification == OBSERVATION_GAP
+    assert row.classification != REPRESENTATION_GAP
+    withheld = Observation(
+        task_ready=True,
+        capacity_available=True,
+        required_information_available=True,
+        external_information_available=True,
+        authority_available=True,
+        veto=False,
+        observed_progress=None,
+    )
+    assert classify(CAN_PROGRESS, withheld, Proposal("TimeGapIsWaiting", ("time_gap_is_waiting",))) == OBSERVATION_GAP
+
+
+def test_complete_unexplained_non_progress_is_a_representation_gap() -> None:
+    row = _by_name()["unexplained_non_progress"]
+    assert row.observations_available is True
+    assert row.current_model_prediction == CAN_PROGRESS
+    assert row.observed_outcome == "0.0"
+    assert row.classification == REPRESENTATION_GAP
+    assert row.candidate == "UnmodeledConstraint"
+    assert row.accepted is True
+    assert candidate_accepted(Proposal("UnmodeledConstraint")) is True
+
+
+def test_unsupported_story_is_a_semantic_gap_and_is_rejected() -> None:
+    row = _by_name()["unsupported_causal_story"]
+    story = Proposal("TimeGapIsWaiting", ("time_gap_is_waiting",))
+    assert row.classification == SEMANTIC_GAP
+    assert row.accepted is False
+    assert candidate_accepted(story) is False
+    assert classify(CAN_PROGRESS, _complete(0.0), story) == SEMANTIC_GAP
+    assert classify(CAN_PROGRESS, _complete(0.0), Proposal("CustomerDelay")) == SEMANTIC_GAP
+
+
+def test_matching_progress_has_no_gap() -> None:
+    row = _by_name()["explained_progress"]
+    assert row.observations_available is True
+    assert row.current_model_prediction == CAN_PROGRESS
+    assert float(row.observed_outcome) == 1.0
+    assert row.classification == NO_GAP
+    assert row.candidate == ""
+    assert row.accepted is False
+
+
+def test_the_candidate_slot_is_not_installed() -> None:
+    names = {item.name for item in fields(TaskConstraint)}
+    assert "UnmodeledConstraint" not in names
+    source = Path(__file__).parents[1].joinpath("src/dealos/org/operating/entities.py").read_text(encoding="utf-8")
+    assert "UnmodeledConstraint" not in source
+
+
+# ---- Ground-truth representation gap ----
 
 
 def test_hidden_rule_changes_the_outcome_with_holders_fixed() -> None:
@@ -92,6 +198,17 @@ def test_g3_and_g4_follow_the_parameter() -> None:
     assert ground_truth_outcome(replace(g3, rule=replace(g3.rule, required_clear=1))) == PROGRESS
 
 
+def test_the_candidate_is_not_installed() -> None:
+    assert "DutyExclusion" not in {item.name for item in fields(TaskConstraint)}
+    assert "DutyExclusion" not in {item.name for item in fields(OrgState)}
+    for name in ("entities.py", "state.py", "bridge.py", "transition.py"):
+        source = ROOT.joinpath("src/dealos/org/operating", name).read_text(encoding="utf-8")
+        assert "DutyExclusion" not in source
+
+
+# ---- Candidate evaluation ----
+
+
 def test_negative_controls_progress_and_the_fitted_candidate_leaves_them_alone() -> None:
     results, _, candidates, vectors = _results()
     for sid in ("G5", "G6"):
@@ -100,14 +217,6 @@ def test_negative_controls_progress_and_the_fitted_candidate_leaves_them_alone()
         assert predict(candidates["DutyExclusion"], results[sid].row, results[sid].current_model_prediction) == PROGRESS
     assert vectors["DutyExclusion"].specificity is True
     assert vectors["DutyExclusion"].regression is True
-
-
-def test_the_candidate_is_not_installed() -> None:
-    assert "DutyExclusion" not in {item.name for item in fields(TaskConstraint)}
-    assert "DutyExclusion" not in {item.name for item in fields(OrgState)}
-    for name in ("entities.py", "state.py", "bridge.py", "transition.py"):
-        source = ROOT.joinpath("src/dealos/org/operating", name).read_text(encoding="utf-8")
-        assert "DutyExclusion" not in source
 
 
 def test_unsupported_semantic_candidate_is_rejected() -> None:
@@ -122,19 +231,7 @@ def test_unsupported_semantic_candidate_is_rejected() -> None:
     assert vectors["UnmodeledConstraint"].supported is False
 
 
-def test_integration_and_fingerprint_stay_in_place() -> None:
-    assert invariant_failures() == ()
-    assert baseline_one_occurrence_matches_v1() is True
-
-
-def test_observation_has_no_hidden_field() -> None:
-    for world in named_worlds() + grid_worlds()[:8]:
-        row = project_observation(world, ground_truth_outcome(world))
-        keys = set(row.fields())
-        assert keys <= PUBLIC_FIELDS
-        assert keys.isdisjoint(HIDDEN_FIELDS)
-        text = ";".join(f"{k}={v}" for k, v in row.fields().items())
-        assert "required_clear" not in text and "active=" not in text and "DutyExclusion" not in text
+# ---- Holdout/generalization ----
 
 
 def test_candidates_are_scored_on_every_named_world_and_the_grid() -> None:
@@ -167,3 +264,29 @@ def test_proposal_is_separate_from_holdout() -> None:
     holdout = tuple(results[sid] for sid in HOLDOUT_IDS)
     vector = evaluate(fitted["DutyExclusion"], tuple(results[sid] for sid in NAMED_IDS), (), True)
     assert vector.holdout_matches == len(holdout)
+
+
+# ---- Anti-leakage ----
+
+
+def test_observation_has_no_hidden_field() -> None:
+    for world in named_worlds() + grid_worlds()[:8]:
+        row = project_observation(world, ground_truth_outcome(world))
+        keys = set(row.fields())
+        assert keys <= PUBLIC_FIELDS
+        assert keys.isdisjoint(HIDDEN_FIELDS)
+        text = ";".join(f"{k}={v}" for k, v in row.fields().items())
+        assert "required_clear" not in text and "active=" not in text and "DutyExclusion" not in text
+
+
+# ---- Regression ----
+
+
+def test_integration_and_seed_fingerprint_stay_in_place() -> None:
+    assert integration_still_passes() is True
+    assert baseline_one_occurrence_matches_v1() is True
+
+
+def test_integration_and_fingerprint_stay_in_place() -> None:
+    assert invariant_failures() == ()
+    assert baseline_one_occurrence_matches_v1() is True
