@@ -96,27 +96,7 @@ Progress is monotone. V1 has no rework, decay, or re-blocking. Allocation to a t
 
 ## Architecture
 
-The repository has eight layers. The first four are the Micro deal simulator described above; the simulator is frozen, and nothing below it imports upward.
-
-```
-src/dealos/
-  domain/             Micro: deal graphs, AND-min readiness, one-step dynamics, state
-  generator/          Micro: seeded portfolios and the five presets
-  sim/                Micro: capacity checks and SalesEnvironment
-  policies/           Micro: random, FIFO, bottleneck, optimization stub
-  diagnostics/        hand-built scenarios for checking the simulator
-  experiments/        multi-seed runner, controlled edits, horizon sweep, decision screens,
-                      blockage diagnosis, Macro-Micro bridge runs, representation-gap runs
-  org/operating/      Macro operating model: OrgState, explicit events, apply(state, event),
-                      TaskConstraint, and the bridge that diagnoses one Micro task
-  macro_world/        Macro ontology experiments: ground-truth worlds, observation masks,
-                      representable versus recoverable queries, relation validation
-  problem_evolution/  mismatch catalogue, structural mutations, candidate evaluation
-  analysis/bpi17/     observational analysis of the BPI Challenge 2017 log
-tests/                one module per layer; see Tests
-docs/                 one report per experiment; see Experiment index
-analysis/             csv and json tables written by the experiment runners
-```
+![DealOS Architecture](docs/architecture/dealos_architecture.png)
 
 The Micro layers depend on the action, not on which policy built it. Replacing a policy does not require a simulator change.
 
