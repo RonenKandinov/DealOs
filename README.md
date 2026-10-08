@@ -96,7 +96,10 @@ Progress is monotone. V1 has no rework, decay, or re-blocking. Allocation to a t
 
 ## Architecture
 
-![DealOS Architecture](docs/architecture/dealos_architecture.png)
+
+<img width="1536" height="1024" alt="dealos_architecture" src="https://github.com/user-attachments/assets/f86cd017-93ce-4980-8b43-507d0da3d066" />
+
+
 
 The Micro layers depend on the action, not on which policy built it. Replacing a policy does not require a simulator change.
 
