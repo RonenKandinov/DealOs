@@ -183,14 +183,6 @@ For each seed the runner builds one scenario and rolls out each runnable policy 
 
 Across seeds it reports count, mean, sample standard deviation, min, and max. The text table prints means. It does not declare a winner. A difference in that table is a description of those runs, not evidence that a policy is better.
 
-## What V1 can and cannot conclude
-
-V1 can check whether the objects in the formulation are implementable, whether the constraints fire, and whether two policies produce different trajectories under a stated preset and seed.
-
-V1 cannot conclude that bottleneck allocation outperforms FIFO, that an optimizer would help, or that the objective `Σ y_i` is the right business objective. Those are empirical questions this code is meant to host, not answer in advance. No result in the repository claims a ranking.
-
-Parameters `φ`, `α`, and `q` are synthetic. Capacities are constant. Dependencies are AND-only. There is no stochastic delay, no rework, and no deal value.
-
 ## Tests
 
 ```bash
@@ -223,14 +215,3 @@ Micro edge cases include a task with no predecessors, a task with several predec
 - calendars and time-varying capacity
 - a real optimizer: first a myopic linear program that treats readiness as a constant at time `t`, then a horizon formulation in which future readiness is a function of future progress, compared with FIFO and bottleneck on these presets before either is trusted
 
-## Assumptions that are configuration
-
-| Assumption | Where it is set | V1 value |
-| --- | --- | --- |
-| Readiness rule | `AndMinReadiness` passed into the environment | minimum of predecessors |
-| Infeasible action | `validate_action` | reject |
-| Blocked when readiness is at or below | `SimulationConfig.blocked_readiness_threshold` | `0` |
-| Completion tolerance | `SimulationConfig.completion_tolerance` | `1e-9` |
-| Capacity comparison tolerance | `SimulationConfig.capacity_tolerance` | `1e-9` |
-| Noise | none in the update | none |
-| Initial progress | generator | dependency-consistent unless a test builds otherwise |
