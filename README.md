@@ -1,8 +1,3 @@
-# DealOs
-
-Deterministic simulation of an enterprise sales portfolio as a capacity-constrained sequential decision problem.
-
-V1 is an experimental environment. It exists so we can ask whether this mathematical formulation is meaningful. It does not show that any allocation rule is better than another.
 
 ## Business problem
 
