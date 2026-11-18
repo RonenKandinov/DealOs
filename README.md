@@ -1,4 +1,4 @@
-
+## DealOs
 ## Business problem
 
 An enterprise deal is not a linear funnel stage. Closing it requires parallel work: commercial, technical, legal, security, procurement, and executive approval. Those work packages depend on each other, and the same people are shared across the portfolio.
